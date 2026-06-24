@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>風の谷のナウシカ | 风之谷</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft Yahei", SimSun, serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+ul {
+    list-style: none;
+}
+img {
+    display: block;
+    object-fit: cover;
+}
+
+/* 腐海背景 孢子浮动基底【修复动画】 */
+body {
+    background: linear-gradient(160deg, #5b9ec8 0%, #a7d867 50%, #60d3d3 100%);
+    color: #c6e9e4;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+/* 浮动孢子动画 重构：多点分散+缓慢漂浮+透明度变化 */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image:
+        radial-gradient(4px 4px at 10% 20%, rgba(17, 237, 123, 0.4), transparent),
+        radial-gradient(3px 3px at 30% 60%, rgba(6, 220, 138, 0.35), transparent),
+        radial-gradient(5px 5px at 70% 30%, rgba(7, 230, 208, 0.4), transparent),
+        radial-gradient(3px 3px at 90% 80%, rgba(3, 215, 151, 0.3), transparent),
+        radial-gradient(4px 4px at 50% 90%, rgba(110, 234, 10, 0.38), transparent);
+    background-size: 400px 400px; /* 关键修复：缩小尺寸，孢子分散浮动 */
+    animation: sporeFloat 20s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+/* 全新浮动关键帧：上下+左右+透明度渐变，肉眼清晰可见 */
+@keyframes sporeFloat {
+    0% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
+    50% { transform: translateY(-60px) translateX(30px); opacity: 0.6; }
+    100% { transform: translateY(0px) translateX(-10px); opacity: 0.2; }
+}
+
+.wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 返回导航 */
+.back-note {
+    padding: 30px 0 15px;
+}
+.back-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 22px;
+    background: rgba(30, 80, 75, 0.6);
+    color: #86e2cb;
+    border-radius: 2px 12px 12px 2px;
+    font-size: 14px;
+    box-shadow: 0 0 8px rgba(90, 220, 180, 0.3);
+    border-left: 3px solid #4ed1b2;
+    transition: all 0.3s;
+    position: relative;
+}
+.back-tag::before {
+    content: "🪁";
+    font-size: 15px;
+}
+.back-tag:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 0 14px rgba(90, 220, 180, 0.5);
+}
+
+/* 右侧悬浮导航 菌类荧光书签 */
+.side-bookmark {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(15, 50, 46, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 20px 14px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border: 2px solid #39b89c;
+    box-shadow: 0 0 15px rgba(70, 210, 175, 0.25);
+    z-index: 99;
+    min-width: 86px;
+}
+.side-bookmark h4 {
+    text-align: center;
+    color: #74e0c6;
+    font-size: 13px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #2e997f;
+    letter-spacing: 2px;
+}
+.side-bookmark li {
+    margin: 10px 0;
+    text-align: center;
+}
+.side-bookmark a {
+    font-size: 12px;
+    padding: 5px 6px;
+    border-radius: 20px;
+    transition: 0.25s;
+    color: #b0e8df;
+    display: block;
+}
+.side-bookmark a:hover {
+    background: rgba(78, 209, 178, 0.25);
+    color: #86e2cb;
+    box-shadow: 0 0 6px rgba(78, 209, 178, 0.4);
+}
+
+/* 顶部主视觉 腐海横幅 */
+.hero-sketch {
+    position: relative;
+    margin-bottom: 60px;
+    padding: 30px;
+    background: rgba(20, 60, 56, 0.55);
+    border-radius: 4px;
+    box-shadow:
+        0 0 30px rgba(60, 190, 160, 0.18),
+        inset 0 0 80px rgba(10, 40, 36, 0.6);
+    border: 1px solid #288a73;
+}
+.hero-img {
+    width: 100%;
+    height: 420px;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    filter: saturate(1.2) brightness(0.9);
+}
+.hero-img img {
+    width: 100%;
+    height: 100%;
+}
+.hero-img::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 2px dashed rgba(78, 209, 178, 0.35);
+    border-radius: 2px;
+    pointer-events: none;
+}
+.hero-title {
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    text-align: right;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(50, 180, 150, 0.8);
+}
+.hero-title h1 {
+    font-size: 46px;
+    letter-spacing: 6px;
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+.hero-title .sub {
+    font-size: 20px;
+    letter-spacing: 4px;
+    opacity: 0.95;
+}
+.hero-title .jp {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 6px;
+    letter-spacing: 3px;
+}
+.sticker {
+    position: absolute;
+    font-size: 12px;
+    padding: 4px 12px;
+    background: rgba(60, 200, 170, 0.6);
+    color: #0c332d;
+    border-radius: 2px;
+    transform: rotate(-5deg);
+    box-shadow: 0 0 5px rgba(60, 200, 170, 0.4);
+    z-index: 2;
+}
+.sticker-1 {
+    top: 15px;
+    left: 80px;
+    transform: rotate(-8deg);
+    background: rgba(90, 230, 200, 0.65);
+}
+.sticker-2 {
+    bottom: 20px;
+    left: 70px;
+    transform: rotate(4deg);
+    background: rgba(230, 200, 80, 0.7);
+    color: #2c2408;
+}
+
+/* 通用章节 */
+.section {
+    margin-bottom: 70px;
+}
+.sec-title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+.sec-title h2 {
+    display: inline-block;
+    font-size: 28px;
+    color: #86e2cb;
+    letter-spacing: 5px;
+    padding: 10px 45px;
+    background: rgba(25, 75, 70, 0.6);
+    position: relative;
+    font-weight: normal;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(70, 210, 175, 0.25);
+}
+.sec-title h2::before,
+.sec-title h2::after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    width: 35px;
+    height: 16px;
+    background: rgba(80, 220, 185, 0.4);
+    border-radius: 2px;
+}
+.sec-title h2::before {
+    left: 10px;
+    transform: rotate(-4deg);
+}
+.sec-title h2::after {
+    right: 10px;
+    transform: rotate(4deg);
+}
+.sec-title .en {
+    display: block;
+    font-size: 11px;
+    color: #49b89e;
+    margin-top: 12px;
+    letter-spacing: 4px;
+}
+
+/* 一、腐海观测 影片档案 */
+.profile-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+    align-items: start;
+}
+.profile-photo {
+    position: relative;
+    padding: 12px;
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 12px rgba(60, 190, 160, 0.2);
+    transform: rotate(-2deg);
+    border-radius: 2px;
+    border: 1px solid #288a73;
+}
+.profile-photo img {
+    width: 100%;
+    height: 320px;
+    border-radius: 2px;
+    filter: saturate(1.15);
+}
+.profile-photo::after {
+    content: "🪲 OMU";
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: #fff;
+    font-size: 13px;
+    text-shadow: 0 0 4px #000;
+}
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.note-card {
+    padding: 18px 22px;
+    background: rgba(22, 68, 63, 0.6);
+    border-radius: 2px 8px 8px 2px;
+    box-shadow: 0 0 8px rgba(60, 190, 160, 0.15);
+    position: relative;
+    border-left: 4px solid;
+}
+.note-card:nth-child(1) { border-left-color: #4ed1b2; transform: rotate(0.5deg); }
+.note-card:nth-child(2) { border-left-color: #e6c850; transform: rotate(-0.8deg); }
+.note-card:nth-child(3) { border-left-color: #5ac9aa; transform: rotate(0.3deg); }
+.note-card h4 {
+    font-size: 16px;
+    color: #86e2cb;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+.note-card p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #b0e8df;
+}
+.note-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+}
+.note-grid span {
+    font-size: 13px;
+    color: #b0e8df;
+    padding: 4px 0;
+    border-bottom: 1px dotted #2e997f;
+}
+.note-grid span strong {
+    color: #74e0c6;
+    font-weight: normal;
+    margin-right: 6px;
+}
+
+/* 二、探索路径 剧情时间轴 */
+.wind-timeline {
+    position: relative;
+    padding: 20px 0;
+}
+.wind-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+    position: relative;
+    gap: 30px;
+}
+.wind-item:nth-child(odd) {
+    flex-direction: row;
+    padding-left: 50px;
+}
+.wind-item:nth-child(even) {
+    flex-direction: row-reverse;
+    padding-right: 50px;
+}
+.wind-img {
+    width: 200px;
+    height: 150px;
+    flex-shrink: 0;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(60, 190, 160, 0.2);
+    position: relative;
+    padding: 6px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid #288a73;
+}
+.wind-item:nth-child(odd) .wind-img {
+    transform: rotate(-3deg);
+}
+.wind-item:nth-child(even) .wind-img {
+    transform: rotate(3deg);
+}
+.wind-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    filter: saturate(1.1);
+}
+.wind-content {
+    flex: 1;
+    padding: 18px 22px;
+    background: rgba(22, 68, 63, 0.6);
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(60, 190, 160, 0.15);
+    position: relative;
+}
+.wind-item:nth-child(odd) .wind-content {
+    border-right: 3px solid #4ed1b2;
+}
+.wind-item:nth-child(even) .wind-content {
+    border-left: 3px solid #4ed1b2;
+}
+.wind-content h4 {
+    font-size: 18px;
+    color: #86e2cb;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+.wind-content h4 .num {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: #4ed1b2;
+    color: #0c332d;
+    border-radius: 50%;
+    font-size: 12px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.wind-content p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #b0e8df;
+}
+/* 脉冲发光节点 增强亮度，动画更明显 */
+.wind-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: #0c2c2c;
+    border: 3px solid #4ed1b2;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    animation: pulse 2s infinite ease-in-out;
+}
+@keyframes pulse {
+    0%,100% { box-shadow: 0 0 6px 2px #4ed1b2; }
+    50% { box-shadow: 0 0 20px 6px #4ed1b2; }
+}
+.wind-item:nth-child(odd) .wind-dot {
+    left: 20px;
+}
+.wind-item:nth-child(even) .wind-dot {
+    right: 20px;
+}
+
+/* 三、人物图鉴 琥珀标本卡片 */
+.polaroid-wall {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 35px 25px;
+    padding: 20px 0;
+}
+.polaroid {
+    width: 200px;
+    padding: 10px 10px 35px;
+    background: linear-gradient(145deg, rgba(230, 200, 80, 0.18), rgba(160, 130, 40, 0.08));
+    box-shadow: 0 0 15px rgba(230, 200, 80, 0.15);
+    border:1px solid rgba(230, 200, 80, 0.3);
+    position: relative;
+    transition: all 0.35s;
+}
+.polaroid:nth-child(1) { transform: rotate(-4deg); }
+.polaroid:nth-child(2) { transform: rotate(3deg); margin-top: -10px; }
+.polaroid:nth-child(3) { transform: rotate(-2deg); }
+.polaroid:nth-child(4) { transform: rotate(5deg); margin-top: 15px; }
+.polaroid:nth-child(5) { transform: rotate(-3deg); }
+.polaroid:hover {
+    transform: rotate(0) translateY(-8px) scale(1.03);
+    box-shadow: 0 0 22px rgba(230, 200, 80, 0.3);
+    z-index: 3;
+}
+.polaroid img {
+    width: 100%;
+    height: 160px;
+    border-radius: 2px;
+    filter: saturate(1.2);
+}
+.polaroid .name {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 15px;
+    color: #e6d080;
+    letter-spacing: 2px;
+    font-family: SimSun, serif;
+}
+.polaroid .name-en {
+    text-align: center;
+    font-size: 10px;
+    color: #c9b266;
+    margin-top: 2px;
+    letter-spacing: 1px;
+}
+.polaroid::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 50px;
+    height: 16px;
+    background: rgba(230, 200, 80, 0.35);
+    border-radius: 2px;
+}
+
+/* 四、远古寄语 石板台词 */
+.letter-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+.letter-card {
+    padding: 30px 35px;
+    background: linear-gradient(160deg, rgba(18, 52, 48, 0.7), rgba(10, 36, 32, 0.8));
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(60, 190, 160, 0.12);
+    position: relative;
+    border:1px solid #288a73;
+    line-height: 28px;
+}
+.letter-card::before {
+    content: "📜";
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 18px;
+    color: #4ed1b2;
+    opacity: 0.6;
+}
+.letter-card .quote-text {
+    font-size: 15px;
+    color: #c6e9e4;
+    margin-bottom: 18px;
+    text-indent: 2em;
+    font-family: SimSun, serif;
+}
+.letter-card .quote-from {
+    text-align: right;
+    font-size: 13px;
+    color: #86e2cb;
+    padding-right: 10px;
+}
+.letter-card .quote-from::before {
+    content: "—— ";
+}
+.stamp {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 45px;
+    height: 55px;
+    border: 2px dashed #2e997f;
+    background: rgba(30, 80, 75, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #4ed1b2;
+    transform: rotate(8deg);
+}
+
+/* 页脚 */
+footer {
+    padding: 50px 20px 30px;
+    margin-top: 30px;
+    text-align: center;
+    position: relative;
+    border-top: 2px dashed #2e997f;
+    background: rgba(15, 50, 46, 0.4);
+}
+footer .footer-mark {
+    font-size: 22px;
+    color: #86e2cb;
+    letter-spacing: 5px;
+    margin-bottom: 12px;
+    font-family: SimSun, serif;
+}
+footer .footer-mark::before {
+    content: "🪲 ";
+    font-size: 18px;
+}
+footer .footer-mark::after {
+    content: " 🪁";
+    font-size: 18px;
+}
+footer p {
+    font-size: 12px;
+    color: #73b8a7;
+    line-height: 2;
+}
+
+/* 响应式适配 */
+@media(max-width: 900px) {
+    .side-bookmark {
+        display: none;
+    }
+    .profile-wrap {
+        grid-template-columns: 1fr;
+    }
+    .profile-photo {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    .letter-wrap {
+        grid-template-columns: 1fr;
+    }
+    .hero-title h1 {
+        font-size: 34px;
+        letter-spacing: 4px;
+    }
+    .hero-img {
+        height: 320px;
+    }
+    .wind-item,
+    .wind-item:nth-child(even) {
+        flex-direction: column;
+        padding-left: 0;
+        padding-right: 0;
+        align-items: flex-start;
+    }
+    .wind-dot {
+        display: none;
+    }
+    .wind-img {
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+    }
+}
+@media(max-width: 576px) {
+    .wrap {
+        padding: 0 16px;
+    }
+    .hero-sketch {
+        padding: 15px;
+    }
+    .hero-img {
+        height: 240px;
+    }
+    .hero-title {
+        right: 30px;
+        bottom: 40px;
+    }
+    .hero-title h1 {
+        font-size: 26px;
+        letter-spacing: 3px;
+    }
+    .hero-title .sub {
+        font-size: 15px;
+    }
+    .sec-title h2 {
+        font-size: 22px;
+        padding: 8px 30px;
+        letter-spacing: 3px;
+    }
+    .polaroid {
+        width: 160px;
+    }
+    .polaroid img {
+        height: 130px;
+    }
+    .note-grid {
+        grid-template-columns: 1fr;
+    }
+    .sticker-1, .sticker-2 {
+        display: none;
+    }
+}
+</style>
+</head>
+<body>
+<!-- 右侧悬浮导航 -->
+<div class="side-bookmark">
+    <h4>目录</h4>
+    <ul>
+        <li><a href="#profile">腐海观测</a></li>
+        <li><a href="#story">探索路径</a></li>
+        <li><a href="#char">人物图鉴</a></li>
+        <li><a href="#quote">远古寄语</a></li>
+    </ul>
+</div>
+
+<div class="wrap">
+<!-- 返回顶部 -->
+<div class="back-note">
+    <a href="index.html" class="back-tag">返回风之画廊</a>
+</div>
+
+<!-- 顶部主视觉 -->
+<div class="hero-sketch">
+    <div class="sticker sticker-1">VOL.03</div>
+    <div class="sticker sticker-2">OMU</div>
+    <div class="hero-img">
+        <img src="https://www.ghibli.jp/gallery/nausicaa007.jpg" alt="风之谷">
+    </div>
+    <div class="hero-title">
+        <h1>風の谷のナウシカ</h1>
+        <p class="sub">风 之 谷</p>
+        <p class="jp">Nausicaä of the Valley of the Wind</p>
+    </div>
+</div>
+
+<!-- 一、腐海观测：影片档案 -->
+<section id="profile" class="section">
+    <div class="sec-title">
+        <h2>腐 海 观 测</h2>
+        <span class="en">FILM FILE</span>
+    </div>
+    <div class="profile-wrap">
+        <div class="profile-photo">
+            <img src="https://www.ghibli.jp/gallery/nausicaa001.jpg" alt="娜乌西卡">
+        </div>
+        <div class="profile-info">
+            <div class="note-card">
+                <h4>✎ 基础档案</h4>
+                <div class="note-grid">
+                    <span><strong>上映</strong>1984年</span>
+                    <span><strong>片长</strong>116分钟</span>
+                    <span><strong>导演</strong>宫崎骏</span>
+                    <span><strong>配乐</strong>久石让</span>
+                    <span><strong>制作</strong>吉卜力前身</span>
+                    <span><strong>原作</strong>宫崎骏漫画</span>
+                </div>
+            </div>
+            <div class="note-card">
+                <h4>✎ 主题标签</h4>
+                <p style="letter-spacing:2px;">
+                    #自然共生 #末世腐海 #和平反战 #人与自然 #王虫 #滑翔翼
+                </p>
+            </div>
+            <div class="note-card">
+                <h4>✎ 影片简介</h4>
+                <p>
+                    千年前工业文明毁灭，大地被剧毒菌类森林“腐海”覆盖，巨型昆虫王虫栖息其中。仅有少数人类部落存活于山谷绿洲。风之谷少女娜乌西卡热爱自然，能与王虫沟通，她发现腐海其实是净化大地的生态系统。多鲁美奇亚军队入侵，企图利用王虫摧毁世界，娜乌西卡踏上阻止战争、调和人类与自然的旅途，用温柔与勇气守护所有生命。
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 二、探索路径 剧情时间轴 -->
+<section id="story" class="section">
+    <div class="sec-title">
+        <h2>探 索 路 径</h2>
+        <span class="en">EXPLORE ROUTE</span>
+    </div>
+    <div class="wind-timeline">
+        <div class="wind-item">
+            <div class="wind-dot"></div>
+            <div class="wind-img">
+                <img src="https://www.ghibli.jp/gallery/nausicaa003.jpg" alt="风之谷日常">
+            </div>
+            <div class="wind-content">
+                <h4><span class="num">1</span>风谷少女</h4>
+                <p>少女娜乌西卡生活在与世隔绝的风之谷，依靠海风隔绝腐海毒孢子。她自制滑翔翼穿梭于菌海，悉心研究腐海植物，发现菌类能够分解土壤毒素，山谷老人告诫人类永远不要激怒王虫。</p>
+            </div>
+        </div>
+        <div class="wind-item">
+            <div class="wind-dot"></div>
+            <div class="wind-img">
+                <img src="https://www.ghibli.jp/gallery/nausicaa012.jpg" alt="军队入侵">
+            </div>
+            <div class="wind-content">
+                <h4><span class="num">2</span>战火降临</h4>
+                <p>军国多鲁美奇亚的战机强行降落风之谷，女王库夏娜率军占领村庄，夺取上古巨神兵残骸，计划操控武器消灭整片腐海，人类与自然的矛盾彻底爆发。</p>
+            </div>
+        </div>
+        <div class="wind-item">
+            <div class="wind-dot"></div>
+            <div class="wind-img">
+                <img src="https://www.ghibli.jp/gallery/nausicaa019.jpg" alt="腐海深处">
+            </div>
+            <div class="wind-content">
+                <h4><span class="num">3</span>腐海真相</h4>
+                <p>娜乌西卡坠入腐海地底，看见干净无毒素的地下水与古老植物，终于揭开真相：腐海不是毁灭大地的毒狱，而是净化被人类污染土地的巨大生态循环。</p>
+            </div>
+        </div>
+        <div class="wind-item">
+            <div class="wind-dot"></div>
+            <div class="wind-img">
+                <img src="https://www.ghibli.jp/gallery/nausicaa026.jpg" alt="王虫暴怒">
+            </div>
+            <div class="wind-content">
+                <h4><span class="num">4</span>虫潮来袭</h4>
+                <p>人类捕捉幼王虫作为诱饵，激怒整片腐海的王虫群，巨大虫潮朝着风之谷狂奔，所有人都认定王虫是毁灭人类的怪物，只有娜乌西卡愿意放下武器安抚暴怒的虫群。</p>
+            </div>
+        </div>
+        <div class="wind-item">
+            <div class="wind-dot"></div>
+            <div class="wind-img">
+                <img src="https://www.ghibli.jp/gallery/nausicaa033.jpg" alt="金色原野">
+            </div>
+            <div class="wind-content">
+                <h4><span class="num">5</span>金色草原</h4>
+                <p>娜乌西卡用身体阻挡虫群，鲜血浸染大地。暴怒的王虫平静下来，金色触须包裹少女，众人看见传说中的金色草原幻境。战争停下，人类终于懂得与自然共生的意义。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 三、人物图鉴 -->
+<section id="char" class="section">
+    <div class="sec-title">
+        <h2>人 物 图 鉴</h2>
+        <span class="en">CHARACTER SPECIMEN</span>
+    </div>
+    <div class="polaroid-wall">
+        <div class="polaroid">
+            <img src="https://www.ghibli.jp/gallery/nausicaa007.jpg" alt="娜乌西卡">
+            <div class="name">娜乌西卡</div>
+            <div class="name-en">Nausicaä</div>
+        </div>
+        <div class="polaroid">
+            <img src="https://www.ghibli.jp/gallery/nausicaa014.jpg" alt="库夏娜">
+            <div class="name">库夏娜</div>
+            <div class="name-en">Kushana</div>
+        </div>
+        <div class="polaroid">
+            <img src="https://www.ghibli.jp/gallery/nausicaa017.jpg" alt="阿斯贝鲁">
+            <div class="name">阿斯贝鲁</div>
+            <div class="name-en">Asbel</div>
+        </div>
+        <div class="polaroid">
+            <img src="https://www.ghibli.jp/gallery/nausicaa022.jpg" alt="犹巴">
+            <div class="name">犹巴大师</div>
+            <div class="name-en">Yupa</div>
+        </div>
+        <div class="polaroid">
+            <img src="https://www.ghibli.jp/gallery/nausicaa030.jpg" alt="王虫">
+            <div class="name">王虫</div>
+            <div class="name-en">Ohmu</div>
+        </div>
+    </div>
+</section>
+
+<!-- 四、远古寄语 经典台词 -->
+<section id="quote" class="section">
+    <div class="sec-title">
+        <h2>远 古 寄 语</h2>
+        <span class="en">ANCIENT WORDS</span>
+    </div>
+    <div class="letter-wrap">
+        <div class="letter-card">
+            <div class="stamp">🌿</div>
+            <p class="quote-text">腐海不是诅咒，是大地自我净化的温柔容器，所有生命都该拥有生存的权利。</p>
+            <p class="quote-from">娜乌西卡</p>
+        </div>
+        <div class="letter-card">
+            <div class="stamp">🪲</div>
+            <p class="quote-text">王虫从不会主动伤害人类，我们的恐惧，才是战争真正的源头。</p>
+            <p class="quote-from">犹巴大师</p>
+        </div>
+        <div class="letter-card">
+            <div class="stamp">🪁</div>
+            <p class="quote-text">风会带走毒孢子，也会带来希望，只要我们愿意放下武器，就能看见金色原野。</p>
+            <p class="quote-from">娜乌西卡</p>
+        </div>
+        <div class="letter-card">
+            <div class="stamp">⚔</div>
+            <p class="quote-text">摧毁自然只会让人类走向灭亡，真正的强大，是懂得与万物共存。</p>
+            <p class="quote-from">库夏娜</p>
+        </div>
+    </div>
+</section>
+</div>
+
+<!-- 页脚 -->
+<footer>
+    <div class="footer-mark">风 之 谷 专 题</div>
+    <p>宫崎骏开山之作 · 人与自然的永恒史诗</p>
+    <p>剧照版权 ©スタジオジブリ STUDIO GHIBLI · 仅供学习交流</p>
+</footer>
+</body>
+</html>

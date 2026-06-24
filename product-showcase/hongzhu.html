@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红猪 | Porco Rosso - 风之画廊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f8f3e6;
+            background-image: radial-gradient(#e9e2d3 1px, transparent 1px);
+            background-size: 30px 30px;
+            font-family: "思源宋体", SimSun, serif;
+            color: #2c2c2c;
+            line-height: 1.8;
+            padding: 0 5%;
+        }
+        /* 返回首页按钮样式 */
+        .back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            padding: 10px 22px;
+            background: #2a4d70;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+        }
+        .back-home:hover {
+            background: #e67c3c;
+            transform: translateX(-4px);
+        }
+        /* 头部标题 */
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+            position: relative;
+        }
+        header h1 {
+            font-size: 42px;
+            color: #2a4d70;
+            letter-spacing: 6px;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 18px;
+            color: #e67c3c;
+            font-style: italic;
+        }
+        .plane-deco {
+            position: absolute;
+            opacity: 0.15;
+            width: 180px;
+            top: 30px;
+            left: 10%;
+            transform: rotate(-10deg);
+        }
+        /* 通用卡片样式 轻微倾斜打破板正 */
+        .card {
+            background: rgba(255,255,255,0.75);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 3px 3px 12px rgba(42, 77, 112, 0.12);
+            margin-bottom: 50px;
+        }
+        .tilt-left { transform: rotate(-0.8deg); }
+        .tilt-right { transform: rotate(0.8deg); }
+        h2 {
+            color: #2a4d70;
+            border-left: 5px solid #e67c3c;
+            padding-left: 14px;
+            margin-bottom: 24px;
+            font-size: 26px;
+        }
+        /* 影片简介区域 左右布局 */
+        .intro-wrap {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .intro-poster {
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
+        }
+        .intro-text {
+            flex: 1;
+            min-width: 300px;
+            font-size: 16px;
+        }
+        /* 剧情段落 图文交替错落 */
+        .story-item {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .story-item.reverse {
+            flex-direction: row-reverse;
+        }
+        .story-img {
+            width: 42%;
+            min-width: 300px;
+            border-radius: 12px;
+        }
+        .story-text {
+            flex: 1;
+            min-width: 320px;
+        }
+        .story-text h3 {
+            color: #e67c3c;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+        /* 角色介绍 错落卡片网格 */
+        .role-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 35px;
+            margin-top: 20px;
+        }
+        .role-card {
+            background: rgba(255,255,255,0.8);
+            padding: 22px;
+            border-radius: 12px;
+            transform: rotate(-0.6deg);
+            transition: all 0.3s ease;
+        }
+        .role-card:nth-child(2n) { transform: rotate(0.6deg); }
+        .role-card:hover {
+            transform: rotate(0) translateY(-6px);
+            box-shadow: 0 8px 20px rgba(42, 77, 112, 0.18);
+        }
+        .role-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        .role-name {
+            font-size: 20px;
+            color: #2a4d70;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        /* 页脚 居中专属样式 */
+        footer {
+            width: 100%;
+            background-color: #2a4d70;
+            color: #fff;
+            text-align: center;
+            padding: 45px 20px;
+            margin-top: 80px;
+        }
+        footer h3 {
+            font-size: 32px;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+        }
+        footer p {
+            font-size: 17px;
+            opacity: 0.85;
+        }
+        /* 移动端适配 */
+        @media (max-width:768px) {
+            header h1 { font-size: 30px; }
+            .story-item, .story-item.reverse { flex-direction: column; }
+            .story-img { width: 100%; }
+            .intro-wrap { justify-content: center; text-align: center; }
+            .back-home {
+                top: 12px;
+                left: 12px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 返回首页按钮 -->
+    <a href="index.html" class="back-home">← 返回风之画廊</a>
+
+    <!-- 电影基础介绍板块 -->
+    <section class="card tilt-left">
+        <h2>影片简介</h2>
+        <div class="intro-wrap">
+            <img class="intro-poster" src="yingpian/images/H1.jpg" alt="红猪官方海报">
+            <div class="intro-text">
+                <p>《红猪》是宫崎骏1992年执导的动画电影，故事舞台设定在一战后的亚得里亚海。曾经是王牌空军飞行员的马可，因厌倦战争、看透人性丑恶，对自己施加诅咒变成一头猪，化名波鲁克·罗梭，成为独来独往的空中赏金猎人。</p>
+                <br>
+                <p>整片没有宏大的正邪对立，充满地中海慵懒温柔的海风、复古水上飞机、自由与反战的内核。影片探讨逃避、自我和解、温柔的勇气，蓝天与大海之间，藏着宫崎骏独有的浪漫：哪怕现实满是灰暗，也要守住心中飞翔的自由。</p>
+                <br>
+                <p><strong>上映时间：</strong>1992年 | <strong>制作：</strong>吉卜力工作室</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 电影剧情板块 5段剧情+对应剧照 -->
+    <section class="card tilt-right">
+        <h2>完整剧情分述</h2>
+
+        <!-- 剧情1 -->
+        <div class="story-item">
+            <img class="story-img" src="yingpian/images/H2.jpg" alt="波鲁克独自飞行">
+            <div class="story-text"></div>
+                <h3>一、亚得里亚海的猪飞行员</h3>
+                <p>一战结束多年，亚得里亚海上横行着劫掠商船的空中海盗。化身为猪的波鲁克驾驶老旧红色水上飞机，靠抓捕海盗换取赏金为生。他独居无人小岛，远离人群与战争，拒绝参与任何国家的军队，只想要一片只属于自己的蓝天。当地海岛咖啡馆老板娘吉娜，是少数知晓他人类过往的知己。</p>
+            </div>
+        </div>
+
+        <!-- 剧情2 -->
+        <div class="story-item reverse">
+            <img class="story-img" src="yingpian/images/H3.jpg" alt="波鲁克海边沉思抽烟">
+            <div class="story-text"></div>
+                <h3>二、强敌来袭，战机损毁</h3>
+                <p>海盗们为了除掉波鲁克，重金聘请美国王牌飞行员卡地士。两人在空中展开激烈缠斗，波鲁克的老式飞机不敌对方新式战机，机身严重破损。为修复飞机，他只能前往米兰的老工坊，寻找老友保可洛进行大修。</p>
+            </div>
+        </div>
+
+        <!-- 剧情3 -->
+        <div class="story-item">
+            <img class="story-img" src="yingpian/images/H4.jpg" alt="菲奥在工坊改造飞机">
+            <div class="story-text">
+                <h3>三、天才少女菲奥改造战机</h3>
+                <p>工坊老师傅年老体弱，负责改造飞机的是年仅17岁的天才少女菲奥。菲奥大胆改良机身结构、减轻重量，重新设计引擎。波鲁克起初不信任少女，却在相处中被菲奥的勇敢、纯粹与热爱飞行打动。两人一同踏上返回海岛的航程，路上遭遇海盗围堵。</p>
+            </div>
+        </div>
+
+        <!-- 剧情4 -->
+        <div class="story-item reverse">
+            <img class="story-img" src="yingpian/images/H5.jpg" alt="波鲁克与卡地士空中对决">
+            <div class="story-text">
+                <h3>四、空中赌局，宿命对决</h3>
+                <p>卡地士向波鲁克发起公开决斗，赌注是菲奥的归属。两人在整片海岛居民的围观下展开公平空战。打斗中，波鲁克尘封的战争记忆不断涌现，他想起曾经牺牲的战友，明白自己逃避现实、自甘变成猪，是无法真正获得解脱的。</p>
+            </div>
+        </div>
+
+        <!-- 剧情5 -->
+        <div class="story-item">
+            <img class="story-img" src="yingpian/images/H6.jpg" alt="吉娜咖啡馆窗边眺望大海">
+            <div class="story-text">
+                <h3>五、与自我和解，奔赴自由</h3>
+                <p>决斗分出胜负，波鲁克放下心中多年的愧疚与枷锁。影片没有狗血的爱情结局，吉娜依旧守着海岛咖啡馆，菲奥回到米兰继续钻研飞机。波鲁克依旧是那头红色的猪，但他不再逃避人生，继续在亚得里亚海的蓝天飞翔，守住属于自己温柔而自由的一方天地。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要角色介绍 -->
+    <section class="card tilt-left">
+        <h2>电影主要角色</h2>
+        <div class="role-box">
+            <!-- 波鲁克·罗梭 -->
+            <div class="role-card">
+                <img class="role-img" src="https://bkimg.cdn.bcebos.com/pic/9a504fc2d5628535e5dd46af5db861c6a7efcf1bc5bf?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="波鲁克·罗梭">
+                <div class="role-name">波鲁克·罗梭（马可）</div>
+                <p>本作主角，原意大利空军王牌飞行员。战争带来的创伤让他诅咒自己变成猪，远离人类社会。外表冷漠孤僻，内心温柔善良，极度厌恶战争与强权，一生追逐蓝天与自由。</p>
+            </div>
+            <!-- 吉娜 -->
+            <div class="role-card">
+                <img class="role-img" src="https://bkimg.cdn.bcebos.com/pic/2934349b033b5bb5c9ea6570fb84c239b6003bf316bf?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="吉娜">
+                <div class="role-name">吉娜</div>
+                <p>海岛咖啡馆店主，温柔通透的女性。她知晓波鲁克的全部过往，默默等候、理解他。一生热爱大海与海岛，包容所有漂泊的飞行员，是整部电影温柔的底色。</p>
+            </div>
+            <!-- 菲奥 -->
+            <div class="role-card">
+                <img class="role-img" src="https://bkimg.cdn.bcebos.com/pic/c995d143ad4bd11373f085bd97f8b30f4bfbfaedafbf?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="菲奥·保可洛">
+                <div class="role-name">菲奥·保可洛</div>
+                <p>17岁飞机机械天才，胆大独立、乐观无畏。她打破波鲁克封闭的内心，教会主角直面过去。不畏惧危险，对机械和飞行拥有极致热忱，代表纯粹无畏的年轻力量。</p>
+            </div>
+            <!-- 卡地士 -->
+            <div class="role-card">
+                <img class="role-img" src="https://bkimg.cdn.bcebos.com/pic/a08b87d6277f9e2f07081987d267fe24b899a80155be?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="卡地士">
+                <div class="role-name">唐纳德·卡地士</div>
+                <p>美国知名飞行员，自大张扬，好胜心极强。起初视波鲁克为对手，追求名利与女人，空战结束后与主角达成和解，性格直率并无纯粹的恶意。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 居中页脚 -->
+    <footer>
+        <h3>风之画廊</h3>
+        <p>就算世界满是绝望，我也想永远翱翔在澄澈的蓝天之上</p>
+    </footer>
+</body>
+</html>

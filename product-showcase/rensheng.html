@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>君たちはどう生きるか | 你想活出怎样的人生</title>
+<style>
+/* ========== 你想活出怎样的人生 · 梦境柔光风格 ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "PingFang SC", "Microsoft YaHei", "Songti SC", "思源宋体", sans-serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { display: block; object-fit: cover; }
+
+/* 梦境柔光背景 */
+body {
+    background: #faf8f5;
+    background-image: 
+        radial-gradient(ellipse at 15% 20%, rgba(180, 160, 210, 0.25) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 15%, rgba(160, 190, 220, 0.2) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 80%, rgba(220, 190, 190, 0.18) 0%, transparent 45%),
+        radial-gradient(ellipse at 75% 65%, rgba(200, 210, 180, 0.15) 0%, transparent 35%);
+    color: #3a4050;
+    min-height: 100vh;
+    line-height: 2;
+    position: relative;
+    overflow-x: hidden;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 30% 40%, rgba(255,255,255,0.4) 0%, transparent 30%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.3) 0%, transparent 25%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== 返回首页：柔光胶囊 ========== */
+.top-back {
+    padding: 30px 0 22px;
+}
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 30px;
+    background: linear-gradient(135deg, rgba(140, 160, 200, 0.3), rgba(180, 160, 200, 0.25));
+    backdrop-filter: blur(8px);
+    color: #4a5065;
+    border-radius: 50px;
+    font-size: 14px;
+    box-shadow: 
+        0 4px 16px rgba(120, 130, 170, 0.15),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.7);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 1px;
+}
+.back-btn::before {
+    content: "🪶";
+    font-size: 14px;
+}
+.back-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 
+        0 10px 26px rgba(120, 130, 170, 0.25),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+    background: linear-gradient(135deg, rgba(140, 160, 200, 0.4), rgba(180, 160, 200, 0.35));
+    color: #3a4050;
+}
+
+/* ========== 右侧固定书签导航栏【完全对齐起风了同款右侧栏】 ========== */
+.side-bookmark {
+    /* 固定右侧居中，和起风完全一致定位 */
+    position: fixed;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    /* 起风同款米黄书签底色 */
+    background: #fff8eb;
+    width: 90px;
+    padding: 26px 12px 22px;
+    border: 1px solid #e2d6c5;
+    border-radius: 8px 8px 12px 12px;
+    box-shadow: 0 4px 18px rgba(130,110,90,0.12);
+}
+/* 书签顶部半圆缺口 起风原版造型 */
+.side-bookmark::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 13px;
+    background: #faf8f5;
+    border-left: 1px solid #e2d6c5;
+    border-right: 1px solid #e2d6c5;
+    border-bottom: 1px solid #e2d6c5;
+    border-radius: 0 0 14px 14px;
+}
+/* 顶部分隔细线 */
+.side-bookmark::after {
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: 8px;
+    right: 8px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d1c2af, transparent);
+}
+.side-bookmark h4 {
+    text-align: center;
+    font-size: 11px;
+    color: #806c53;
+    letter-spacing: 1.5px;
+    padding-top: 6px;
+    padding-bottom: 9px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed #ddcfbd;
+    font-weight: normal;
+}
+.side-bookmark li {
+    margin: 11px 0;
+    text-align: center;
+}
+.side-bookmark a {
+    display: block;
+    font-size: 11.5px;
+    color: #705e49;
+    padding: 5px 6px;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+    transition: 0.25s ease;
+}
+.side-bookmark a:hover,
+.side-bookmark a.active {
+    background: rgba(160,135,105,0.12);
+    color: #4f3f2e;
+}
+
+/* ========== 顶部主视觉：梦境柔光 ========== */
+.hero-dream {
+    position: relative;
+    margin-bottom: 80px;
+    border-radius: 24px;
+    overflow: hidden;
+    height: 520px;
+    box-shadow: 
+        0 20px 50px rgba(100, 110, 150, 0.2),
+        0 0 60px rgba(180, 160, 200, 0.15);
+}
+.hero-dream img {
+    width: 100%;
+    height: 100%;
+    filter: saturate(1.05) contrast(1.02) brightness(1.02);
+}
+/* 柔光渐变遮罩 */
+.hero-dream::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        linear-gradient(180deg, rgba(250, 248, 245, 0.3) 0%, transparent 30%),
+        linear-gradient(0deg, rgba(250, 248, 245, 0.95) 0%, rgba(250, 248, 245, 0.5) 35%, transparent 55%);
+    z-index: 2;
+}
+/* 光晕效果 */
+.hero-dream::after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 40%;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.4) 0%, transparent 70%);
+    z-index: 3;
+    filter: blur(20px);
+}
+
+.hero-title {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #3a4050;
+    z-index: 4;
+    width: 100%;
+    padding: 0 40px;
+}
+.hero-title .dream-mark {
+    font-size: 13px;
+    color: #8b7fa8;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+.hero-title h1 {
+    font-size: 54px;
+    letter-spacing: 12px;
+    margin-bottom: 14px;
+    font-weight: 300;
+    background: linear-gradient(135deg, #5a4a7a, #7c6fa0, #8fa8c8, #7c6fa0, #5a4a7a);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: dreamShine 6s ease-in-out infinite;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+@keyframes dreamShine {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+}
+.hero-title .sub {
+    font-size: 21px;
+    letter-spacing: 7px;
+    color: #5a6075;
+    margin-bottom: 8px;
+    font-weight: 300;
+}
+.hero-title .en {
+    font-size: 12px;
+    color: #8a90a5;
+    letter-spacing: 5px;
+    opacity: 0.85;
+}
+
+/* ========== 章节通用：柔光标题 ========== */
+.section {
+    margin-bottom: 90px;
+}
+.sec-title {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+.sec-title h2 {
+    display: inline-block;
+    font-size: 27px;
+    color: #4a5065;
+    letter-spacing: 7px;
+    padding: 14px 55px;
+    font-weight: 300;
+    position: relative;
+    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4));
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 
+        0 4px 18px rgba(120, 130, 170, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    font-family: "Songti SC", "思源宋体", serif;
+}
+/* 左右羽毛装饰 */
+.sec-title h2::before,
+.sec-title h2::after {
+    content: "🪶";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.5;
+}
+.sec-title h2::before {
+    left: 24px;
+    transform: translateY(-50%) scaleX(-1);
+}
+.sec-title h2::after {
+    right: 24px;
+}
+.sec-title .en {
+    display: block;
+    font-size: 11px;
+    color: #9a90b0;
+    margin-top: 12px;
+    letter-spacing: 5px;
+    opacity: 0.8;
+}
+
+/* ========== 梦境档案：影片信息 ========== */
+.dream-profile {
+    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 48px 52px;
+    box-shadow: 
+        0 10px 35px rgba(120, 130, 170, 0.15),
+        0 0 40px rgba(180, 160, 200, 0.1),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0.8);
+    position: relative;
+    overflow: hidden;
+}
+/* 柔光装饰 */
+.dream-profile::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(180, 160, 200, 0.2), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.dream-profile::after {
+    content: "";
+    position: absolute;
+    bottom: -40px;
+    left: -20px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(160, 190, 220, 0.18), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.profile-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+}
+.profile-poster {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 
+        0 8px 28px rgba(120, 130, 170, 0.2),
+        0 0 0 3px rgba(255,255,255,0.6);
+    position: relative;
+}
+.profile-poster img {
+    width: 100%;
+    height: 400px;
+}
+.profile-poster::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(90, 80, 120, 0.25) 100%);
+    pointer-events: none;
+}
+
+.profile-info h3 {
+    font-size: 26px;
+    color: #3a4050;
+    margin-bottom: 22px;
+    letter-spacing: 3px;
+    font-weight: 300;
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgba(180, 160, 200, 0.3);
+    position: relative;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+.profile-info h3::after {
+    content: "— 梦境档案 —";
+    position: absolute;
+    right: 0;
+    bottom: 12px;
+    font-size: 12px;
+    color: #8b7fa8;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 30px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed rgba(180, 160, 200, 0.35);
+}
+.info-item {
+    font-size: 14px;
+    color: #6a7085;
+    padding: 5px 0;
+}
+.info-item strong {
+    color: #4a5065;
+    font-weight: 500;
+    margin-right: 10px;
+    display: inline-block;
+    min-width: 50px;
+}
+.info-item strong::before {
+    content: "✦";
+    color: #8b7fa8;
+    font-size: 10px;
+    margin-right: 6px;
+}
+.tags {
+    margin-bottom: 26px;
+}
+.tags span {
+    display: inline-block;
+    padding: 5px 16px;
+    background: linear-gradient(135deg, rgba(140, 160, 200, 0.2), rgba(180, 160, 200, 0.15));
+    color: #5a5075;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 2px 6px rgba(120, 130, 170, 0.08);
+}
+.profile-desc {
+    font-size: 14px;
+    line-height: 2.2;
+    color: #5a6075;
+    text-indent: 2em;
+    padding: 24px 28px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
+    border-radius: 12px;
+    border-left: 3px solid #8b7fa8;
+    position: relative;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.profile-desc::first-letter {
+    font-size: 36px;
+    color: #7c6fa0;
+    font-weight: bold;
+    float: left;
+    line-height: 1.2;
+    margin-right: 10px;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+
+/* ========== 梦境碎片：剧情 ========== */
+.dream-fragments {
+    position: relative;
+    padding: 10px 0;
+}
+.fragment-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 40px;
+}
+.fragment-item:nth-child(odd) {
+    flex-direction: row;
+}
+.fragment-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.fragment-img {
+    flex: 0 0 42%;
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 
+        0 10px 32px rgba(120, 130, 170, 0.2),
+        0 0 0 4px rgba(255,255,255,0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.fragment-img:hover {
+    transform: scale(1.03) rotate(0.5deg);
+    box-shadow: 
+        0 18px 45px rgba(120, 130, 170, 0.28),
+        0 0 0 4px rgba(255,255,255,0.7),
+        0 0 40px rgba(180, 160, 200, 0.2);
+}
+.fragment-item:nth-child(even) .fragment-img:hover {
+    transform: scale(1.03) rotate(-0.5deg);
+}
+.fragment-img img {
+    width: 100%;
+    height: 240px;
+}
+.fragment-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+.fragment-num {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    backdrop-filter: blur(6px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #5a4a7a;
+    font-weight: 500;
+    z-index: 3;
+    box-shadow: 0 2px 8px rgba(120, 130, 170, 0.2);
+    border: 1px solid rgba(255,255,255,0.8);
+}
+.fragment-text {
+    flex: 1;
+    padding: 20px 0;
+}
+.fragment-text h4 {
+    font-size: 20px;
+    color: #3a4050;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+.fragment-text h4 .jp {
+    font-size: 12px;
+    color: #8b7fa8;
+    margin-left: 10px;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+.fragment-text .divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #8b7fa8, transparent);
+    margin-bottom: 16px;
+    border-radius: 1px;
+}
+.fragment-item:nth-child(even) .fragment-text .divider {
+    margin-left: auto;
+    background: linear-gradient(270deg, #8b7fa8, transparent);
+}
+.fragment-text p {
+    font-size: 14px;
+    line-height: 2.1;
+    color: #5a6075;
+}
+
+/* ========== 梦境肖像：人物 ========== */
+.dream-portraits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px 30px;
+}
+.portrait-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.85), rgba(255,255,255,0.55));
+    backdrop-filter: blur(10px);
+    border-radius: 20px 20px 16px 16px;
+    overflow: hidden;
+    box-shadow: 
+        0 8px 28px rgba(120, 130, 170, 0.15),
+        0 0 30px rgba(180, 160, 200, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    position: relative;
+}
+.portrait-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 18px 45px rgba(120, 130, 170, 0.25),
+        0 0 40px rgba(180, 160, 200, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.95);
+}
+.portrait-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #8b7fa8, transparent);
+    border-radius: 0 0 2px 2px;
+    opacity: 0.6;
+}
+.portrait-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    mask-image: linear-gradient(180deg, black 75%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, black 75%, transparent 100%);
+}
+.portrait-body {
+    padding: 18px 22px 24px;
+}
+.portrait-body h3 {
+    font-size: 19px;
+    color: #3a4050;
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+.portrait-body .name-jp {
+    font-size: 11px;
+    color: #8b7fa8;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+.portrait-body .role-tag {
+    display: inline-block;
+    padding: 4px 14px;
+    background: linear-gradient(135deg, rgba(140, 160, 200, 0.25), rgba(180, 160, 200, 0.2));
+    color: #5a5075;
+    border-radius: 20px;
+    font-size: 11px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+}
+.portrait-body p {
+    font-size: 12.5px;
+    line-height: 1.9;
+    color: #6a7085;
+    text-align: left;
+}
+
+/* ========== 梦境低语：台词 ========== */
+.dream-whispers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+}
+.whisper-card {
+    padding: 30px 34px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+    backdrop-filter: blur(10px);
+    border-radius: 18px 6px 18px 6px;
+    box-shadow: 
+        0 6px 22px rgba(120, 130, 170, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0.7);
+    position: relative;
+    transition: all 0.35s;
+}
+.whisper-card:nth-child(even) {
+    border-radius: 6px 18px 6px 18px;
+}
+.whisper-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 14px 34px rgba(120, 130, 170, 0.2),
+        0 0 30px rgba(180, 160, 200, 0.12);
+}
+.whisper-card::before {
+    content: "✦";
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-size: 16px;
+    color: #8b7fa8;
+    opacity: 0.5;
+}
+.whisper-card .whisper-text {
+    font-size: 15px;
+    color: #4a5065;
+    line-height: 2.2;
+    margin-bottom: 18px;
+    text-indent: 2em;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+.whisper-card .whisper-from {
+    text-align: right;
+    font-size: 13px;
+    color: #7c6fa0;
+    padding-right: 10px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+.whisper-card .whisper-from::before {
+    content: "—— ";
+    color: #8b7fa8;
+}
+
+/* ========== 页脚：梦境之底 ========== */
+footer {
+    padding: 60px 20px 45px;
+    margin-top: 40px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(180deg, transparent, rgba(180, 160, 200, 0.1));
+}
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8b7fa8, transparent);
+    border-radius: 1px;
+}
+footer .footer-mark {
+    font-size: 24px;
+    color: #4a5065;
+    letter-spacing: 7px;
+    margin-bottom: 16px;
+    font-weight: 300;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+footer .footer-mark::before {
+    content: "🪶 ";
+    font-size: 20px;
+}
+footer .footer-mark::after {
+    content: " 🪶";
+    font-size: 20px;
+}
+footer p {
+    font-size: 13px;
+    color: #7a7590;
+    line-height: 2.3;
+}
+footer .copyright {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #9a95b0;
+    opacity: 0.8;
+}
+
+/* ========== 响应式 ========== */
+@media(max-width: 960px) {
+    .side-bookmark { display: none; }
+    .profile-inner {
+        grid-template-columns: 1fr;
+    }
+    .profile-poster {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    .profile-poster img {
+        height: 360px;
+    }
+    .dream-portraits {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .dream-whispers {
+        grid-template-columns: 1fr;
+    }
+    .hero-dream {
+        height: 420px;
+    }
+    .hero-title h1 {
+        font-size: 40px;
+        letter-spacing: 7px;
+    }
+    .hero-title {
+        bottom: 65px;
+    }
+    .fragment-item,
+    .fragment-item:nth-child(even) {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .fragment-img {
+        flex: none;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .fragment-item:nth-child(even) .fragment-text .divider {
+        margin-left: 0;
+        background: linear-gradient(90deg, #8b7fa8, transparent);
+    }
+}
+@media(max-width: 600px) {
+    .wrap { padding: 0 20px; }
+    .hero-dream { height: 340px; }
+    .hero-title { bottom: 55px; padding: 0 20px; }
+    .hero-title h1 { font-size: 28px; letter-spacing: 4px; }
+    .hero-title .sub { font-size: 16px; letter-spacing: 3px; }
+    .hero-title .dream-mark { font-size: 11px; letter-spacing: 3px; }
+    .sec-title h2 {
+        font-size: 22px;
+        padding: 12px 40px;
+        letter-spacing: 4px;
+    }
+    .sec-title h2::before,
+    .sec-title h2::after {
+        display: none;
+    }
+    .dream-profile { padding: 32px 26px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .dream-portraits {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .fragment-img img { height: 200px; }
+    .portrait-card img { height: 220px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 右侧书签条导航【完全复刻起风了同款右侧固定栏】 -->
+<div class="side-bookmark">
+    <h4>梦境指引</h4>
+    <ul>
+        <li><a href="#profile">梦境档案</a></li>
+        <li><a href="#fragments">梦境碎片</a></li>
+        <li><a href="#portraits">梦境肖像</a></li>
+        <li><a href="#whispers">梦境低语</a></li>
+    </ul>
+</div>
+
+<div class="wrap">
+
+<!-- 返回首页 -->
+<div class="top-back">
+    <a href="index.html" class="back-btn">返回风之画廊</a>
+</div>
+
+<!-- 顶部主视觉：梦境柔光 -->
+<div class="hero-dream">
+    <img src="https://www.ghibli.jp/gallery/kimitachi042.jpg" alt="你想活出怎样的人生">
+    <div class="hero-title">
+        <p class="dream-mark">✦ 梦 境 序 章 ✦</p>
+        <h1>君たちはどう生きるか</h1>
+        <p class="sub">你 想 活 出 怎 样 的 人 生</p>
+        <p class="en">THE BOY AND THE HERON</p>
+    </div>
+</div>
+
+<!-- 一、梦境档案：影片信息 -->
+<section id="profile" class="section">
+    <div class="sec-title">
+        <h2>梦 境 档 案</h2>
+        <span class="en">DREAM PROFILE</span>
+    </div>
+    <div class="dream-profile">
+        <div class="profile-inner">
+            <div class="profile-poster">
+                <img src="https://www.ghibli.jp/gallery/kimitachi002.jpg" alt="真人">
+            </div>
+            <div class="profile-info">
+                <h3>君たちはどう生きるか</h3>
+                <div class="info-grid">
+                    <div class="info-item"><strong>上映</strong>2023年</div>
+                    <div class="info-item"><strong>片长</strong>124分钟</div>
+                    <div class="info-item"><strong>导演</strong>宫崎骏</div>
+                    <div class="info-item"><strong>配乐</strong>久石让</div>
+                    <div class="info-item"><strong>制作</strong>吉卜力</div>
+                    <div class="info-item"><strong>原作</strong>宫崎骏</div>
+                </div>
+                <div class="tags">
+                    <span>奇幻穿越</span>
+                    <span>少年成长</span>
+                    <span>生死探寻</span>
+                    <span>自我对话</span>
+                    <span>苍鹭之塔</span>
+                </div>
+                <div class="profile-desc">
+                    太平洋战争时期，少年真人在东京大轰炸中失去了母亲。父亲再婚，他随家人搬到郊外的老宅。在那里，一只会说话的苍鹭引导他发现了一座神秘的古塔。穿过塔门，真人踏入了一个生与死交织的奇幻世界。在这场穿越时空的旅程中，他遇见了早已离去的母亲，也遇见了年少时的自己。关于失去、关于成长、关于如何活下去的答案，都藏在苍鹭的歌声里。
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 二、梦境碎片：剧情 -->
+<section id="fragments" class="section">
+    <div class="sec-title">
+        <h2>梦 境 碎 片</h2>
+        <span class="en">DREAM FRAGMENTS</span>
+    </div>
+    <div class="dream-fragments">
+
+        <div class="fragment-item">
+            <div class="fragment-img">
+                <div class="fragment-num">壹</div>
+                <img src="https://www.ghibli.jp/gallery/kimitachi005.jpg" alt="丧母之痛">
+            </div>
+            <div class="fragment-text">
+                <h4>丧母 <span class="jp">ははをうしなう</span></h4>
+                <div class="divider"></div>
+                <p>太平洋战争的烽火蔓延到东京，少年真人在一场轰炸中永远失去了母亲。熊熊燃烧的医院、漫天飞舞的灰烬，成为他童年最深的印记。父亲带着他搬到乡下，与新的继母一同生活。但真人的心里，始终有一块无法愈合的空洞。</p>
+            </div>
+        </div>
+
+        <div class="fragment-item">
+            <div class="fragment-img">
+                <div class="fragment-num">贰</div>
+                <img src="https://www.ghibli.jp/gallery/kimitachi012.jpg" alt="苍鹭的召唤">
+            </div>
+            <div class="fragment-text">
+                <h4>召唤 <span class="jp">あおさぎのよび</span></h4>
+                <div class="divider"></div>
+                <p>郊外老宅的附近，矗立着一座废弃的石塔。一只巨大的苍鹭总是在塔边盘旋，它似乎在召唤着真人。苍鹭开口说话了，它告诉真人：你的母亲还活着，她在塔的另一边等着你。半信半疑的真人，终于推开了那扇尘封的塔门。</p>
+            </div>
+        </div>
+
+        <div class="fragment-item">
+            <div class="fragment-img">
+                <div class="fragment-num">叁</div>
+                <img src="https://www.ghibli.jp/gallery/kimitachi023.jpg" alt="穿越之境">
+            </div>
+            <div class="fragment-text">
+                <h4>穿越 <span class="jp">とうのむこう</span></h4>
+                <div class="divider"></div>
+                <p>穿过狭窄的石砌通道，真人踏入了一个完全不同的世界。这里有漂浮的岛屿、巨大的鹦鹉、会说话的生物，还有掌管生死的神秘力量。时间在这里失去了意义，过去与未来交织在一起。苍鹭告诉他，要找到答案，就必须继续往下走。</p>
+            </div>
+        </div>
+
+        <div class="fragment-item">
+            <div class="fragment-img">
+                <div class="fragment-num">肆</div>
+                <img src="https://www.ghibli.jp/gallery/kimitachi031.jpg" alt="母亲的身影">
+            </div>
+            <div class="fragment-text">
+                <h4>重逢 <span class="jp">ははとのさいかい</span></h4>
+                <div class="divider"></div>
+                <p>在世界的深处，真人见到了年轻的母亲。她还不知道自己未来的命运，她还是那个爱笑的少女。真人没有告诉她自己是谁，只是默默陪在她身边。他终于明白，失去的人从未真正离开，他们以另一种方式，活在我们的生命里。</p>
+            </div>
+        </div>
+
+        <div class="fragment-item">
+            <div class="fragment-img">
+                <div class="fragment-num">伍</div>
+                <img src="https://www.ghibli.jp/gallery/kimitachi038.jpg" alt="塔主的试炼">
+            </div>
+            <div class="fragment-text">
+                <h4>试炼 <span class="jp">とうのぬし</span></h4>
+                <div class="divider"></div>
+                <p>古塔的主人出现了，他是一个掌握着创世之力的老人。他问真人：你愿意留下来，成为这个世界的建造者吗？还是选择回到那个充满痛苦的现实？真人站在两个世界的交界处，第一次认真思考自己究竟想要怎样的人生。</p>
+            </div>
+        </div>
+
+        <div class="fragment-item">
+            <div class="fragment-img">
+                <div class="fragment-num">陆</div>
+                <img src="https://www.ghibli.jp/gallery/kimitachi045.jpg" alt="告别与选择">
+            </div>
+            <div class="fragment-text">
+                <h4>抉择 <span class="jp">えらぶということ</span></h4>
+                <div class="divider"></div>
+                <p>真人选择了回去。他选择了有痛苦、有失去、但也有爱与温暖的真实人生。他告别了年轻的母亲，告别了奇幻的世界，告别了苍鹭。他终于明白，人不是因为幸福才活着，而是因为活着，才能遇见幸福。哪怕幸福很短暂，也值得去经历。</p>
+            </div>
+        </div>
+
+        <div class="fragment-item">
+            <div class="fragment-img">
+                <div class="fragment-num">柒</div>
+                <img src="https://www.ghibli.jp/gallery/kimitachi048.jpg" alt="回归现实">
+            </div>
+            <div class="fragment-text">
+                <h4>新生 <span class="jp">あたらしいはじまり</span></h4>
+                <div class="divider"></div>
+                <p>真人回到了现实世界。战争结束了，日子还要继续。他开始学着接纳新的家人，学着与过去和解。苍鹭的身影消失在远方，但那句问话永远留在了他心里——君たちはどう生きるか？你想活出怎样的人生？这个问题，需要用一生来回答。</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- 三、梦境肖像：人物 -->
+<section id="portraits" class="section">
+    <div class="sec-title">
+        <h2>梦 境 肖 像</h2>
+        <span class="en">DREAM PORTRAITS</span>
+    </div>
+    <div class="dream-portraits">
+
+        <div class="portrait-card">
+            <img src="https://www.ghibli.jp/gallery/kimitachi003.jpg" alt="真人">
+            <div class="portrait-body">
+                <h3>真人</h3>
+                <div class="name-jp">まひと</div>
+                <div class="role-tag">· 问卜者 ·</div>
+                <p>失去母亲的少年，沉默寡言，内心敏感。在苍鹭的引导下穿越古塔，踏入奇幻世界。在这场旅程中，他与过去和解，学会了接纳失去。</p>
+            </div>
+        </div>
+
+        <div class="portrait-card">
+            <img src="https://www.ghibli.jp/gallery/kimitachi008.jpg" alt="苍鹭">
+            <div class="portrait-body">
+                <h3>苍鹭</h3>
+                <div class="name-jp">あおさぎ</div>
+                <div class="role-tag">· 引路人 ·</div>
+                <p>会说话的巨大苍鹭，亦正亦邪，是引路人也是考验者。它引导真人穿越古塔，见证他的每一次选择，像是命运本身的化身。</p>
+            </div>
+        </div>
+
+        <div class="portrait-card">
+            <img src="https://www.ghibli.jp/gallery/kimitachi015.jpg" alt="夏子">
+            <div class="portrait-body">
+                <h3>夏子</h3>
+                <div class="name-jp">なつこ</div>
+                <div class="role-tag">· 继母 ·</div>
+                <p>真人的继母，温柔善良，始终包容着真人的疏离与抗拒。她也是真人母亲的妹妹，有着和姐姐相似的眉眼与温柔。</p>
+            </div>
+        </div>
+
+        <div class="portrait-card">
+            <img src="https://www.ghibli.jp/gallery/kimitachi026.jpg" alt="塔主">
+            <div class="portrait-body">
+                <h3>塔主</h3>
+                <div class="name-jp">とうのぬし</div>
+                <div class="role-tag">· 守塔人 ·</div>
+                <p>古塔的主人，掌握着创世与毁灭的力量。他在等待一个继承者，等待一个能够回答"如何活下去"这个问题的人。</p>
+            </div>
+        </div>
+
+        <div class="portrait-card">
+            <img src="https://www.ghibli.jp/gallery/kimitachi035.jpg" alt="雾子">
+            <div class="portrait-body">
+                <h3>雾子</h3>
+                <div class="name-jp">きりこ</div>
+                <div class="role-tag">· 同行者 ·</div>
+                <p>生活在塔中世界的神秘少女，勇敢独立，有着超越年龄的成熟。她陪伴真人走过了一段危险的旅程，也让他看到了另一种活法。</p>
+            </div>
+        </div>
+
+        <div class="portrait-card">
+            <img src="https://www.ghibli.jp/gallery/kimitachi020.jpg" alt="父亲">
+            <div class="portrait-body">
+                <h3>父亲</h3>
+                <div class="name-jp">ちち</div>
+                <div class="role-tag">· 守护者 ·</div>
+                <p>在军工厂工作的工程师，沉默寡言，不善表达。妻子去世后再婚，带着儿子搬到乡下。他用自己的方式爱着真人。</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- 四、梦境低语：台词 -->
+<section id="whispers" class="section">
+    <div class="sec-title">
+        <h2>梦 境 低 语</h2>
+        <span class="en">DREAM WHISPERS</span>
+    </div>
+    <div class="dream-whispers">
+
+        <div class="whisper-card">
+            <p class="whisper-text">你想活出怎样的人生？这个问题，没有人能替你回答。你必须自己走下去，自己去寻找答案。</p>
+            <p class="whisper-from">苍鹭</p>
+        </div>
+
+        <div class="whisper-card">
+            <p class="whisper-text">人不是因为幸福才活着，而是因为活着，才能遇见幸福。哪怕幸福很短暂，也值得我们去经历。</p>
+            <p class="whisper-from">塔主</p>
+        </div>
+
+        <div class="whisper-card">
+            <p class="whisper-text">失去的人从未真正离开，他们变成了风，变成了雨，变成了光，一直都在你身边。</p>
+            <p class="whisper-from">雾子</p>
+        </div>
+
+        <div class="whisper-card">
+            <p class="whisper-text">勇敢不是不害怕，而是明明害怕，还是

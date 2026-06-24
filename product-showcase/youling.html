@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>もののけ姫 | 幽灵公主</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "PingFang SC", "Microsoft YaHei", "Songti SC", "思源宋体", serif;
+}
+html { scroll-behavior: smooth; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { display: block; object-fit: cover; }
+
+/* ===== 岩壁背景 ===== */
+body {
+    background: #2a3a2a;
+    background-image: 
+        radial-gradient(ellipse at 20% 20%, rgba(90, 122, 74, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(60, 80, 50, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(40, 60, 40, 0.1) 0%, transparent 60%);
+    color: #d4c8a8;
+    min-height: 100vh;
+    line-height: 2;
+    position: relative;
+    overflow-x: hidden;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: 
+        radial-gradient(1px 1px at 10% 15%, rgba(100, 130, 80, 0.15), transparent),
+        radial-gradient(1.5px 1.5px at 30% 45%, rgba(80, 100, 60, 0.12), transparent),
+        radial-gradient(1px 1px at 60% 25%, rgba(120, 150, 90, 0.1), transparent),
+        radial-gradient(2px 2px at 75% 65%, rgba(60, 80, 50, 0.15), transparent),
+        radial-gradient(1px 1px at 90% 85%, rgba(90, 120, 70, 0.1), transparent),
+        radial-gradient(1.5px 1.5px at 45% 80%, rgba(70, 90, 55, 0.12), transparent);
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 0;
+}
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 15% 30%, rgba(90, 130, 70, 0.08) 0%, transparent 8%),
+        radial-gradient(circle at 85% 60%, rgba(100, 140, 80, 0.06) 0%, transparent 10%),
+        radial-gradient(circle at 50% 90%, rgba(80, 120, 60, 0.07) 0%, transparent 6%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== 返回首页：古老木牌 ===== */
+.top-back {
+    padding: 28px 0 20px;
+}
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 28px;
+    background: linear-gradient(180deg, #5a4a3a, #4a3a2a);
+    color: #d4c8a8;
+    border-radius: 3px;
+    font-size: 13px;
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid #3a2a1a;
+    transition: all 0.3s;
+    letter-spacing: 2px;
+    position: relative;
+    font-family: "Songti SC", serif;
+}
+.back-btn::before {
+    content: "🌿";
+    font-size: 14px;
+}
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, #6a5a4a, #5a4a3a);
+}
+
+/* ===== 右侧书签导航【起风同款·森林色】 ===== */
+.side-bookmark {
+    position: fixed;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    background: #3a4a3a;
+    width: 90px;
+    padding: 26px 12px 22px;
+    border: 1px solid #2a3a2a;
+    border-radius: 8px 8px 12px 12px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+.side-bookmark::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 13px;
+    background: #2a3a2a;
+    border-left: 1px solid #1a2a1a;
+    border-right: 1px solid #1a2a1a;
+    border-bottom: 1px solid #1a2a1a;
+    border-radius: 0 0 14px 14px;
+}
+.side-bookmark::after {
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: 8px;
+    right: 8px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #5a7a4a, transparent);
+}
+.side-bookmark h4 {
+    text-align: center;
+    font-size: 11px;
+    color: #8aaa7a;
+    letter-spacing: 1.5px;
+    padding-top: 6px;
+    padding-bottom: 9px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed #4a6a4a;
+    font-weight: normal;
+}
+.side-bookmark li {
+    margin: 11px 0;
+    text-align: center;
+}
+.side-bookmark a {
+    display: block;
+    font-size: 11.5px;
+    color: #b8c8a8;
+    padding: 5px 6px;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+    transition: 0.25s ease;
+}
+.side-bookmark a:hover,
+.side-bookmark a.active {
+    background: rgba(90, 130, 70, 0.2);
+    color: #d4e8c8;
+}
+
+/* ===== 顶部主视觉：森林入口 ===== */
+.hero-forest {
+    position: relative;
+    margin-bottom: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    height: 500px;
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.4),
+        0 0 0 6px #4a5a4a,
+        0 0 0 7px #2a3a2a;
+}
+.hero-forest img {
+    width: 100%;
+    height: 100%;
+    filter: saturate(0.9) contrast(1.1) brightness(0.9);
+}
+.hero-forest::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        linear-gradient(0deg, rgba(42, 58, 42, 0.95) 0%, rgba(42, 58, 42, 0.5) 30%, transparent 55%),
+        radial-gradient(ellipse at 50% 30%, transparent 30%, rgba(42, 58, 42, 0.3) 70%);
+    z-index: 2;
+}
+.hero-forest::after {
+    content: "";
+    position: absolute;
+    inset: 15px;
+    border: 2px solid rgba(184, 160, 112, 0.3);
+    border-radius: 3px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.hero-title {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 4;
+    width: 100%;
+    padding: 0 40px;
+}
+.hero-title .forest-mark {
+    font-size: 11px;
+    color: #7a9a6a;
+    letter-spacing: 6px;
+    margin-bottom: 15px;
+    font-family: "Songti SC", serif;
+}
+.hero-title .forest-mark::before,
+.hero-title .forest-mark::after {
+    content: "🌲";
+    margin: 0 10px;
+    font-size: 10px;
+    opacity: 0.7;
+}
+.hero-title h1 {
+    font-size: 58px;
+    letter-spacing: 12px;
+    margin-bottom: 15px;
+    font-weight: 300;
+    color: #e8dcc8;
+    text-shadow: 0 0 30px rgba(184, 160, 112, 0.3);
+    font-family: "Songti SC", "思源宋体", serif;
+    background: linear-gradient(180deg, #f0e4c8, #c9b080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hero-title .sub {
+    font-size: 22px;
+    letter-spacing: 8px;
+    color: #a8c090;
+    margin-bottom: 8px;
+    font-weight: 300;
+}
+.hero-title .en {
+    font-size: 11px;
+    color: #6a8a5a;
+    letter-spacing: 5px;
+}
+
+/* ===== 章节通用：石刻标题 ===== */
+.section {
+    margin-bottom: 90px;
+}
+.sec-title {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+.sec-title h2 {
+    display: inline-block;
+    font-size: 26px;
+    color: #d4c8a8;
+    letter-spacing: 8px;
+    padding: 15px 55px;
+    font-weight: 300;
+    position: relative;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+.sec-title h2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(184, 160, 112, 0.4);
+    border-radius: 2px;
+}
+.sec-title h2::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(90, 130, 70, 0.3);
+    border-radius: 1px;
+}
+.sec-title .en {
+    display: block;
+    font-size: 10px;
+    color: #5a7a4a;
+    margin-top: 12px;
+    letter-spacing: 5px;
+}
+.sec-title::before,
+.sec-title::after {
+    content: "🌿";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    opacity: 0.4;
+}
+.sec-title::before { left: 20%; }
+.sec-title::after { right: 20%; }
+
+/* ===== 巨幅岩壁题记：影片信息 ===== */
+.stone-tablet {
+    position: relative;
+    padding: 8px;
+    background: linear-gradient(135deg, #4a5a4a, #3a4a3a, #4a5a4a);
+    border-radius: 6px;
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.stone-tablet::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(1px 1px at 10% 20%, rgba(0,0,0,0.15), transparent),
+        radial-gradient(1.5px 1.5px at 30% 60%, rgba(255,255,255,0.03), transparent),
+        radial-gradient(1px 1px at 70% 30%, rgba(0,0,0,0.1), transparent),
+        radial-gradient(2px 2px at 85% 75%, rgba(255,255,255,0.02), transparent);
+    background-size: 150px 150px;
+    border-radius: 6px;
+    pointer-events: none;
+}
+.tablet-inner {
+    background: linear-gradient(180deg, #3a4a3a, #2a3a2a);
+    border-radius: 3px;
+    padding: 45px 50px;
+    position: relative;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.tablet-inner::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(184, 160, 112, 0.25);
+    border-radius: 2px;
+    pointer-events: none;
+}
+.tablet-inner::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: 
+        radial-gradient(ellipse at 10% 0%, rgba(90, 130, 70, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 0%, rgba(100, 140, 80, 0.3) 0%, transparent 50%);
+    border-radius: 3px 3px 0 0;
+}
+
+.tablet-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 50px;
+    align-items: start;
+}
+.tablet-poster {
+    position: relative;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.tablet-poster img {
+    width: 100%;
+    height: 380px;
+    filter: saturate(0.85) contrast(1.05);
+}
+.tablet-poster::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(184, 160, 112, 0.3);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.tablet-text h3 {
+    font-size: 26px;
+    color: #e8dcc8;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    font-weight: 300;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(184, 160, 112, 0.3);
+    font-family: "Songti SC", "思源宋体", serif;
+    position: relative;
+}
+.tablet-text h3::after {
+    content: "— 麒麟森林题记 —";
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    font-size: 11px;
+    color: #7a9a6a;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+
+.stone-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 30px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px dashed rgba(184, 160, 112, 0.2);
+}
+.stone-info li {
+    font-size: 13px;
+    color: #a8b898;
+    padding: 4px 0;
+}
+.stone-info li strong {
+    color: #c9b080;
+    font-weight: 500;
+    margin-right: 10px;
+    font-family: "Songti SC", serif;
+    letter-spacing: 1px;
+}
+.stone-info li strong::before {
+    content: "◆ ";
+    font-size: 8px;
+    color: #7a9a6a;
+    margin-right: 4px;
+}
+
+.rune-tags {
+    margin-bottom: 25px;
+}
+.rune-tags span {
+    display: inline-block;
+    padding: 5px 16px;
+    background: rgba(90, 130, 70, 0.15);
+    color: #a8c090;
+    border-radius: 2px;
+    font-size: 11px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(90, 130, 70, 0.3);
+    letter-spacing: 1px;
+    position: relative;
+}
+.rune-tags span::before {
+    content: "✦ ";
+    font-size: 8px;
+    color: #c9b080;
+}
+
+.tablet-desc {
+    font-size: 13px;
+    line-height: 2.2;
+    color: #b8c8a8;
+    text-indent: 2em;
+    padding: 22px 26px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    position: relative;
+    border-left: 3px solid #5a7a4a;
+    font-family: "Songti SC", serif;
+}
+.tablet-desc::first-letter {
+    font-size: 36px;
+    color: #c9b080;
+    font-weight: bold;
+    float: left;
+    line-height: 1.2;
+    margin-right: 10px;
+    font-family: "Songti SC", serif;
+}
+
+/* ===== 壁画群：剧情 ===== */
+.mural-gallery {
+    position: relative;
+    min-height: 1550px;
+}
+.mural-gallery::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 50% 10%, rgba(90, 130, 70, 0.2) 0%, transparent 30%),
+        radial-gradient(ellipse at 30% 40%, rgba(100, 140, 80, 0.15) 0%, transparent 25%),
+        radial-gradient(ellipse at 60% 70%, rgba(80, 120, 60, 0.18) 0%, transparent 30%);
+    pointer-events: none;
+}
+.mural-gallery::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 50% 20%, rgba(90, 130, 70, 0.18) 0%, transparent 30%),
+        radial-gradient(ellipse at 70% 55%, rgba(100, 140, 80, 0.15) 0%, transparent 25%),
+        radial-gradient(ellipse at 40% 85%, rgba(80, 120, 60, 0.2) 0%, transparent 30%);
+    pointer-events: none;
+}
+
+.mural-frame {
+    position: absolute;
+    background: linear-gradient(135deg, #4a5a4a, #3a4a3a);
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+}
+.mural-frame:hover {
+    transform: scale(1.04) translateY(-5px) !important;
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(90, 130, 70, 0.2);
+    z-index: 10;
+}
+.mural-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(1px 1px at 15% 25%, rgba(0,0,0,0.15), transparent),
+        radial-gradient(1px 1px at 65% 55%, rgba(255,255,255,0.03), transparent),
+        radial-gradient(1.5px 1.5px at 85% 80%, rgba(0,0,0,0.1), transparent);
+    background-size: 100px 100px;
+    border-radius: 4px;
+    pointer-events: none;
+}
+.mural-frame::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(184, 160, 112, 0.25);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.mural-inner {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+}
+.mural-inner img {
+    width: 100%;
+    filter: saturate(0.8) contrast(1.08) brightness(0.95);
+    transition: 0.5s ease;
+}
+.mural-frame:hover .mural-inner img {
+    filter: saturate(0.95) contrast(1.1) brightness(1);
+    transform: scale(1.05);
+}
+.mural-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.mural-caption {
+    padding: 14px 16px 16px;
+    background: linear-gradient(180deg, #3a4a3a, #2a3a2a);
+    border-radius: 0 0 2px 2px;
+    position: relative;
+}
+.mural-caption .mural-num {
+    font-size: 10px;
+    color: #7a9a6a;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    font-family: "Courier New", monospace;
+}
+.mural-caption .mural-num::before {
+    content: "第 ";
+}
+.mural-caption .mural-num::after {
+    content: " 章";
+}
+.mural-caption h4 {
+    font-size: 17px;
+    color: #e8dcc8;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    font-family: "Songti SC", serif;
+}
+.mural-caption p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #a8b898;
+    font-family: "Songti SC", serif;
+}
+
+/* 7幅壁画错落排布 */
+.mural-frame:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 52%;
+    transform: rotate(-1deg);
+}
+.mural-frame:nth-child(1) img { height: 260px; }
+
+.mural-frame:nth-child(2) {
+    top: 20px;
+    right: 0;
+    width: 42%;
+    transform: rotate(1.5deg);
+}
+.mural-frame:nth-child(2) img { height: 200px; }
+
+.mural-frame:nth-child(3) {
+    top: 390px;
+    left: 8%;
+    width: 38%;
+    transform: rotate(1deg);
+}
+.mural-frame:nth-child(3) img { height: 180px; }
+
+.mural-frame:nth-child(4) {
+    top: 370px;
+    right: 5%;
+    width: 48%;
+    transform: rotate(-1.5deg);
+}
+.mural-frame:nth-child(4) img { height: 240px; }
+
+.mural-frame:nth-child(5) {
+    top: 730px;
+    left: 0;
+    width: 44%;
+    transform: rotate(0.5deg);
+}
+.mural-frame:nth-child(5) img { height: 220px; }
+
+.mural-frame:nth-child(6) {
+    top: 710px;
+    right: 0;
+    width: 50%;
+    transform: rotate(-1deg);
+}
+.mural-frame:nth-child(6) img { height: 250px; }
+
+.mural-frame:nth-child(7) {
+    top: 1060px;
+    left: 50%;
+    transform: translateX(-50%) rotate(0.5deg);
+    width: 60%;
+}
+.mural-frame:nth-child(7) img { height: 280px; }
+
+/* ===== 图腾浮雕：人物 ===== */
+.totem-wall {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px 40px;
+    padding: 20px 0;
+}
+.totem-card {
+    position: relative;
+    text-align: center;
+    transition: all 0.4s;
+}
+.totem-card:hover {
+    transform: translateY(-8px);
+}
+.totem-relief {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4a5a4a, #3a4a3a, #2a3a2a);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.35),
+        inset 0 2px 4px rgba(255, 255, 255, 0.08),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+.totem-relief::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    border: 1px solid rgba(184, 160, 112, 0.3);
+    z-index: 3;
+}
+.totem-relief img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    filter: saturate(0.7) contrast(1.1) brightness(0.9);
+    mask-image: radial-gradient(circle, black 65%, transparent 95%);
+    -webkit-mask-image: radial-gradient(circle, black 65%, transparent 95%);
+}
+.totem-relief::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(0deg, rgba(90, 130, 70, 0.4) 0%, transparent 100%);
+    z-index: 2;
+    border-radius: 0 0 50% 50%;
+}
+
+.totem-card h3 {
+    font-size: 18px;
+    color: #e8dcc8;
+    margin-bottom: 4px;
+    letter-spacing: 3px;
+    font-weight: 400;
+    font-family: "Songti SC", serif;
+}
+.totem-card .name-jp {
+    font-size: 11px;
+    color: #7a9a6a;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+.totem-card .totem-role {
+    display: inline-block;
+    font-size: 10px;
+    color: #c9b080;
+    padding: 3px 12px;
+    border: 1px solid rgba(184, 160, 112, 0.3);
+    border-radius: 10px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+.totem-card p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #9aaa8a;
+    padding: 0 10px;
+    font-family: "Songti SC", serif;
+}
+
+/* ===== 神谕石刻：台词 ===== */
+.oracle-stones {
+    position: relative;
+    min-height: 350px;
+    padding: 20px 0;
+}
+.oracle-stone {
+    position: absolute;
+    background: linear-gradient(135deg, #4a5a4a, #3a4a3a);
+    padding: 20px 24px;
+    border-radius: 8px 15px 10px 12px;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition: all 0.35s;
+    max-width: 260px;
+}
+.oracle-stone:hover {
+    transform: translateY(-5px) scale(1.03) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+.oracle-stone::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(1px 1px at 20% 30%, rgba(0,0,0,0.15), transparent),
+        radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,0.03), transparent);
+    background-size: 80px 80px;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.oracle-stone .stone-text {
+    font-size: 13px;
+    color: #d4c8a8;
+    line-height: 2;
+    margin-bottom: 10px;
+    font-family: "Kaiti SC", "楷体", "Songti SC", serif;
+    letter-spacing: 0.5px;
+}
+.oracle-stone .stone-text::before {
+    content: "「";
+    color: #7a9a6a;
+    font-size: 16px;
+}
+.oracle-stone .stone-text::after {
+    content: "」";
+    color: #7a9a6a;
+    font-size: 16px;
+}
+.oracle-stone .stone-from {
+    text-align: right;
+    font-size: 11px;
+    color: #8aaa7a;
+    font-style: italic;
+}
+.oracle-stone .stone-from::before {
+    content: "—— ";
+    color: #5a7a4a;
+}
+
+.oracle-stone:nth-child(1) {
+    top: 20px;
+    left: 5%;
+    transform: rotate(-3deg);
+}
+.oracle-stone:nth-child(2) {
+    top: 60px;
+    left: 30%;
+    transform: rotate(2deg);
+}
+.oracle-stone:nth-child(3) {
+    top: 30px;
+    right: 28%;
+    transform: rotate(-2deg);
+}
+.oracle-stone:nth-child(4) {
+    top: 70px;
+    right: 5%;
+    transform: rotate(4deg);
+}
+
+/* ===== 页脚 ===== */
+footer {
+    padding: 60px 20px 40px;
+    margin-top: 40px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
+}
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(184, 160, 112, 0.4), transparent);
+}
+footer .footer-mark {
+    font-size: 24px;
+    color: #a8b898;
+    letter-spacing: 8px;
+    margin-bottom: 16px;
+    font-weight: 300;
+    font-family: "Songti SC", serif;
+}
+footer .footer-mark::before {
+    content: "🌲 ";
+    font-size: 18px;
+    opacity: 0.6;
+}
+footer .footer-mark::after {
+    content: " 🌲";
+    font-size: 18px;
+    opacity: 0.6;
+}
+footer p {
+    font-size: 12px;
+    color: #7a8a6a;
+    line-height: 2.2;
+}
+footer .copyright {
+    margin-top: 15px;
+    font-size: 10px;
+    color: #5a6a4a;
+    opacity: 0.8;
+}
+
+/* ===== 响应式 ===== */
+@media(max-width: 960px) {
+    .side-bookmark { display: none; }
+    .tablet-layout {
+        grid-template-columns: 1fr;
+    }
+    .tablet-poster {
+        max-width: 240px;
+        margin: 0 auto 25px;
+    }
+    .tablet-poster img {
+        height: 340px;
+    }
+    .hero-forest {
+        height: 400px;
+    }
+    .hero-title h1 {
+        font-size: 40px;
+        letter-spacing: 6px;
+    }
+    .hero-title .sub {
+        font-size: 18px;
+        letter-spacing: 4px;
+    }
+    .totem-wall {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px 25px;
+    }
+    .mural-gallery {
+        min-height: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .mural-frame {
+        position: static;
+        width: auto;
+        transform: rotate(0) !important;
+    }
+    .mural-frame:nth-child(7) {
+        grid-column: span 2;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .mural-frame img {
+        height: 200px !important;
+    }
+    .oracle-stones {
+        min-height: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .oracle-stone {
+        position: static;
+        max-width: none;
+        transform: rotate(0) !important;
+    }
+}
+@media(max-width: 600px) {
+    .wrap { padding: 0 20px; }
+    .hero-forest { height: 320px; }
+    .hero-title { bottom: 60px; padding: 0 20px; }
+    .hero-title h1 { font-size: 30px; letter-spacing: 4px; }
+    .hero-title .sub { font-size: 15px; letter-spacing: 2px; }
+    .sec-title h2 {
+        font-size: 20px;
+        padding: 12px 36px;
+        letter-spacing: 4px;
+    }
+    .sec-title::before, .sec-title::after { display: none; }
+    .stone-tablet { padding: 6px; }
+    .tablet-inner { padding: 30px 24px; }
+    .stone-info { grid-template-columns: 1fr; }
+    .mural-gallery {
+        grid-template-columns: 1fr;
+    }
+    .mural-frame:nth-child(7) {
+        grid-column: span 1;
+    }
+    .mural-frame img {
+        height: 180px !important;
+    }
+    .totem-wall {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px 15px;
+    }
+    .totem-relief {
+        width: 110px;
+        height: 110px;
+    }
+    .oracle-stones {
+        grid-template-columns: 1fr;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- 右侧书签导航【起风同款·森林色】 -->
+<div class="side-bookmark">
+    <h4>森林导览</h4>
+    <ul>
+        <li><a href="#tablet">麒麟题记</a></li>
+        <li><a href="#murals">壁画群</a></li>
+        <li><a href="#totems">图腾浮雕</a></li>
+        <li><a href="#oracle">神谕石刻</a></li>
+    </ul>
+</div>
+
+<div class="wrap">
+
+<!-- 返回首页 -->
+<div class="top-back">
+    <a href="index.html" class="back-btn">返回风之画廊</a>
+</div>
+
+<!-- 顶部主视觉：森林入口 -->
+<div class="hero-forest">
+    <img src="https://www.ghibli.jp/gallery/mononoke042.jpg" alt="麒麟森林">
+    <div class="hero-title">
+        <p class="forest-mark">麒 麟 森 林 古 老 题 记</p>
+        <h1>もののけ姫</h1>
+        <p class="sub">幽 灵 公 主</p>
+        <p class="en">PRINCESS MONONOKE</p>
+    </div>
+</div>
+
+<!-- 一、麒麟题记：影片信息 -->
+<section id="tablet" class="section">
+    <div class="sec-title">
+        <h2>麒 麟 题 记</h2>
+        <span class="en">FOREST TABLET</span>
+    </div>
+    <div class="stone-tablet">
+        <div class="tablet-inner">
+            <div class="tablet-layout">
+                <div class="tablet-poster">
+                    <img src="https://www.ghibli.jp/gallery/mononoke002.jpg" alt="幽灵公主">
+                </div>
+                <div class="tablet-text">
+                    <h3>もののけ姫 · 古老传说</h3>
+                    <ul class="stone-info">
+                        <li><strong>年代</strong>1997年</li>
+                        <li><strong>导演</strong>宫崎骏</li>
+                        <li><strong>原作</strong>宫崎骏</li>
+                        <li><strong>制作</strong>吉卜力</li>
+                        <li><strong>配乐</strong>久石让</li>
+                        <li><strong>片长</strong>133分钟</li>
+                    </ul>
+                    <div class="rune-tags">
+                        <span>人与自然</span>
+                        <span>森林诸神</span>
+                        <span>诅咒与救赎</span>
+                        <span>麒麟兽</span>
+                        <span>狼神莫娜</span>
+                    </div>
+                    <div class="tablet-desc">
+                        虾夷族的少年阿席达卡为了拯救族人，被野猪神的诅咒侵蚀右臂。为了寻找诅咒的真相，他向西而行，来到了麒麟森林。森林深处住着山兽神、狼神莫娜和被狼养大的人类女孩桑——人们叫她"幽灵公主"。森林的另一边是达达拉城，女头领幻姬带领人们开采铁矿、砍伐森林。人与自然的战争一触即发，阿席达卡夹在中间，他想阻止这场战争，想让两边都活下去。可诅咒正在吞噬他的身体，他还能坚持多久？
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 二、壁画群：剧情 -->
+<section id="murals" class="section">
+    <div class="sec-title">
+        <h2>壁 画 群</h2>
+        <span class="en">MURAL GALLERY</span>
+    </div>
+    <div class="mural-gallery">
+
+        <div class="mural-frame">
+            <div class="mural-inner">
+                <img src="https://www.ghibli.jp/gallery/mononoke005.jpg" alt="诅咒">
+            </div>
+            <div class="mural-caption">
+                <div class="mural-num">一</div>
+                <h4>邪神之咒</h4>
+                <p>野猪神变成邪神袭击村庄，阿席达卡为保护族人被诅咒侵蚀。他必须离开家乡，去西方寻找诅咒的根源。</p>
+            </div>
+        </div>
+
+        <div class="mural-frame">
+            <div class="mural-inner">
+                <img src="https://www.ghibli.jp/gallery/mononoke012.jpg" alt="达达拉">
+            </div>
+            <div class="mural-caption">
+                <div class="mural-num">二</div>
+                <h4>铁镇达达拉</h4>
+                <p>阿席达卡来到炼铁的达达拉城，认识了女头领幻姬。这里的人们勤劳坚韧，但他们砍伐森林、与森林为敌。</p>
+            </div>
+        </div>
+
+        <div class="mural-frame">
+            <div class="mural-inner">
+                <img src="https://www.ghibli.jp/gallery/mononoke023.jpg" alt="桑">
+            </div>
+            <div class="mural-caption">
+                <div class="mural-num">三</div>
+                <h4>幽灵公主桑</h4>
+                <p>阿席达卡第一次见到桑——被狼神养大的人类女孩。她戴着白色面具，眼神像野兽一样锐利，她要杀了幻姬。</p>
+            </div>
+        </div>
+
+        <div class="mural-frame">
+            <div class="mural-inner">
+                <img src="https://www.ghibli.jp/gallery/mononoke031.jpg" alt="麒麟森林">
+            </div>
+            <div class="mural-caption">
+                <div class="mural-num">四</div>
+                <h4>麒麟森林</h4>
+                <p>阿席达卡走进了古老的麒麟森林，见到了传说中的山兽神。森林里住着树精灵，它们安静地看着一切。</p>
+            </div>
+        </div>
+
+        <div class="mural-frame">
+            <div class="mural-inner">
+                <img src="https://www.ghibli.jp/gallery/mononoke038.jpg" alt="战争">
+            </div>
+            <div class="mural-caption">
+                <div class="mural-num">五</div>
+                <h4>诸神之战</h4>
+                <p>野猪族集结大军要踏平达达拉，幻姬带着火枪队迎战。桑和狼神也加入了战斗，森林在燃烧，鲜血染红了河水。</p>
+            </div>
+        </div>
+
+        <div class="mural-frame">
+            <div class="mural-inner">
+                <img src="https://www.ghibli.jp/gallery/mononoke045.jpg" alt="山兽神">
+            </div>
+            <div class="mural-caption">
+                <div class="mural-num">六</div>
+                <h4>山兽神之首</h4>
+                <p>幻姬射下了山兽神的头颅，山兽神变成了巨大的死亡之神，所到之处万物凋零。整个森林都在死亡的阴影下。</p>
+            </div>
+        </div>
+
+        <div class="mural-frame">
+            <div class="mural-inner">
+                <img src="https://www.ghibli.jp/gallery/mononoke048.jpg" alt="重生">
+            </div>
+            <div class="mural-caption">
+                <div class="mural-num">七</div>
+                <h4>万物重生</h4>
+                <p>阿席达卡和桑一起把头颅还给了山兽神。清晨，死亡消散，森林重新长出嫩芽。诅咒解除了，但战争还没有结束。</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- 三、图腾浮雕：人物 -->
+<section id="totems" class="section">
+    <div class="sec-title">
+        <h2>图 腾 浮 雕</h2>
+        <span class="en">TOTEM RELIEFS</span>
+    </div>
+    <div class="totem-wall">
+
+        <div class="totem-card">
+            <div class="totem-relief">
+                <img src="https://www.ghibli.jp/gallery/mononoke003.jpg" alt="阿席达卡">
+            </div>
+            <h3>阿席达卡</h3>
+            <div class="name-jp">アシタカ</div>
+            <div class="totem-role">虾夷族少年</div>
+            <p>被诅咒的少年，为寻找真相来到西方。他善良勇敢，夹在人与自然之间，想要两边都拯救。</p>
+        </div>
+
+        <div class="totem-card">
+            <div class="totem-relief">
+                <img src="https://www.ghibli.jp/gallery/mononoke008.jpg" alt="桑">
+            </div>
+            <h3>桑</h3>
+            <div class="name-jp">サン</div>
+            <div class="totem-role">幽灵公主</div>
+            <p>被人类抛弃、由狼神养大的女孩。她憎恨人类，誓死守护森林，戴着白色面具像野兽一样战斗。</p>
+        </div>
+
+        <div class="totem-card">
+            <div class="totem-relief">
+                <img src="https://www.ghibli.jp/gallery/mononoke015.jpg" alt="幻姬">
+            </div>
+            <h3>幻姬</h3>
+            <div class="name-jp">エボシ御前</div>
+            <div class="totem-role">达达拉头领</div>
+            <p>铁镇的女头领，坚强果决。她带领人们开矿炼铁，给了弱者生存的希望，却也在毁灭森林。</p>
+        </div>
+
+        <div class="totem-card">
+            <div class="totem-relief">
+                <img src="https://www.ghibli.jp/gallery/mononoke026.jpg" alt="莫娜">
+            </div>
+            <h3>莫娜</h3>
+            <div class="name-jp">モロ</div>
+            <div class="totem-role">狼神</div>
+            <p>森林的狼族大神，桑的养母。她智慧而高傲，守护着森林和山兽神，与人类势不两立。</p>
+        </div>
+
+        <div class="totem-card">
+            <div class="totem-relief">
+                <img src="https://www.ghibli.jp/gallery/mononoke035.jpg" alt="乙事主">
+            </div>
+            <h3>乙事主</h3>
+            <div class="name-jp">オコト様</div>
+            <div class="totem-role">野猪神</div>
+            <p>野猪族的大神，古老而愤怒。他率领野猪大军要踏平人类，最终在憎恨中变成了邪神。</p>
+        </div>
+
+        <div class="totem-card">
+            <div class="totem-relief">
+                <img src="https://www.ghibli.jp/gallery/mononoke020.jpg" alt="山兽神">
+            </div>
+            <h3>山兽神</h3>
+            <div class="name-jp">シシ神</div>
+            <div class="totem-role">森林之神</div>
+            <p>麒麟森林的守护神，掌管生命与死亡。白天是鹿的样子，夜晚变成巨大的荧光巨人。</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- 四、神谕石刻：台词 -->
+<section id="oracle" class="section">
+    <div class="sec-title">
+        <h2>神 谕 石 刻</h2>
+        <span class="en">ORACLE STONES</span>
+    </div>
+    <div class="oracle-stones">
+
+        <div class="oracle-stone">
+            <p class="stone-text">活下去。无论多么痛苦，都要活下去。</p>
+            <p class="stone-from">阿席达卡</p>
+        </div>
+
+        <div class="oracle-stone">
+            <p class="stone-text">我是桑，是狼的孩子。我不是人类。</p>
+            <p class="stone-from">幽灵公主</p>
+        </div>
+
+        <div class="oracle-stone">
+            <p class="stone-text">你说森林很美丽，可美丽的东西都是脆弱的。</p>
+            <p class="stone-from">幻姬</p>
+        </div>
+
+        <div class="oracle-stone">
+            <p class="stone-text">山兽神既不是神也不是恶魔，它只是生命本身。</p>
+            <p class="stone-from">古老的传说</p>
+        </div>
+
+    </div>
+</section>
+
+</div>
+
+<!-- 页脚 -->
+<footer>
+    <div class="footer-mark">风 之 画 廊</div>
+    <p>幽灵公主 · 麒麟森林岩壁画廊专题</p>
+    <p class="copyright">所有剧照版权归属 ©スタジオジブリ STUDIO GHIBLI · 仅供爱好者交流学习</p>
+</footer>
+
+<script>
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".side-bookmark a");
+
+function updateActiveNav() {
+    let current = "";
+    sections.forEach(sec => {
+        const top = sec.offsetTop;
+        if (window.scrollY >= top - 300) {
+            current = sec.getAttribute("id");
+        }
+    });
+    navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+        }
+    });
+}
+window.addEventListener("scroll", updateActiveNav);
+updateActiveNav();
+</script>
+
+</body>
+</html>

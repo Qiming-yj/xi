@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鲁邦三世：卡里奥斯特罗之城｜宫崎骏动画电影专题</title>
+    <style>
+        /* ========== 铅笔手绘滤镜 ========== */
+        .pencil-filter {
+            filter: url(#pencil-texture);
+        }
+
+        /* ========== 全局重置与基础 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Songti SC", "思源宋体", "SimSun", "メイリオ", serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ========== 全局动画（低饱和、克制） ========== */
+        @keyframes fadeInUp {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        @keyframes paper-shift {
+            0%, 100% {background-position: 0 0;}
+            50% {background-position: 2px 2px;}
+        }
+        @keyframes pencil-wobble {
+            0%, 100% {transform: rotate(-0.3deg);}
+            50% {transform: rotate(0.3deg);}
+        }
+
+        /* ========== 全局背景：旧纸张质感 ========== */
+        body {
+            background-color: #e8dfc8;
+            color: #3d4a4d;
+            line-height: 2.1;
+            overflow-x: hidden;
+            position: relative;
+            background-image: 
+                /* 纸张噪点纹理 */
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E"),
+                /* 纸张纤维纹理 */
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 48, 50 50 T 100 50' stroke='%23c9b896' stroke-width='0.3' fill='none' opacity='0.4'/%3E%3Cpath d='M0 20 Q 30 22, 60 20 T 100 20' stroke='%23c9b896' stroke-width='0.2' fill='none' opacity='0.3'/%3E%3Cpath d='M0 80 Q 20 78, 40 80 T 80 80' stroke='%23c9b896' stroke-width='0.25' fill='none' opacity='0.35'/%3E%3C/svg%3E"),
+                /* 褪色渐变 */
+                radial-gradient(ellipse at 30% 20%, rgba(200, 180, 140, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(160, 150, 120, 0.15) 0%, transparent 50%),
+                /* 基础底色 */
+                linear-gradient(135deg, #ece4cc 0%, #e0d6b8 50%, #d8ceb0 100%);
+            background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+            background-size: 300px 300px, 100px 100px, 100% 100%, 100% 100%, 100% 100%;
+        }
+        /* 纸张边缘暗角 */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at center, transparent 50%, rgba(80, 70, 50, 0.15) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        /* 纸张折痕 */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: 
+                linear-gradient(90deg, transparent 49.8%, rgba(150, 140, 110, 0.08) 50%, transparent 50.2%),
+                linear-gradient(0deg, transparent 49.8%, rgba(150, 140, 110, 0.06) 50%, transparent 50.2%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        a {text-decoration: none; color: inherit;}
+        ul {list-style: none;}
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== 铅笔手绘边框通用类 ========== */
+        .pencil-border {
+            position: relative;
+            border: 2.5px solid #5a6b6e;
+            border-radius: 2px 8px 3px 10px / 6px 2px 9px 4px;
+        }
+        .pencil-border::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border: 1px solid #7a8a8d;
+            border-radius: 4px 6px 5px 8px / 7px 4px 6px 3px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .pencil-border::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            border: 0.5px dashed #8b9a9d;
+            border-radius: 3px 7px 4px 6px / 5px 3px 7px 2px;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ========== 右侧固定侧边目录（铅笔手绘风格） ========== */
+        .sidebar-toc {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #f0e8d0;
+            padding: 30px 18px;
+            z-index: 999;
+            width: 150px;
+            /* 手绘不规则边框 */
+            border: 2.5px solid #5a6b6e;
+            border-radius: 3px 12px 4px 10px / 8px 3px 11px 5px;
+            box-shadow: 
+                3px 4px 12px rgba(80, 70, 50, 0.15),
+                inset 0 0 20px rgba(180, 160, 120, 0.1);
+        }
+        .sidebar-toc::before {
+            content: "✎";
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-15deg);
+            font-size: 22px;
+            background: #f0e8d0;
+            padding: 0 8px;
+            color: #7a3b3b;
+        }
+        .sidebar-toc::after {
+            content: "";
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px dashed #8b9a9d;
+            border-radius: 2px 10px 3px 8px / 6px 2px 9px 4px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .sidebar-toc h4 {
+            text-align: center;
+            color: #4a5a5d;
+            font-size: 16px;
+            letter-spacing: 2px;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #7a3b3b;
+            font-weight: 600;
+            /* 手绘不规则下划线 */
+            position: relative;
+        }
+        .sidebar-toc h4::after {
+            content: "～";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f0e8d0;
+            padding: 0 6px;
+            color: #7a3b3b;
+            font-size: 12px;
+        }
+        .sidebar-toc li {
+            margin: 14px 0;
+        }
+        .sidebar-toc a {
+            display: block;
+            font-size: 13px;
+            padding: 8px 12px;
+            /* 手绘不规则圆角 */
+            border-radius: 2px 10px 3px 8px / 6px 2px 9px 4px;
+            border: 1.5px solid transparent;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: 1px;
+            color: #5a6b6e;
+        }
+        .sidebar-toc a.active {
+            background: rgba(122, 59, 59, 0.1);
+            color: #7a3b3b;
+            border-color: #7a3b3b;
+            font-weight: 600;
+        }
+        .sidebar-toc a:hover {
+            background: rgba(90, 107, 110, 0.08);
+            border-color: #5a6b6e;
+            transform: translateX(-2px) rotate(-0.5deg);
+        }
+
+        /* ========== 返回首页按钮（铅笔手绘风格） ========== */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 10px 24px;
+            background: #f0e8d0;
+            color: #5a6b6e;
+            /* 手绘不规则圆角 */
+            border-radius: 20px 4px 18px 6px / 5px 20px 4px 18px;
+            border: 2px solid #5a6b6e;
+            box-shadow: 2px 3px 8px rgba(80, 70, 50, 0.12);
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .back-home::before {
+            content: "←";
+            margin-right: 8px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+            color: #7a3b3b;
+        }
+        .back-home:hover {
+            transform: translateY(-2px) rotate(-0.5deg);
+            box-shadow: 3px 5px 12px rgba(80, 70, 50, 0.18);
+            border-color: #7a3b3b;
+            color: #7a3b3b;
+        }
+        .back-home:hover::before {
+            transform: translateX(-3px);
+        }
+
+        /* ========== 顶部海报（手绘边框） ========== */
+        .movie-top-banner {
+            width: 100%;
+            height: 520px;
+            overflow: hidden;
+            margin-bottom: 60px;
+            position: relative;
+            /* 多层手绘边框效果 */
+            padding: 6px;
+            background: #5a6b6e;
+            border-radius: 4px 12px 5px 10px / 8px 4px 11px 6px;
+        }
+        .movie-top-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #f0e8d0;
+            z-index: 0;
+            padding: 4px;
+            border-radius: 3px 11px 4px 9px / 7px 3px 10px 5px;
+        }
+        .movie-top-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            /* 褪色胶片叠加 */
+            background: 
+                linear-gradient(180deg, rgba(80, 70, 50, 0.1) 0%, transparent 25%),
+                linear-gradient(0deg, rgba(60, 50, 40, 0.3) 0%, transparent 40%);
+            z-index: 3;
+            pointer-events: none;
+        }
+        .movie-top-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 低饱和褪色效果 */
+            filter: saturate(0.75) contrast(0.95) sepia(0.15);
+            transition: filter 1s ease;
+            position: relative;
+            z-index: 1;
+            border-radius: 2px 8px 3px 7px / 5px 2px 8px 4px;
+        }
+        .movie-top-banner:hover img {
+            filter: saturate(0.85) contrast(1) sepia(0.1);
+        }
+        .banner-title-jp {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 56px;
+            color: #f0e8d0;
+            z-index: 4;
+            letter-spacing: 6px;
+            font-weight: 300;
+            text-shadow: 
+                2px 2px 8px rgba(0,0,0,0.6),
+                0 0 30px rgba(184, 160, 96, 0.3);
+            font-family: "Songti SC", serif;
+        }
+        .banner-subtitle {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(240, 232, 208, 0.85);
+            font-size: 14px;
+            letter-spacing: 4px;
+            z-index: 4;
+            border-top: 1px solid rgba(184, 160, 96, 0.5);
+            padding-top: 10px;
+        }
+
+        /* ========== 章节标题（铅笔手绘风格） ========== */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            color: #4a5a5d;
+            margin-bottom: 50px;
+            position: relative;
+            font-weight: 600;
+            letter-spacing: 4px;
+        }
+        .section-title::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: #7a3b3b;
+            /* 手绘不规则线条 */
+            border-radius: 50%;
+        }
+        .section-title::after {
+            content: attr(data-subtitle);
+            display: block;
+            font-size: 14px;
+            color: #7a8a8d;
+            margin-top: 18px;
+            letter-spacing: 3px;
+            font-weight: normal;
+            font-style: italic;
+        }
+        .section-title .title-decoration {
+            position: absolute;
+            font-size: 20px;
+            color: #b8a060;
+            opacity: 0.6;
+        }
+        .section-title .title-decoration.left {
+            left: 20%;
+            top: 50%;
+            transform: translateY(-50%) rotate(-20deg);
+        }
+        .section-title .title-decoration.right {
+            right: 20%;
+            top: 50%;
+            transform: translateY(-50%) rotate(20deg);
+        }
+
+        /* ========== 影片档案卡片（铅笔手绘风格） ========== */
+        .movie-info-card {
+            background: #f0e8d0;
+            padding: 45px 40px;
+            margin-bottom: 80px;
+            position: relative;
+            /* 手绘边框 */
+            border: 2.5px solid #5a6b6e;
+            border-radius: 4px 18px 5px 15px / 12px 4px 16px 6px;
+            box-shadow: 
+                4px 5px 15px rgba(80, 70, 50, 0.12),
+                inset 0 0 30px rgba(180, 160, 120, 0.08);
+        }
+        .movie-info-card::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px dashed #8b9a9d;
+            border-radius: 3px 15px 4px 12px / 10px 3px 13px 5px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .movie-info-card::after {
+            content: "❖";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #7a3b3b;
+            font-size: 18px;
+            background: #f0e8d0;
+            padding: 0 12px;
+        }
+        .movie-info-card h1 {
+            font-size: 36px;
+            color: #3d4a4d;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 18px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .movie-info-card h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7a3b3b, transparent);
+        }
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 35px;
+            margin: 25px 0;
+            font-size: 15px;
+            justify-content: center;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .info-item strong {
+            color: #7a3b3b;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .info-item strong::before {
+            content: "◆";
+            color: #b8a060;
+            margin-right: 5px;
+            font-size: 10px;
+        }
+        .movie-desc {
+            margin-top: 30px;
+            padding: 22px 28px;
+            background: rgba(90, 107, 110, 0.05);
+            border-left: 3px solid #7a3b3b;
+            font-size: 16px;
+            line-height: 2.1;
+            text-indent: 2em;
+            color: #4a5a5d;
+            /* 手绘不规则右边框 */
+            border-radius: 2px 8px 8px 2px;
+        }
+        .movie-desc::first-letter {
+            font-size: 34px;
+            color: #7a3b3b;
+            font-weight: bold;
+            float: left;
+            line-height: 1.1;
+            margin-right: 8px;
+            font-family: "Songti SC", serif;
+        }
+
+        /* ========== 内容板块通用 ========== */
+        .content-section {
+            padding: 70px 0;
+            margin-bottom: 70px;
+            position: relative;
+        }
+        .content-section.alt-bg {
+            background: rgba(168, 192, 200, 0.08);
+            /* 手绘上下分割线 */
+            border-top: 2px solid #5a6b6e;
+            border-bottom: 2px solid #5a6b6e;
+            border-radius: 50% 20% 50% 30% / 10px 10px 10px 10px;
+        }
+
+        /* ========== 制作背景板块 ========== */
+        .production-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .production-card {
+            background: #f0e8d0;
+            padding: 30px;
+            /* 手绘边框 */
+            border: 2px solid #5a6b6e;
+            border-radius: 4px 14px 5px 12px / 10px 4px 13px 6px;
+            box-shadow: 3px 4px 12px rgba(80, 70, 50, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .production-card:hover {
+            transform: translateY(-4px) rotate(-0.3deg);
+            box-shadow: 5px 7px 18px rgba(80, 70, 50, 0.15);
+        }
+        .production-card h3 {
+            color: #7a3b3b;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1.5px dashed #b8a060;
+            letter-spacing: 2px;
+        }
+        .production-card h3 .card-num {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: #7a3b3b;
+            color: #f0e8d0;
+            border-radius: 50% 30% 50% 30%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 14px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .production-card p {
+            font-size: 15px;
+            line-height: 2;
+            color: #5a6b6e;
+        }
+
+        /* ========== 艺术风格分析板块 ========== */
+        .style-analysis {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            align-items: flex-start;
+        }
+        .style-text {
+            flex: 1;
+        }
+        .style-text p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 2.1;
+            color: #4a5a5d;
+            text-indent: 2em;
+        }
+        .style-text .highlight {
+            color: #7a3b3b;
+            font-weight: 600;
+            border-bottom: 1px dotted #b8a060;
+        }
+        .style-image {
+            flex: 0 0 350px;
+            position: relative;
+        }
+        .style-image img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            /* 手绘相框效果 */
+            padding: 5px;
+            background: #5a6b6e;
+            border-radius: 3px 12px 4px 10px / 8px 3px 11px 5px;
+            filter: saturate(0.7) sepia(0.15);
+            transition: all 0.4s ease;
+        }
+        .style-image:hover img {
+            filter: saturate(0.8) sepia(0.1);
+            transform: rotate(1deg);
+        }
+        .style-image .img-caption {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 13px;
+            color: #7a8a8d;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* ========== 经典场景板块 ========== */
+        .scenes-list {
+            margin-top: 40px;
+        }
+        .scene-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 45px;
+            align-items: flex-start;
+            position: relative;
+            padding-left: 40px;
+        }
+        .scene-item::before {
+            content: "";
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: -45px;
+            width: 2px;
+            background: linear-gradient(180deg, #7a3b3b, #b8a060, #7a3b3b);
+            /* 手绘不规则线条 */
+            border-radius: 2px;
+        }
+        .scene-item:last-child::before {
+            display: none;
+        }
+        .scene-item::after {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 8px;
+            width: 14px;
+            height: 14px;
+            background: #f0e8d0;
+            border: 2px solid #7a3b3b;
+            border-radius: 50% 30% 50% 30%;
+            z-index: 2;
+        }
+        .scene-item:last-child::after {
+            background: #7a3b3b;
+        }
+        .scene-img {
+            flex: 0 0 320px;
+        }
+        .scene-img img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            /* 手绘边框 */
+            padding: 4px;
+            background: #5a6b6e;
+            border-radius: 3px 10px 4px 8px / 6px 3px 9px 4px;
+            filter: saturate(0.72) sepia(0.12);
+            transition: all 0.4s ease;
+        }
+        .scene-item:hover .scene-img img {
+            filter: saturate(0.82) sepia(0.08);
+            transform: scale(1.03) rotate(-0.5deg);
+        }
+        .scene-content {
+            flex: 1;
+        }
+        .scene-content h3 {
+            color: #7a3b3b;
+            font-size: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        .scene-content h3 .scene-tag {
+            display: inline-block;
+            font-size: 12px;
+            background: rgba(122, 59, 59, 0.1);
+            color: #7a3b3b;
+            padding: 3px 10px;
+            border-radius: 10px 3px 10px 3px;
+            margin-left: 10px;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+        .scene-content p {
+            font-size: 15px;
+            line-height: 2;
+            color: #5a6b6e;
+        }
+
+        /* ========== 人物深度分析板块 ========== */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .character-card {
+            background: #f0e8d0;
+            border-radius: 4px 12px 5px 10px / 8px 4px 11px 6px;
+            overflow: hidden;
+            box-shadow: 3px 4px 12px rgba(80, 70, 50, 0.12);
+            transition: all 0.4s ease;
+            border: 2px solid #5a6b6e;
+            position: relative;
+        }
+        .character-card:hover {
+            transform: translateY(-6px) rotate(-0.5deg);
+            box-shadow: 5px 8px 20px rgba(80, 70, 50, 0.18);
+        }
+        .character-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #7a3b3b, #b8a060, #7a3b3b);
+            z-index: 3;
+        }
+        .character-card::after {
+            content: attr(data-number);
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            background: #f0e8d0;
+            color: #7a3b3b;
+            border: 2px solid #7a3b3b;
+            border-radius: 50% 30% 50% 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            z-index: 4;
+        }
+        .character-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: saturate(0.7) sepia(0.15);
+            transition: all 0.5s ease;
+        }
+        .character-card:hover img {
+            filter: saturate(0.8) sepia(0.1);
+            transform: scale(1.05);
+        }
+        .char-text {
+            padding: 20px;
+        }
+        .char-text h3 {
+            color: #4a5a5d;
+            margin-bottom: 10px;
+            font-size: 19px;
+            padding-bottom: 8px;
+            border-bottom: 1.5px dashed #b8a060;
+            letter-spacing: 1px;
+        }
+        .char-text h3 .char-jp {
+            font-size: 13px;
+            color: #7a8a8d;
+            font-weight: normal;
+            margin-left: 6px;
+        }
+        .char-text .char-role {
+            font-size: 13px;
+            color: #7a3b3b;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        .char-text p {
+            font-size: 14px;
+            line-height: 1.9;
+            color: #5a6b6e;
+        }
+
+        /* ========== 主题内核板块 ========== */
+        .theme-section {
+            background: rgba(122, 59, 59, 0.05);
+            padding: 50px 45px;
+            margin-top: 40px;
+            /* 手绘边框 */
+            border: 2px solid #7a3b3b;
+            border-radius: 6px 20px 5px 18px / 14px 5px 16px 8px;
+            position: relative;
+        }
+        .theme-section::before {
+            content: "✦ 主题内核 ✦";
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e8dfc8;
+            padding: 0 15px;
+            color: #7a3b3b;
+            font-size: 16px;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+        .theme-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .theme-item {
+            padding: 20px;
+            border-left: 3px solid #b8a060;
+            background: rgba(240, 232, 208, 0.5);
+            border-radius: 2px 8px 8px 2px;
+        }
+        .theme-item h4 {
+            color: #7a3b3b;
+            font-size: 17px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .theme-item p {
+            font-size: 14px;
+            line-height: 1.9;
+            color: #5a6b6e;
+        }
+
+       
+
+        /* ========== 页脚 ========== */
+        footer {
+            text-align: center;
+            padding: 50px 0 30px;
+            color: #5a6b6e;
+            font-size: 13px;
+            margin-top: 40px;
+            border-top: 2px solid #5a6b6e;
+            position: relative;
+        }
+        footer::before {
+            content: "— ✎ —";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e8dfc8;
+            padding: 0 15px;
+            color: #7a3b3b;
+            font-size: 14px;
+            letter-spacing: 3px;
+        }
+        footer .footer-title {
+            font-size: 18px;
+            color: #4a5a5d;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+        footer .footer-sub {
+            font-size: 13px;
+            color: #7a8a8d;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        footer .copyright {
+            font-size: 12px;
+            color: #8b9a9d;
+            opacity: 0.8;
+        }
+
+        /* ========== 移动端适配 ========== */
+        @media (max-width: 992px) {
+            .sidebar-toc {display: none;}
+            .banner-title-jp {font-size: 40px;}
+            .production-grid {grid-template-columns: 1fr;}
+            .character-grid {grid-template-columns: repeat(2, 1fr);}
+            .style-analysis {flex-direction: column;}
+            .style-image {flex: none; width: 100%;}
+            .music-section {flex-direction: column; text-align: center;}
+            .legacy-points {grid-template-columns: 1fr;}
+        }
+        @media (max-width: 768px) {
+            .movie-top-banner {height: 300px;}
+            .banner-title-jp {font-size: 28px; letter-spacing: 3px; bottom: 45px;}
+            .banner-subtitle {font-size: 12px; letter-spacing: 2px;}
+            .info-row {flex-direction: column; gap: 10px; align-items: flex-start;}
+            h1 {font-size: 24px !important;}
+            .section-title {font-size: 24px; letter-spacing: 2px;}
+            .character-grid {grid-template-columns: 1fr;}
+            .scene-item {flex-direction: column; padding-left: 30px;}
+            .scene-img {flex: none; width: 100%;}
+            .theme-list {grid-template-columns: 1fr;}
+            .movie-info-card {padding: 30px 22px;}
+            .content-section {padding: 50px 0;}
+            .production-card {padding: 22px;}
+            .theme-section {padding: 35px 25px;}
+            .legacy-section {padding: 25px;}
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG 铅笔纹理滤镜定义 -->
+    <svg width="0" height="0" style="position:absolute">
+        <defs>
+            <filter id="pencil-texture">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- 右侧固定侧边目录 -->
+    <div class="sidebar-toc">
+        <h4>影片导览</h4>
+        <ul>
+            <li><a href="#info">影片档案</a></li>
+            <li><a href="#production">制作背景</a></li>
+            <li><a href="#style">艺术风格</a></li>
+            <li><a href="#scenes">经典场景</a></li>
+            <li><a href="#characters">人物深度</a></li>
+            <li><a href="#theme">主题内核</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="container">
+        <a href="index.html" class="back-home">返回风之画廊</a>
+
+        <!-- 顶部海报横幅 -->
+        <div class="movie-top-banner">
+            <img src="https://so1.360tres.com/t01d143fc62ae1aca0f.png" alt="鲁邦三世卡里奥斯特罗之城主海报">
+            <div class="banner-title-jp">ルパン三世</div>
+            <div class="banner-subtitle">カリオストロの城 · 1979</div>
+        </div>
+
+        <!-- 影片基础档案 -->
+        <div id="info" class="movie-info-card">
+            <h1>鲁邦三世：卡里奥斯特罗之城</h1>
+            <div class="info-row">
+                <div class="info-item"><strong>导演</strong>宫崎骏</div>
+                <div class="info-item"><strong>原作</strong>Monkey Punch</div>
+                <div class="info-item"><strong>制作</strong>东京电影新社</div>
+                <div class="info-item"><strong>上映</strong>1979年12月15日</div>
+            </div>
+            <div class="info-row">
+                <div class="info-item"><strong>片长</strong>100分钟</div>
+                <div class="info-item"><strong>配乐</strong>大野雄二</div>
+                <div class="info-item"><strong>类型</strong>冒险 · 悬疑 · 浪漫</div>
+                <div class="info-item"><strong>票房</strong>约6.1亿日元</div>
+            </div>
+            <div class="movie-desc">
+                《鲁邦三世：卡里奥斯特罗之城》是宫崎骏首次独立执导的剧场版动画，也是吉卜力工作室成立前的重要过渡作品。影片以欧洲虚构小国卡里奥斯特罗为舞台，讲述怪盗鲁邦三世为拯救被囚禁的公主克蕾莉丝，闯入古堡揭开假币制造阴谋的冒险故事。这部作品奠定了宫崎骏日后创作的核心母题——飞行、水城、少女与自由，其手绘质感的欧洲街景、精彩绝伦的追逐戏码、温柔的人文关怀，至今仍被视为动画史上的经典之作。
+            </div>
+        </div>
+
+        <!-- 制作背景板块 -->
+        <section id="production" class="content-section">
+            <h2 class="section-title" data-subtitle="Production Background">
+                <span class="title-decoration left">✎</span>
+                制作背景
+                <span class="title-decoration right">✎</span>
+            </h2>
+            
+            <div class="production-grid">
+                <div class="production-card">
+                    <h3><span class="card-num">01</span>导演处女作</h3>
+                    <p>1979年，38岁的宫崎骏首次独立担任剧场版动画导演。此前他已在东映动画参与多部动画制作，但《卡里奥斯特罗之城》是他完全掌控创作的首部作品。影片虽改编自Monkey Punch的《鲁邦三世》漫画，却深深烙印了宫崎骏个人的美学风格与人文关怀。</p>
+                </div>
+                <div class="production-card">
+                    <h3><span class="card-num">02</span>吉卜力前夜</h3>
+                    <p>本片制作于吉卜力工作室正式成立（1985年）之前，由东京电影新社出品。宫崎骏与高畑勋、小田部羊一等日后吉卜力核心成员在此片中深度合作，形成了独特的创作默契，为日后吉卜力的成立奠定了团队基础。</p>
+                </div>
+                <div class="production-card">
+                    <h3><span class="card-num">03</span>欧洲采风</h3>
+                    <p>为了真实还原欧洲古堡与水城风貌，宫崎骏团队前往意大利、法国、德国等地实地采风。影片中的卡里奥斯特罗公国融合了威尼斯的水城、德国的新天鹅堡、法国的乡村小镇等多种欧洲建筑元素，手绘场景的精细程度在当时堪称巅峰。</p>
+                </div>
+                <div class="production-card">
+                    <h3><span class="card-num">04</span>票房与口碑</h3>
+                    <p>影片上映初期票房表现平平，许多观众因期待传统鲁邦式的搞笑冒险而感到意外。但随着时间推移，影片凭借精湛的制作水准和动人的故事，逐渐被公认为动画史上的经典之作，影响了包括《天空之城》《红猪》在内的众多后续作品。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 艺术风格分析板块 -->
+        <section id="style" class="content-section alt-bg">
+            <h2 class="section-title" data-subtitle="Art Style">
+                <span class="title-decoration left">✎</span>
+                艺术风格
+                <span class="title-decoration right">✎</span>
+            </h2>
+            
+            <div class="style-analysis">
+                <div class="style-text">
+                    <p>《卡里奥斯特罗之城》的视觉风格呈现出<span class="highlight">宫崎骏早期手绘动画的典型特征</span>：线条硬朗而富有张力，色彩饱和度偏低却层次丰富，场景绘制追求真实感与浪漫主义的完美结合。</p>
+                    <p>影片中的<span class="highlight">欧洲建筑场景</span>是最大亮点之一。古堡的石墙纹理、水城的波光倒影、钟楼的机械结构、地下洞窟的钟乳石，每一处细节都经过精心考据与手绘呈现。宫崎骏对建筑的痴迷在本片中展露无遗，这种对场景真实性的执着也成为他日后作品的标志性特征。</p>
+                    <p><span class="highlight">机械设计</span>同样令人印象深刻。鲁邦驾驶的菲亚特500、水上快艇、古堡机关、钟楼齿轮，每一件机械都兼具功能性与美感，体现了宫崎骏对工业美学的独特理解。这种"会飞的机械"情结在后续的《天空之城》《红猪》中得到了更充分的展现。</p>
+                    <p>人物造型方面，本片中的鲁邦三世形象与漫画原作有明显区别，被赋予了更多<span class="highlight">温柔与正义感</span>。克蕾莉丝公主的形象则开创了宫崎骏"坚强少女"角色的原型，日后的娜乌西卡、希达、千寻等角色都能在她身上找到影子。</p>
+                </div>
+                <div class="style-image">
+                    <img src="https://aka.doubaocdn.com/s/rlbN1weu6N" alt="卡里奥斯特罗古堡场景">
+                    <div class="img-caption">— 古堡水城手绘场景 —</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 经典场景板块 -->
+        <section id="scenes" class="content-section">
+            <h2 class="section-title" data-subtitle="Classic Scenes">
+                <span class="title-decoration left">✎</span>
+                经典场景
+                <span class="title-decoration right">✎</span>
+            </h2>
+            
+            <div class="scenes-list">
+                <div class="scene-item">
+                    <div class="scene-img">
+                        <img src="https://aka.doubaocdn.com/s/iztU1weu2H" alt="水城追逐戏">
+                    </div>
+                    <div class="scene-content">
+                        <h3>水城追逐 <span class="scene-tag">动作戏巅峰</span></h3>
+                        <p>鲁邦与次元驾驶菲亚特500在水城街巷中与大公手下展开激烈追逐，快艇在河道中穿梭、汽车在石板路上漂移、从拱桥下惊险穿过，镜头调度行云流水，被誉为动画史上最精彩的追逐戏之一。这场戏充分展现了宫崎骏对速度感与空间感的超强把控能力。</p>
+                    </div>
+                </div>
+
+                <div class="scene-item">
+                    <div class="scene-img">
+                        <img src="https://aka.doubaocdn.com/s/jRAx1weu2H" alt="钟楼对决">
+                    </div>
+                    <div class="scene-content">
+                        <h3>钟楼机关 <span class="scene-tag">机械美学</span></h3>
+                        <p>鲁邦潜入古堡钟楼，利用巨大的钟表齿轮躲避追兵。错综复杂的齿轮系统、摆动的钟摆、定时触发的机关，构成了一场充满智慧与紧张感的猫鼠游戏。宫崎骏对机械结构的痴迷在这场戏中展现得淋漓尽致，每一个齿轮的转动都经过精确设计。</p>
+                    </div>
+                </div>
+
+                <div class="scene-item">
+                    <div class="scene-img">
+                        <img src="https://aka.doubaocdn.com/s/pM4X1weu2H" alt="地下宝库">
+                    </div>
+                    <div class="scene-content">
+                        <h3>地下宝库 <span class="scene-tag">视觉奇观</span></h3>
+                        <p>鲁邦与克蕾莉丝坠入古堡地下的罗马水道，发现了被水淹没的古代黄金雕像群。幽暗的洞窟中，水光倒映着金色雕像，神秘而壮丽。这场戏将水的透明感、光影的折射效果表现得淋漓尽致，是宫崎骏"水之美学"的早期代表作。</p>
+                    </div>
+                </div>
+
+                <div class="scene-item">
+                    <div class="scene-img">
+                        <img src="https://aka.doubaocdn.com/s/yNAr1weu2H" alt="黎明离别">
+                    </div>
+                    <div class="scene-content">
+                        <h3>黎明离别 <span class="scene-tag">温柔收尾</span></h3>
+                        <p>阴谋落幕，鲁邦拒绝了公主的挽留，在黎明时分与伙伴悄然离开古堡。晨光中，克蕾莉丝站在城墙上目送鲁邦远去，没有煽情的告白，只有默契的微笑。这场克制而温柔的离别戏，完美诠释了"自由比财富更珍贵"的主题，也成为宫崎骏式结局的经典范式。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 人物深度分析板块 -->
+        <section id="characters" class="content-section alt-bg">
+            <h2 class="section-title" data-subtitle="Characters">
+                <span class="title-decoration left">✎</span>
+                人物深度
+                <span class="title-decoration right">✎</span>
+            </h2>
+            
+            <div class="character-grid">
+                <div class="character-card" data-number="01">
+                    <img src="https://alioss.gcores.com/uploads/article/f6897131-e731-405c-ad9c-be3a0b3e8bf4_hl.png" alt="鲁邦三世">
+                    <div class="char-text">
+                        <h3>鲁邦三世 <span class="char-jp">ルパン三世</span></h3>
+                        <div class="char-role">天才怪盗 · 自由的追寻者</div>
+                        <p>与原作漫画中好色滑稽的形象不同，宫崎骏笔下的鲁邦更加沉稳、温柔，带有强烈的正义感。他不为财富而动，只为拯救被囚禁的公主奔赴险境。这个角色体现了宫崎骏对"自由"的理解——真正的自由不是占有，而是选择放手的勇气。</p>
+                    </div>
+                </div>
+
+                <div class="character-card" data-number="02">
+                    <img src="https://aka.doubaocdn.com/s/wCJV1wetrc" alt="克蕾莉丝">
+                    <div class="char-text">
+                        <h3>克蕾莉丝 <span class="char-jp">クラリス</span></h3>
+                        <div class="char-role">古堡公主 · 希望的象征</div>
+                        <p>卡里奥斯特罗公国的公主，自幼被大公囚禁。她外表柔弱却内心坚韧，即使身处困境也不放弃希望。这个角色是宫崎骏"坚强少女"形象的雏形，她代表着被压抑的纯真与自由，也是鲁邦这次冒险的全部意义。</p>
+                    </div>
+                </div>
+
+                <div class="character-card" data-number="03">
+                    <img src="https://aka.doubaocdn.com/s/8vMQ1wetl4" alt="次元大介">
+                    <div class="char-text">
+                        <h3>次元大介 <span class="char-jp">次元大介</span></h3>
+                        <div class="char-role">神枪手 · 沉默的搭档</div>
+                        <p>鲁邦最信任的搭档，百发百中的神枪手。沉默寡言，行事冷静，永远在鲁邦最需要的时候出现。他代表着忠诚与可靠，是鲁邦冒险路上最坚实的后盾。两人之间无需言语的默契，是影片中最动人的友情写照。</p>
+                    </div>
+                </div>
+
+                <div class="character-card" data-number="04">
+                    <img src="https://aka.doubaocdn.com/s/hAhJ1wetra" alt="石川五右卫门">
+                    <div class="char-text">
+                        <h3>石川五右卫门 <span class="char-jp">石川五ェ門</span></h3>
+                        <div class="char-role">武士 · 正义的行者</div>
+                        <p>日本武士后裔，手持斩铁剑，刀法出神入化。坚守武士道精神，跟随鲁邦游历世界。在古堡之战中，他斩断无数机关与追兵，用行动诠释了什么是真正的武士风骨——不为财富折腰，只为正道拔剑。</p>
+                    </div>
+                </div>
+
+                <div class="character-card" data-number="05">
+                    <img src="https://aka.doubaocdn.com/s/Gs7X1wetl0" alt="钱形幸一">
+                    <div class="char-text">
+                        <h3>钱形幸一 <span class="char-jp">銭形幸一</span></h3>
+                        <div class="char-role">警部 · 法律的坚守者</div>
+                        <p>国际刑警组织警部，一生以追捕鲁邦为目标。执着但不失原则，当他发现大公的罪恶后，选择与鲁邦短暂联手。这个角色体现了宫崎骏对"正义"的思考——法律与良知之间，后者才是最终的底线。</p>
+                    </div>
+                </div>
+
+                <div class="character-card" data-number="06">
+                    <img src="https://aka.doubaocdn.com/s/KX9z1wetre" alt="卡里奥斯特罗大公">
+                    <div class="char-text">
+                        <h3>卡里奥斯特罗大公 <span class="char-jp">カリオストロ伯爵</span></h3>
+                        <div class="char-role">阴谋家 · 贪婪的化身</div>
+                        <p>影片反派，卡里奥斯特罗公国的实际统治者。贪婪、冷酷、野心勃勃，伪造货币扰乱世界经济，囚禁公主妄图霸占王室宝藏。他是权力与欲望的化身，最终被自己的贪婪所吞噬，是宫崎骏对极权与贪婪的批判。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 主题内核板块 -->
+        <section id="theme" class="content-section">
+            <h2 class="section-title" data-subtitle="Themes">
+                <span class="title-decoration left">✎</span>
+                主题内核
+                <span class="title-decoration right">✎</span>
+            </h2>
+            
+            <div class="theme-section">
+                <div class="theme-list">
+                    <div class="theme-item">
+                        <h4>◆ 自由与财富</h4>
+                        <p>影片最核心的主题：面对唾手可得的巨额宝藏，鲁邦选择了离开。对他而言，无拘无束的自由比任何财富都更加珍贵。这种"不占有"的人生态度，是宫崎骏贯穿一生创作的核心价值观。</p>
+                    </div>
+                    <div class="theme-item">
+                        <h4>◆ 纯真与救赎</h4>
+                        <p>克蕾莉丝代表着被压抑的纯真，鲁邦的闯入不仅是拯救公主，更是对被玷污的美好事物的一次救赎。宫崎骏相信，即使在最黑暗的地方，也总有纯真值得被守护。</p>
+                    </div>
+                    <div class="theme-item">
+                        <h4>◆ 权力批判</h4>
+                        <p>大公利用权力制造假币、囚禁公主、垄断财富，是对极权与贪婪的深刻批判。宫崎骏在日后的作品中反复探讨这一主题——权力会腐蚀人心，而真正的力量来自人心的善良与自由。</p>
+                    </div>
+                    <div class="theme-item">
+                        <h4>◆ 人文关怀</h4>
+                        <p>即使是怪盗题材，宫崎骏也没有渲染暴力与犯罪，而是将焦点放在人与人之间的善意与温情上。鲁邦的冒险不是为了掠夺，而是为了守护。这种温柔的人文关怀，是宫崎骏作品最动人的底色。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+        
+
+        <footer>
+            <div class="footer-title">风之画廊</div>
+            <div class="footer-subtitle">ルパン三世 カリオストロの城 · 1979</div>
+            <p>致敬所有用铅笔与梦想构筑世界的动画人</p>
+        </footer>
+    </div>
+
+    <script>
+        console.log("鲁邦三世：卡里奥斯特罗之城 动画电影专题页面加载完成");
+        
+        // 侧边目录滚动高亮
+        const sections = document.querySelectorAll("section, div#info");
+        const tocLinks = document.querySelectorAll(".sidebar-toc a");
+        
+        function updateTocActive() {
+            let currentId = "";
+            sections.forEach(sec => {
+                const top = sec.offsetTop;
+                if (window.scrollY >= top - 250) {
+                    currentId = sec.id;
+                }
+            });
+            tocLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === "#" + currentId) {
+                    link.classList.add("active");
+                }
+            });
+        }
+        
+        window.addEventListener("scroll", updateTocActive);
+        updateTocActive();
+
+        // 滚动淡入动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = "fadeInUp 0.8s ease forwards";
+                }
+            });
+        }, { threshold: 0.08 });
+
+        document.querySelectorAll(".production-card, .character-card, .scene-item, .theme-item, .legacy-point, .movie-info-card, .style-analysis, .music-section, .legacy-section").forEach(el => {
+            el.style.opacity = "0";
+            observer.observe(el);
+        });
+
+        // 铅笔抖动效果（轻微随机偏移，模拟手绘的不完美）
+        const pencilElements = document.querySelectorAll(".pencil-border, .production-card, .character-card");
+        pencilElements.forEach((el, index) => {
+            const rotation = (Math.random() - 0.5) * 0.6;
+            el.style.transform = `rotate(${rotation}deg)`;
+        });
+    </script>
+</body>
+</html>

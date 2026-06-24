@@ -1,0 +1,729 @@
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft Yahei", sans-serif;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+ul {
+    list-style: none;
+}
+body {
+    background-color: #f8f6f0;
+    color: #333;
+}
+
+/* 导航栏 */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 2px 8px #ddd;
+}
+.nav-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #487c6e;
+}
+.nav-list {
+    display: flex;
+    gap: 28px;
+}
+.nav-list li a {
+    font-size: 15px;
+    transition: color 0.3s;
+}
+.nav-list li a:hover {
+    color: #63a895;
+}
+
+/* 首屏Banner */
+.banner {
+    width: 100%;
+    height: 95vh;
+    background: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)), url("https://s.panlai.com/zb_users/upload/2025/12/bizhihui_com_202512241766553796236382.jpg-arthumbs") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+}
+.banner h1 {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+.banner p {
+    font-size: 20px;
+    margin-bottom: 32px;
+    opacity: 0.95;
+}
+.banner-btn {
+    padding: 14px 36px;
+    background: #63a895;
+    color: white;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+.banner-btn:hover {
+    background: #487c6e;
+}
+
+/* 通用容器 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+.sec-title {
+    text-align: center;
+    font-size: 32px;
+    color: #3a695c;
+    margin-bottom: 45px;
+    position: relative;
+}
+.sec-title::after {
+    content: "";
+    width: 70px;
+    height: 3px;
+    background: #63a895;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -12px;
+}
+
+/* 轮播标题美化（精美原画标题全部保留） */
+.carousel-title-box {
+    text-align: center;
+    padding: 40px 20px 20px;
+    background: linear-gradient(to bottom, #f7f3ee, transparent);
+}
+.carousel-title {
+    font-size: 36px;
+    color: #2c3e50;
+    letter-spacing: 4px;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+}
+.carousel-title::after {
+    content: "";
+    width: 80px;
+    height: 3px;
+    background: #7fb0b8;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-radius: 3px;
+}
+.carousel-sub {
+    display: block;
+    margin-top: 18px;
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 1px;
+}
+
+/* 轮播核心横向滑动（适配你的JS，左右切换+圆点功能完整保留） */
+.carousel {
+  width: 100%;
+  height: 900px;
+  max-height: 900px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  background: #f7f3ee;
+}
+.carousel-inner {
+  width: 100%;
+  height: 100%;
+}
+.carousel-item {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.carousel-item.active {
+  opacity: 1;
+  z-index: 2;
+}
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 轮播左右按钮美化 */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 22px;
+    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 10;
+}
+.carousel-btn:hover {
+    background: #63a895;
+}
+.prev { left: 20px; }
+.next { right: 20px; }
+
+/* 轮播底部圆点指示器 */
+.carousel-dots {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 14px;
+    z-index: 10;
+}
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.45);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.dot.active {
+    background: #fff;
+    transform: scale(1.3);
+}
+
+/* 宫崎骏介绍区域 */
+.about-miyazaki {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+.about-img {
+    width: 42%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.about-img img {
+    width: 100%;
+    display: block;
+}
+.about-text {
+    width: 58%;
+}
+.about-text h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: #3a695c;
+}
+.about-text p {
+    line-height: 1.8;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+/* 作品无限自动滚动卡片（完整保留悬停暂停、缩放效果） */
+.works-scroll-wrap {
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0 20px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.works-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    animation: worksScroll 50s linear infinite;
+}
+.works-scroll-wrap:hover .works-track {
+    animation-play-state: paused;
+}
+@keyframes worksScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.work-card {
+    flex-shrink: 0;
+    width: 230px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.work-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+.card-img {
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+}
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.work-card:hover .card-img img {
+    transform: scale(1.06);
+}
+.card-text {
+    padding: 16px 18px 20px;
+}
+.card-text h4 {
+    font-size: 17px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.card-text p {
+    font-size: 12.5px;
+    color: #888;
+    line-height: 1.7;
+}
+
+/* 台词板块 */
+.quote-wrap {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+.quote-item {
+    background: #fff;
+    padding: 26px 22px;
+    border-left: 5px solid #63a895;
+    border-radius: 6px;
+}
+.quote-item p:first-child {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+.quote-item p:last-child {
+    text-align: right;
+    color: #777;
+    font-size: 14px;
+}
+
+/* 页脚 */
+footer {
+    background: #3a5c52;
+    color: #eaeaea;
+    padding: 50px 20px 30px;
+}
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+.footer-col h4 {
+    font-size: 18px;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #54796f;
+}
+.footer-col li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #54796f;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* 导航下拉菜单全部保留动画、布局 */
+.nav-work-item {
+  position: relative;
+}
+.nav-work-item::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 16px;
+  left: 0;
+  top: 100%;
+}
+.nav-main-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.work-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  background: #ffffff;
+  padding: 24px;
+  padding-top: 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(72, 124, 110, 0.15);
+  z-index: 9999;
+  border: 1px solid #eee;
+}
+@keyframes dropShow {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+.nav-work-item:hover .work-dropdown {
+  display: block;
+  animation: dropShow 0.25s ease forwards;
+}
+.drop-title {
+  text-align: center;
+  color: #3a695c;
+  font-size: 17px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e9efed;
+  letter-spacing: 1px;
+}
+.dropdown-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.film-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 8px;
+  text-align: center;
+  background: #f6faf9;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+  min-height: 48px;
+  word-break: break-all;
+}
+.film-btn:hover {
+  background: #63a895;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(99, 168, 149, 0.25);
+}
+
+/* ========== 平板适配 992px ========== */
+@media(max-width:992px){
+  .quote-wrap {
+    grid-template-columns: repeat(2,1fr);
+  }
+  .about-miyazaki {
+    flex-direction: column;
+  }
+  .about-img,.about-text {
+    width: 100%;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+  .carousel {
+    height: 500px;
+  }
+  .carousel-item {
+    height: 500px;
+  }
+}
+
+/* ========== 手机适配 768px ========== */
+@media (max-width: 768px) {
+  .nav-wrap {
+    padding: 0 20px;
+  }
+  .logo {
+    font-size: 18px;
+  }
+  .nav-list li {
+    margin-left: 16px;
+  }
+  .nav-list a {
+    font-size: 13px;
+  }
+  .work-dropdown {
+    width: 320px;
+    right: -80px;
+  }
+  .dropdown-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .banner h1 {
+    font-size: 32px;
+    letter-spacing: 4px;
+    padding: 0 20px;
+  }
+  .banner p {
+    font-size: 14px;
+    padding: 0 20px;
+  }
+  .banner-btn {
+    padding: 10px 28px;
+    font-size: 14px;
+  }
+  .carousel {
+    height: 300px;
+  }
+  .container {
+    padding: 50px 20px;
+  }
+  .sec-title {
+    font-size: 24px;
+    margin-bottom: 35px;
+  }
+  .about-miyazaki {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .about-img {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .about-img img {
+    height: 280px;
+  }
+  .about-text {
+    width: 100%;
+    text-align: center;
+  }
+  .about-text h3 {
+    font-size: 20px;
+  }
+  .about-text p {
+    font-size: 14px;
+    text-align: left;
+  }
+  .works-scroll-wrap {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .works-track {
+    gap: 16px;
+    animation-duration: 40s;
+  }
+  .work-card {
+    width: 170px;
+  }
+  .card-img {
+    height: 240px;
+  }
+  .card-text {
+    padding: 14px 16px 18px;
+  }
+  .card-text h4 {
+    font-size: 15px;
+  }
+  .card-text p {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .quote-wrap {
+    grid-template-columns: 1fr;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    text-align: center;
+  }
+  .footer-col {
+    width: 100%;
+  }
+  .footer-col h4 {
+    margin-bottom: 15px;
+  }
+  .footer-col ul li {
+    margin-bottom: 8px;
+  }
+  .copyright {
+    padding: 25px 20px;
+    font-size: 12px;
+  }
+}
+
+/* ========== 小屏手机 480px ========== */
+@media(max-width: 480px) {
+  .nav-wrap {
+    padding: 0 15px;
+  }
+  .logo {
+    font-size: 16px;
+  }
+  .nav-list li {
+    margin-left: 12px;
+  }
+  .nav-list a {
+    font-size: 12px;
+  }
+  .nav-work-item .nav-main-link {
+    display: none;
+  }
+  .work-dropdown {
+    width: 280px;
+    right: -50px;
+    padding: 15px;
+  }
+  .dropdown-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .film-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .banner {
+    height: 70vh;
+    min-height: 400px;
+  }
+  .banner h1 {
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+  .banner p {
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .banner-btn {
+    margin-top: 30px;
+    padding: 9px 24px;
+    font-size: 13px;
+  }
+  .carousel {
+    height: 220px;
+  }
+  .carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  .carousel-dots {
+    bottom: 15px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+  }
+  .container {
+    padding: 40px 15px;
+  }
+  .sec-title {
+    font-size: 20px;
+    margin-bottom: 28px;
+    letter-spacing: 2px;
+  }
+  .about-img img {
+    height: 240px;
+  }
+  .about-text h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  .about-text p {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 12px;
+  }
+  .work-card {
+    width: 145px;
+  }
+  .card-img {
+    height: 200px;
+  }
+  .card-text {
+    padding: 12px 14px 16px;
+  }
+  .card-text h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .card-text p {
+    font-size: 11.5px;
+    line-height: 1.6;
+  }
+  .quote-item {
+    padding: 20px;
+  }
+  .quote-item p:first-child {
+    font-size: 14px;
+  }
+  .quote-item p:last-child {
+    font-size: 12px;
+  }
+  .footer-inner {
+    padding: 40px 15px 20px;
+    gap: 30px;
+  }
+  .footer-col h4 {
+    font-size: 15px;
+  }
+  .footer-col ul li {
+    font-size: 13px;
+  }
+  .copyright {
+    padding: 20px 15px;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}

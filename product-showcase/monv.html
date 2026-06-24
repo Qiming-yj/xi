@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>魔女の宅急便 | 魔女宅急便</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "PingFang SC", "Microsoft YaHei", "Kaiti SC", "楷体", sans-serif;
+}
+html { scroll-behavior: smooth; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { display: block; object-fit: cover; }
+
+/* ===== 面包店墙面背景 ===== */
+body {
+    background: #f5ebe0;
+    background-image: 
+        radial-gradient(ellipse at 20% 15%, rgba(212, 165, 115, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 60%, rgba(188, 143, 94, 0.08) 0%, transparent 40%);
+    color: #5c4a3a;
+    min-height: 100vh;
+    line-height: 2;
+    position: relative;
+    overflow-x: hidden;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 25% 30%, rgba(139, 110, 75, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 75% 70%, rgba(139, 110, 75, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px, 36px 36px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== 返回首页：面包店门牌 ===== */
+.top-back {
+    padding: 28px 0 20px;
+}
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 26px;
+    background: #fff9ef;
+    color: #8b6f47;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: 
+        0 2px 8px rgba(139, 110, 75, 0.12),
+        inset 0 1px 0 #fff;
+    border: 1px solid #e8dcc8;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+    position: relative;
+}
+.back-btn::before {
+    content: "🥖";
+    font-size: 15px;
+}
+.back-btn::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: #b8956a;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(139, 110, 75, 0.2);
+    background: #fffdf5;
+}
+
+/* ===== 右侧书签导航【起风同款】 ===== */
+.side-bookmark {
+    position: fixed;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    background: #fff8eb;
+    width: 90px;
+    padding: 26px 12px 22px;
+    border: 1px solid #e2d6c5;
+    border-radius: 8px 8px 12px 12px;
+    box-shadow: 0 4px 18px rgba(130,110,90,0.12);
+}
+.side-bookmark::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 13px;
+    background: #faf8f5;
+    border-left: 1px solid #e2d6c5;
+    border-right: 1px solid #e2d6c5;
+    border-bottom: 1px solid #e2d6c5;
+    border-radius: 0 0 14px 14px;
+}
+.side-bookmark::after {
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: 8px;
+    right: 8px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d1c2af, transparent);
+}
+.side-bookmark h4 {
+    text-align: center;
+    font-size: 11px;
+    color: #806c53;
+    letter-spacing: 1.5px;
+    padding-top: 6px;
+    padding-bottom: 9px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed #ddcfbd;
+    font-weight: normal;
+}
+.side-bookmark li {
+    margin: 11px 0;
+    text-align: center;
+}
+.side-bookmark a {
+    display: block;
+    font-size: 11.5px;
+    color: #705e49;
+    padding: 5px 6px;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+    transition: 0.25s ease;
+}
+.side-bookmark a:hover,
+.side-bookmark a.active {
+    background: rgba(160,135,105,0.12);
+    color: #4f3f2e;
+}
+
+/* ===== 顶部主视觉：小镇风景 ===== */
+.hero-town {
+    position: relative;
+    margin-bottom: 70px;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 480px;
+    box-shadow: 
+        0 15px 40px rgba(139, 110, 75, 0.18),
+        0 0 0 8px #fff9ef,
+        0 0 0 9px #e8dcc8;
+    transform: rotate(-0.5deg);
+}
+.hero-town img {
+    width: 100%;
+    height: 100%;
+    filter: saturate(1.05) brightness(1.02);
+}
+.hero-town::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        linear-gradient(0deg, rgba(245, 235, 220, 0.9) 0%, rgba(245, 235, 220, 0.4) 25%, transparent 45%);
+    z-index: 2;
+}
+.hero-town::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 100px;
+    height: 28px;
+    background: rgba(255, 230, 180, 0.6);
+    z-index: 3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.hero-title {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 4;
+    width: 100%;
+    padding: 0 40px;
+}
+.hero-title .town-mark {
+    font-size: 12px;
+    color: #b8860b;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+.hero-title .town-mark::before,
+.hero-title .town-mark::after {
+    content: "🍞";
+    margin: 0 8px;
+    font-size: 11px;
+}
+.hero-title h1 {
+    font-size: 50px;
+    letter-spacing: 10px;
+    margin-bottom: 12px;
+    font-weight: 300;
+    color: #5c4a3a;
+    text-shadow: 0 2px 10px rgba(255, 245, 230, 0.8);
+    font-family: "Songti SC", "思源宋体", serif;
+}
+.hero-title .sub {
+    font-size: 20px;
+    letter-spacing: 6px;
+    color: #7a6550;
+    margin-bottom: 6px;
+    font-weight: 300;
+}
+.hero-title .en {
+    font-size: 11px;
+    color: #9a8570;
+    letter-spacing: 4px;
+}
+
+/* ===== 章节通用：图钉便签标题 ===== */
+.section {
+    margin-bottom: 80px;
+}
+.sec-title {
+    text-align: center;
+    margin-bottom: 45px;
+    position: relative;
+}
+.sec-title h2 {
+    display: inline-block;
+    font-size: 25px;
+    color: #5c4a3a;
+    letter-spacing: 6px;
+    padding: 12px 50px;
+    font-weight: 300;
+    position: relative;
+    background: #fff9ef;
+    transform: rotate(-1deg);
+    box-shadow: 
+        0 3px 12px rgba(139, 110, 75, 0.12),
+        0 0 0 1px #e8dcc8;
+    font-family: "Songti SC", "思源宋体", serif;
+}
+.sec-title h2::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle at 30% 30%, #e8a85c, #b8860b);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.sec-title .en {
+    display: block;
+    font-size: 10px;
+    color: #b09878;
+    margin-top: 10px;
+    letter-spacing: 4px;
+    transform: rotate(0.5deg);
+}
+
+/* ===== 店铺公告：影片信息 ===== */
+.board-wrap {
+    position: relative;
+    padding: 30px;
+    background: #c9a87c;
+    border-radius: 8px;
+    box-shadow: 
+        inset 0 2px 8px rgba(0,0,0,0.15),
+        0 8px 25px rgba(139, 110, 75, 0.2);
+}
+.board-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 80px,
+            rgba(139, 110, 75, 0.08) 80px,
+            rgba(139, 110, 75, 0.08) 81px
+        );
+    border-radius: 8px;
+    pointer-events: none;
+}
+.board-inner {
+    background: #fff9ef;
+    border-radius: 4px;
+    padding: 40px 45px;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+.board-inner .note-strip {
+    position: absolute;
+    top: -12px;
+    left: 30px;
+    background: #ffe4b5;
+    padding: 4px 18px;
+    font-size: 11px;
+    color: #8b6f47;
+    letter-spacing: 2px;
+    transform: rotate(-2deg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.board-inner .note-strip::before {
+    content: "📌 ";
+    font-size: 10px;
+}
+
+.profile-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+.profile-photo {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(139, 110, 75, 0.15);
+    transform: rotate(2deg);
+}
+.profile-photo img {
+    width: 100%;
+    height: 340px;
+}
+.profile-photo::after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(5deg);
+    width: 60px;
+    height: 20px;
+    background: rgba(255, 230, 180, 0.7);
+}
+
+.profile-text h3 {
+    font-size: 24px;
+    color: #5c4a3a;
+    margin-bottom: 18px;
+    letter-spacing: 3px;
+    font-weight: 300;
+    padding-bottom: 12px;
+    border-bottom: 2px dotted #d4b896;
+    font-family: "Songti SC", "思源宋体", serif;
+    position: relative;
+}
+.profile-text h3::after {
+    content: "— 店铺介绍 —";
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+    font-size: 11px;
+    color: #b8956a;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+
+.info-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 25px;
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px dashed #e8dcc8;
+}
+.info-list li {
+    font-size: 13px;
+    color: #7a6550;
+    padding: 3px 0;
+}
+.info-list li strong {
+    color: #5c4a3a;
+    font-weight: 500;
+    margin-right: 8px;
+}
+.info-list li strong::before {
+    content: "🍞";
+    font-size: 10px;
+    margin-right: 5px;
+}
+
+.tag-wall {
+    margin-bottom: 20px;
+}
+.tag-wall span {
+    display: inline-block;
+    padding: 4px 14px;
+    background: #fff3d6;
+    color: #8b6f47;
+    border-radius: 3px;
+    font-size: 11px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #e8d4a8;
+    transform: rotate(-1deg);
+    position: relative;
+}
+.tag-wall span:nth-child(even) {
+    transform: rotate(1deg);
+    background: #ffe8cc;
+}
+
+.intro-paper {
+    font-size: 13px;
+    line-height: 2.1;
+    color: #6a5848;
+    text-indent: 2em;
+    padding: 20px 24px;
+    background: #fffdf5;
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(139, 110, 75, 0.08);
+    border-left: 3px solid #d4a574;
+}
+.intro-paper::first-letter {
+    font-size: 32px;
+    color: #b8860b;
+    font-weight: bold;
+    float: left;
+    line-height: 1.2;
+    margin-right: 8px;
+    font-family: "Songti SC", serif;
+}
+
+/* ===== 订单黑板墙：9张订单 + 黑板背景 ===== */
+.blackboard-wrap {
+    position: relative;
+    padding: 35px;
+    background: #8b6f47;
+    border-radius: 6px;
+    box-shadow: 
+        inset 0 3px 10px rgba(0,0,0,0.2),
+        0 10px 30px rgba(139, 110, 75, 0.25);
+}
+/* 木纹边框 */
+.blackboard-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 60px,
+            rgba(90, 65, 35, 0.12) 60px,
+            rgba(90, 65, 35, 0.12) 61px
+        );
+    border-radius: 6px;
+    pointer-events: none;
+}
+/* 黑板主体 */
+/* 黑板主体 - 高度调整为刚好适配9张订单 */
+.blackboard {
+    background: #2d5a3d;
+    border-radius: 3px;
+    padding: 30px 25px 30px;
+    position: relative;
+    min-height: 890px;
+    box-shadow: 
+        inset 0 2px 8px rgba(0,0,0,0.3),
+        inset 0 -2px 4px rgba(255,255,255,0.05);
+}
+/* 粉笔灰质感 */
+.blackboard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.08), transparent),
+        radial-gradient(1.5px 1.5px at 35% 65%, rgba(255,255,255,0.06), transparent),
+        radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,0.07), transparent),
+        radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.05), transparent),
+        radial-gradient(1.5px 1.5px at 50% 50%, rgba(255,255,255,0.04), transparent),
+        radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,0.06), transparent);
+    background-size: 300px 300px;
+    pointer-events: none;
+    border-radius: 3px;
+}
+/* 黑板标题粉笔字 */
+.blackboard .bb-title {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 8px;
+    font-family: "Kaiti SC", "楷体", serif;
+    z-index: 1;
+}
+.blackboard .bb-title::before,
+.blackboard .bb-title::after {
+    content: "✦";
+    margin: 0 12px;
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+/* 订单便签 - 贴在黑板上 */
+.order-note {
+    position: absolute;
+    width: 28%;
+    background: #fff9ef;
+    padding: 14px 16px 16px;
+    border-radius: 2px;
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+}
+.order-note:hover {
+    transform: scale(1.06) rotate(0deg) !important;
+    box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+}
+/* 图钉 */
+.order-note::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    z-index: 3;
+}
+.order-note:nth-child(odd)::before {
+    left: 15px;
+    background: radial-gradient(circle at 30% 30%, #e88, #c44);
+}
+.order-note:nth-child(even)::before {
+    right: 15px;
+    background: radial-gradient(circle at 30% 30%, #8ce, #48a);
+}
+.order-note:nth-child(3n)::before {
+    background: radial-gradient(circle at 30% 30%, #fd8, #d90) !important;
+}
+
+.order-note .order-num {
+    font-size: 9px;
+    color: #b8956a;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-align: right;
+    font-family: "Courier New", monospace;
+}
+.order-note .order-num::before {
+    content: "#";
+}
+.order-note h4 {
+    font-size: 15px;
+    color: #5c4a3a;
+    margin-bottom: 3px;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    font-family: "Songti SC", serif;
+}
+.order-note .order-date {
+    font-size: 9px;
+    color: #a08868;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed #e8dcc8;
+}
+.order-note .order-date::before {
+    content: "📅 ";
+}
+.order-note img {
+    width: 100%;
+    height: 85px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    object-fit: cover;
+}
+.order-note p {
+    font-size: 11px;
+    line-height: 1.85;
+    color: #7a6550;
+}
+
+/* 9张订单错落排布，塞满黑板 */
+.order-note:nth-child(1) {
+    top: 45px;
+    left: 3%;
+    transform: rotate(-4deg);
+    width: 26%;
+}
+.order-note:nth-child(2) {
+    top: 30px;
+    left: 32%;
+    transform: rotate(2deg);
+    width: 25%;
+}
+.order-note:nth-child(3) {
+    top: 50px;
+    right: 3%;
+    transform: rotate(-2deg);
+    width: 27%;
+}
+.order-note:nth-child(4) {
+    top: 280px;
+    left: 1%;
+    transform: rotate(3deg);
+    width: 28%;
+}
+.order-note:nth-child(5) {
+    top: 260px;
+    left: 34%;
+    transform: rotate(-3deg);
+    width: 24%;
+}
+.order-note:nth-child(6) {
+    top: 290px;
+    right: 2%;
+    transform: rotate(2.5deg);
+    width: 27%;
+}
+.order-note:nth-child(7) {
+    top: 530px;
+    left: 4%;
+    transform: rotate(-2deg);
+    width: 26%;
+}
+.order-note:nth-child(8) {
+    top: 510px;
+    left: 33%;
+    transform: rotate(4deg);
+    width: 25%;
+}
+.order-note:nth-child(9) {
+    top: 540px;
+    right: 4%;
+    transform: rotate(-3deg);
+    width: 26%;
+}
+
+/* 不同颜色的便签纸 */
+.order-note:nth-child(1),
+.order-note:nth-child(5),
+.order-note:nth-child(9) {
+    background: #fff9ef;
+}
+.order-note:nth-child(2),
+.order-note:nth-child(6) {
+    background: #fff3d6;
+}
+.order-note:nth-child(3),
+.order-note:nth-child(7) {
+    background: #ffe8cc;
+}
+.order-note:nth-child(4),
+.order-note:nth-child(8) {
+    background: #ffecd6;
+}
+
+/* ===== 员工胸牌：人物 ===== */
+.badge-wall {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px 25px;
+    padding: 20px 0;
+}
+.badge-card {
+    width: 150px;
+    background: #fff;
+    border-radius: 8px 8px 6px 6px;
+    overflow: hidden;
+    box-shadow: 
+        0 4px 14px rgba(139, 110, 75, 0.15),
+        0 0 0 1px #f0e4d0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    position: relative;
+}
+.badge-card:nth-child(odd) {
+    transform: rotate(-3deg);
+}
+.badge-card:nth-child(even) {
+    transform: rotate(3deg);
+}
+.badge-card:hover {
+    transform: rotate(0) translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 28px rgba(139, 110, 75, 0.25);
+}
+.badge-card::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 10px;
+    background: linear-gradient(180deg, #d4a574, #b8956a);
+    border-radius: 3px;
+    z-index: 3;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.badge-card::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 4px;
+    background: #e8dcc8;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.badge-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    margin-top: 18px;
+    mask-image: linear-gradient(180deg, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, black 80%, transparent 100%);
+}
+.badge-body {
+    padding: 10px 14px 16px;
+    background: linear-gradient(180deg, #fff9ef, #fff);
+}
+.badge-body h3 {
+    font-size: 16px;
+    color: #5c4a3a;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-family: "Songti SC", serif;
+}
+.badge-body .name-jp {
+    font-size: 10px;
+    color: #a08868;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+.badge-body .role {
+    font-size: 10px;
+    color: #b8860b;
+    padding: 3px 8px;
+    background: #fff3d6;
+    border-radius: 10px;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+/* ===== 留言便签：台词 ===== */
+.sticky-wall {
+    position: relative;
+    min-height: 320px;
+    padding: 20px 0;
+}
+.sticky-note {
+    position: absolute;
+    width: 220px;
+    padding: 20px 22px 24px;
+    border-radius: 2px;
+    box-shadow: 
+        0 3px 12px rgba(139, 110, 75, 0.15),
+        0 0 0 1px rgba(0,0,0,0.03);
+    transition: all 0.35s;
+}
+.sticky-note:hover {
+    transform: scale(1.08) rotate(0deg) !important;
+    box-shadow: 0 10px 25px rgba(139, 110, 75, 0.25);
+    z-index: 10;
+}
+.sticky-note::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.sticky-note .sticky-text {
+    font-size: 13px;
+    color: #5c4a3a;
+    line-height: 2;
+    margin-bottom: 12px;
+    text-indent: 2em;
+    font-family: "Kaiti SC", "楷体", serif;
+}
+.sticky-note .sticky-from {
+    text-align: right;
+    font-size: 11px;
+    color: #8b6f47;
+    font-style: italic;
+}
+.sticky-note .sticky-from::before {
+    content: "—— ";
+}
+
+.sticky-note:nth-child(1) {
+    top: 10px;
+    left: 5%;
+    background: #fff3b0;
+    transform: rotate(-4deg);
+}
+.sticky-note:nth-child(2) {
+    top: 40px;
+    left: 30%;
+    background: #ffd6a5;
+    transform: rotate(3deg);
+}
+.sticky-note:nth-child(3) {
+    top: 15px;
+    right: 28%;
+    background: #caffbf;
+    transform: rotate(-2deg);
+}
+.sticky-note:nth-child(4) {
+    top: 50px;
+    right: 5%;
+    background: #bdb2ff;
+    transform: rotate(5deg);
+    color: #4a4060;
+}
+.sticky-note:nth-child(4) .sticky-text {
+    color: #4a4060;
+}
+.sticky-note:nth-child(4) .sticky-from {
+    color: #6a5f8a;
+}
+
+/* ===== 页脚 ===== */
+footer {
+    padding: 50px 20px 35px;
+    margin-top: 30px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(180deg, transparent, rgba(184, 149, 106, 0.1));
+}
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4a574, transparent);
+}
+footer .footer-mark {
+    font-size: 22px;
+    color: #7a6550;
+    letter-spacing: 6px;
+    margin-bottom: 14px;
+    font-weight: 300;
+    font-family: "Songti SC", serif;
+}
+footer .footer-mark::before {
+    content: "🥖 ";
+    font-size: 18px;
+}
+footer .footer-mark::after {
+    content: " 🥖";
+    font-size: 18px;
+}
+footer p {
+    font-size: 12px;
+    color: #9a8570;
+    line-height: 2.2;
+}
+footer .copyright {
+    margin-top: 12px;
+    font-size: 10px;
+    color: #b09878;
+    opacity: 0.8;
+}
+
+/* ===== 响应式 ===== */
+@media(max-width: 960px) {
+    .side-bookmark { display: none; }
+    .profile-layout {
+        grid-template-columns: 1fr;
+    }
+    .profile-photo {
+        max-width: 220px;
+        margin: 0 auto 20px;
+    }
+    .profile-photo img {
+        height: 300px;
+    }
+    .hero-town {
+        height: 380px;
+    }
+    .hero-title h1 {
+        font-size: 36px;
+        letter-spacing: 5px;
+    }
+    .badge-wall {
+        gap: 25px 20px;
+    }
+    .badge-card {
+        width: 140px;
+    }
+    /* 黑板订单墙改grid */
+    .blackboard {
+        min-height: auto;
+        padding: 25px 20px;
+    }
+    .blackboard .bb-title {
+        position: static;
+        transform: none;
+        text-align: center;
+        margin-bottom: 20px;
+        padding-top: 5px;
+    }
+    .order-note {
+        position: static;
+        width: auto;
+        transform: rotate(0) !important;
+        margin-bottom: 15px;
+    }
+    .order-wall-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    .order-note:nth-child(9) {
+        grid-column: span 2;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    /* 便签墙改grid */
+    .sticky-wall {
+        min-height: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .sticky-note {
+        position: static;
+        width: auto;
+        transform: rotate(0) !important;
+    }
+}
+@media(max-width: 600px) {
+    .wrap { padding: 0 20px; }
+    .hero-town { height: 300px; }
+    .hero-title { bottom: 50px; padding: 0 20px; }
+    .hero-title h1 { font-size: 26px; letter-spacing: 3px; }
+    .hero-title .sub { font-size: 15px; letter-spacing: 2px; }
+    .sec-title h2 {
+        font-size: 20px;
+        padding: 10px 36px;
+        letter-spacing: 3px;
+    }
+    .board-wrap { padding: 20px; }
+    .board-inner { padding: 28px 22px; }
+    .info-list { grid-template-columns: 1fr; }
+    .blackboard-wrap { padding: 20px; }
+    .order-wall-grid {
+        grid-template-columns: 1fr;
+    }
+    .order-note:nth-child(9) {
+        grid-column: span 1;
+    }
+    .badge-wall {
+        gap: 20px 15px;
+    }
+    .badge-card {
+        width: 130px;
+    }
+    .badge-card img {
+        height: 110px;
+    }
+    .sticky-wall {
+        grid-template-columns: 1fr;
+        max-width: 260px;
+        margin: 0 auto;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- 右侧书签导航【起风同款】 -->
+<div class="side-bookmark">
+    <h4>面包店导览</h4>
+    <ul>
+        <li><a href="#board">店铺公告</a></li>
+        <li><a href="#orders">订单黑板</a></li>
+        <li><a href="#badges">员工胸牌</a></li>
+        <li><a href="#stickies">留言便签</a></li>
+    </ul>
+</div>
+
+<div class="wrap">
+
+<!-- 返回首页 -->
+<div class="top-back">
+    <a href="index.html" class="back-btn">返回风之画廊</a>
+</div>
+
+<!-- 顶部主视觉：小镇照片 -->
+<div class="hero-town">
+    <img src="https://www.ghibli.jp/gallery/majo042.jpg" alt="克里克小镇">
+    <div class="hero-title">
+        <p class="town-mark">面 包 店 欢 迎 你</p>
+        <h1>魔女の宅急便</h1>
+        <p class="sub">魔 女 宅 急 便</p>
+        <p class="en">KIKI'S DELIVERY SERVICE</p>
+    </div>
+</div>
+
+<!-- 一、店铺公告 -->
+<section id="board" class="section">
+    <div class="sec-title">
+        <h2>店 铺 公 告</h2>
+        <span class="en">SHOP NOTICE</span>
+    </div>
+    <div class="board-wrap">
+        <div class="board-inner">
+            <div class="note-strip">今日营业中</div>
+            <div class="profile-layout">
+                <div class="profile-photo">
+                    <img src="https://www.ghibli.jp/gallery/majo002.jpg" alt="琪琪">
+                </div>
+                <div class="profile-text">
+                    <h3>索娜面包店·魔女宅急便</h3>
+                    <ul class="info-list">
+                        <li><strong>开业</strong>1989年</li>
+                        <li><strong>营业</strong>每日清晨</li>
+                        <li><strong>店长</strong>索娜</li>
+                        <li><strong>配送</strong>魔女琪琪</li>
+                        <li><strong>招牌</strong>牛角面包</li>
+                        <li><strong>业务</strong>飞行快递</li>
+                    </ul>
+                    <div class="tag-wall">
+                        <span>见习魔女驻店</span>
+                        <span>飞行当日达</span>
+                        <span>黑猫全程陪护</span>
+                        <span>海边小镇风光</span>
+                        <span>温暖治愈系</span>
+                    </div>
+                    <div class="intro-paper">
+                        13岁的魔女琪琪按照传统离开家乡，骑着扫帚带着黑猫吉吉来到海边小镇克里克。好心的面包店老板娘索娜收留了她，琪琪便用自己的飞行能力开了一家"魔女宅急便"，帮镇上的人们送快递。在这里，她遇见了热爱飞行的少年蜻蜓、森林里的画家乌露斯拉，还有许多善良的人。她也曾经历魔法失灵的挫折，但最终明白——魔女的魔法从来不止是飞行，更是勇气、善良，和想要帮助别人的心。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 二、订单黑板墙：9张订单 + 黑板背景 -->
+<section id="orders" class="section">
+    <div class="sec-title">
+        <h2>订 单 黑 板</h2>
+        <span class="en">BLACKBOARD ORDERS</span>
+    </div>
+    <div class="blackboard-wrap">
+        <div class="blackboard">
+            <div class="bb-title">今 日 订 单</div>
+
+            <div class="order-wall-grid">
+
+            <div class="order-note">
+                <div class="order-num">001</div>
+                <h4>启程之夜</h4>
+                <div class="order-date">月圆 · 离家</div>
+                <img src="https://www.ghibli.jp/gallery/majo005.jpg" alt="离家">
+                <p>13岁生日的月圆之夜，琪琪带着黑猫吉吉，骑着妈妈的旧扫帚离开了从小生活的村庄。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">002</div>
+                <h4>初到小镇</h4>
+                <div class="order-date">清晨 · 克里克</div>
+                <img src="https://www.ghibli.jp/gallery/majo012.jpg" alt="小镇">
+                <p>飞了一整夜，琪琪来到靠海的美丽小镇克里克。红色屋顶、蓝色大海，一切都那么新鲜。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">003</div>
+                <h4>第一单快递</h4>
+                <div class="order-date">第5天 · 面包店</div>
+                <img src="https://www.ghibli.jp/gallery/majo023.jpg" alt="面包店">
+                <p>索娜老板娘的面包店开张了，琪琪接到了第一单快递——帮客人送生日礼物。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">004</div>
+                <h4>遇见蜻蜓</h4>
+                <div class="order-date">第15天 · 海边</div>
+                <img src="https://www.ghibli.jp/gallery/majo031.jpg" alt="蜻蜓">
+                <p>琪琪认识了热爱飞行的少年蜻蜓。他自己做人力飞机，梦想有一天能飞上天空。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">005</div>
+                <h4>送错的包裹</h4>
+                <div class="order-date">第22天 · 森林</div>
+                <img src="https://www.ghibli.jp/gallery/majo038.jpg" alt="送错包裹">
+                <p>大风天送快递，琪琪把客人的包裹弄丢了，她急得到处找，最后在森林里找到了。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">006</div>
+                <h4>魔法失灵</h4>
+                <div class="order-date">第30天 · 危机</div>
+                <img src="https://www.ghibli.jp/gallery/majo008.jpg" alt="魔法失灵">
+                <p>琪琪突然飞不起来了，连吉吉说的话也听不懂了。她很害怕，不知道该怎么办。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">007</div>
+                <h4>森林画家</h4>
+                <div class="order-date">第35天 · 乌露斯拉</div>
+                <img src="https://www.ghibli.jp/gallery/majo035.jpg" alt="乌露斯拉">
+                <p>森林里的画家乌露斯拉告诉她：迷茫的时候魔法就会沉睡，没关系，等一等就好了。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">008</div>
+                <h4>飞艇大营救</h4>
+                <div class="order-date">第45天 · 重生</div>
+                <img src="https://www.ghibli.jp/gallery/majo045.jpg" alt="飞艇">
+                <p>观光飞艇被大风吹走，蜻蜓挂在绳子上。琪琪借了地板刷重新飞了起来，救下了朋友。</p>
+            </div>
+
+            <div class="order-note">
+                <div class="order-num">009</div>
+                <h4>真正的魔女</h4>
+                <div class="order-date">每一天 · 成长</div>
+                <img src="https://www.ghibli.jp/gallery/majo048.jpg" alt="成长">
+                <p>琪琪终于明白，魔女的魔法从来不止是飞行。是勇气、是善良、是想要帮助别人的心。</p>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 三、员工胸牌：人物 -->
+<section id="badges" class="section">
+    <div class="sec-title">
+        <h2>员 工 胸 牌</h2>
+        <span class="en">STAFF BADGES</span>
+    </div>
+    <div class="badge-wall">
+
+        <div class="badge-card">
+            <img src="https://www.ghibli.jp/gallery/majo003.jpg" alt="琪琪">
+            <div class="badge-body">
+                <h3>琪琪</h3>
+                <div class="name-jp">キキ</div>
+                <div class="role">配送员</div>
+            </div>
+        </div>
+
+        <div class="badge-card">
+            <img src="https://www.ghibli.jp/gallery/majo008.jpg" alt="吉吉">
+            <div class="badge-body">
+                <h3>吉吉</h3>
+                <div class="name-jp">ジジ</div>
+                <div class="role">吉祥物</div>
+            </div>
+        </div>
+
+        <div class="badge-card">
+            <img src="https://www.ghibli.jp/gallery/majo015.jpg" alt="蜻蜓">
+            <div class="badge-body">
+                <h3>蜻蜓</h3>
+                <div class="name-jp">トンボ</div>
+                <div class="role">特邀顾问</div>
+            </div>
+        </div>
+
+        <div class="badge-card">
+            <img src="https://www.ghibli.jp/gallery/majo026.jpg" alt="索娜">
+            <div class="badge-body">
+                <h3>索娜</h3>
+                <div class="name-jp">オソノ</div>
+                <div class="role">店长</div>
+            </div>
+        </div>
+
+        <div class="badge-card">
+            <img src="https://www.ghibli.jp/gallery/majo035.jpg" alt="乌露斯拉">
+            <div class="badge-body">
+                <h3>乌露斯拉</h3>
+                <div class="name-jp">ウルスラ</div>
+                <div class="role">艺术顾问</div>
+            </div>
+        </div>
+
+        <div class="badge-card">
+            <img src="https://www.ghibli.jp/gallery/majo020.jpg" alt="可琪莉">
+            <div class="badge-body">
+                <h3>可琪莉</h3>
+                <div class="name-jp">コキリ</div>
+                <div class="role">技术指导</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- 四、留言便签：台词 -->
+<section id="stickies" class="section">
+    <div class="sec-title">
+        <h2>留 言 便 签</h2>
+        <span class="en">STICKY NOTES</span>
+    </div>
+    <div class="sticky-wall">
+
+        <div class="sticky-note">
+            <p class="sticky-text">虽然也曾失落过，但我还是很喜欢这座城市。喜欢红色的屋顶，喜欢蓝色的大海。</p>
+            <p class="sticky-from">琪琪</p>
+        </div>
+
+        <div class="sticky-note">
+            <p class="sticky-text">魔女的魔法和心情是连在一起的。不相信自己的时候，魔法就会睡着。</p>
+            <p class="sticky-from">乌露斯拉</p>
+        </div>
+
+        <div class="sticky-note">
+            <p class="sticky-text">我以前以为魔女只要会飞就够了。现在我知道了，真正的魔法是勇气和善良。</p>
+            <p class="sticky-from">琪琪的日记</p>
+        </div>
+
+        <div class="sticky-note">
+            <p class="sticky-text">吉吉，你知道吗？就算听不懂你的话，我也知道你一直都在。我们是最好的朋友。</p>
+            <p class="sticky-from">琪琪</p>
+        </div>
+
+    </div>
+</section>
+
+</div>
+
+<!-- 页脚 -->
+<footer>
+    <div class="footer-mark">风 之 画 廊</div>
+    <p>魔女宅急便 · 面包店黑板墙专题</p>
+    <p class="copyright">所有剧照版权归属 ©スタジオジブリ STUDIO GHIBLI · 仅供爱好者交流学习</p>
+</footer>
+
+<script>
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".side-bookmark a");
+
+function updateActiveNav() {
+    let current = "";
+    sections.forEach(sec => {
+        const top = sec.offsetTop;
+        if (window.scrollY >= top - 300) {
+            current = sec.getAttribute("id");
+        }
+    });
+    navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+        }
+    });
+}
+window.addEventListener("scroll", updateActiveNav);
+updateActiveNav();
+</script>
+
+</body>
+</html>

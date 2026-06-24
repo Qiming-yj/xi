@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风立ちぬ | 起风了</title>
+    <style>
+        /* ========== 起风了专属：复古手账速写本风格 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", "KaiTi", serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            object-fit: cover;
+        }
+
+        /* 米黄纸张背景 + 纸纹肌理 */
+        body {
+            background: #f5ede0;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(180, 150, 100, 0.08) 28px, rgba(180, 150, 100, 0.08) 29px),
+                radial-gradient(ellipse at 30% 20%, rgba(255, 220, 150, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(255, 200, 120, 0.2) 0%, transparent 50%);
+            color: #4a3728;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 飘散的纸飞机装饰 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(135deg, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 55%);
+            background-size: 200px 200px;
+            background-position: 10% 15%, 85% 40%, 30% 75%, 70% 90%;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .wrap {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== 返回首页：纸飞机便签 ========== */
+        .back-note {
+            padding: 30px 0 15px;
+        }
+
+        .back-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 22px;
+            background: #fff9ee;
+            color: #b87333;
+            border-radius: 2px 12px 12px 2px;
+            font-size: 14px;
+            box-shadow: 2px 2px 0 rgba(184, 115, 51, 0.15);
+            border-left: 3px solid #e8a85c;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .back-tag::before {
+            content: "✈";
+            font-size: 15px;
+            transform: rotate(-20deg);
+        }
+
+        .back-tag:hover {
+            transform: translateX(-5px);
+            box-shadow: 4px 3px 0 rgba(184, 115, 51, 0.2);
+        }
+
+        /* 胶带装饰 */
+        .back-tag::after {
+            content: "";
+            position: absolute;
+            top: -6px;
+            right: 15px;
+            width: 30px;
+            height: 14px;
+            background: rgba(255, 220, 150, 0.6);
+            transform: rotate(-3deg);
+            border-radius: 2px;
+        }
+
+        /* ========== 右侧悬浮导航：书签条风格（缩小版，与天空之城侧边栏尺寸一致） ========== */
+        .side-bookmark {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 20px 14px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            border: 2px solid #c9a96e;
+            box-shadow: 0 4px 20px rgba(44, 62, 80, 0.15);
+            z-index: 99;
+            min-width: 86px;
+        }
+
+        .side-bookmark h4 {
+            text-align: center;
+            color: #b87333;
+            font-size: 13px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #d4c08a;
+            letter-spacing: 2px;
+        }
+
+        .side-bookmark li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .side-bookmark a {
+            font-size: 12px;
+            padding: 5px 6px;
+            border-radius: 20px;
+            transition: 0.25s;
+            color: #6b4e30;
+            display: block;
+        }
+
+        .side-bookmark a:hover {
+            background: #fdf0d8;
+            color: #b87333;
+        }
+
+        /* ========== 顶部主视觉：速写本翻开页 ========== */
+        .hero-sketch {
+            position: relative;
+            margin-bottom: 60px;
+            padding: 30px;
+            background: #fffbf2;
+            border-radius: 4px;
+            box-shadow:
+                0 6px 25px rgba(120, 80, 30, 0.15),
+                inset 0 0 60px rgba(200, 160, 100, 0.1);
+            border: 1px solid #e8d8bc;
+        }
+
+        /* 装订线 */
+        .hero-sketch::before {
+            content: "";
+            position: absolute;
+            left: 50px;
+            top: 20px;
+            bottom: 20px;
+            width: 2px;
+            background: repeating-linear-gradient(to bottom,
+                    #d4b896 0,
+                    #d4b896 8px,
+                    transparent 8px,
+                    transparent 16px);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 420px;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+            filter: sepia(15%) contrast(95%);
+        }
+
+        .hero-img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 手绘边框效果 */
+        .hero-img::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border: 2px dashed rgba(184, 115, 51, 0.3);
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .hero-title {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            text-align: right;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(80, 40, 10, 0.6);
+        }
+
+        .hero-title h1 {
+            font-size: 46px;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
+
+        .hero-title .sub {
+            font-size: 20px;
+            letter-spacing: 4px;
+            opacity: 0.95;
+        }
+
+        .hero-title .jp {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 6px;
+            letter-spacing: 3px;
+        }
+
+        /* 角落贴纸装饰 */
+        .sticker {
+            position: absolute;
+            font-size: 12px;
+            padding: 4px 12px;
+            background: #ffd98a;
+            color: #8b5a2b;
+            border-radius: 2px;
+            transform: rotate(-5deg);
+            box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        .sticker-1 {
+            top: 15px;
+            left: 80px;
+            transform: rotate(-8deg);
+            background: #ffb366;
+            color: #fff;
+        }
+
+        .sticker-2 {
+            bottom: 20px;
+            left: 70px;
+            transform: rotate(4deg);
+            background: #87ceeb;
+            color: #fff;
+        }
+
+        /* ========== 章节通用：胶带标题 ========== */
+        .section {
+            margin-bottom: 70px;
+        }
+
+        .sec-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .sec-title h2 {
+            display: inline-block;
+            font-size: 28px;
+            color: #8b5a2b;
+            letter-spacing: 5px;
+            padding: 10px 45px;
+            background: #fff9ee;
+            position: relative;
+            font-weight: normal;
+            border-radius: 2px;
+            box-shadow: 2px 2px 0 rgba(184, 115, 51, 0.1);
+        }
+
+        /* 左右胶带 */
+        .sec-title h2::before,
+        .sec-title h2::after {
+            content: "";
+            position: absolute;
+            top: -8px;
+            width: 35px;
+            height: 16px;
+            background: rgba(255, 200, 120, 0.55);
+            border-radius: 2px;
+        }
+
+        .sec-title h2::before {
+            left: 10px;
+            transform: rotate(-4deg);
+        }
+
+        .sec-title h2::after {
+            right: 10px;
+            transform: rotate(4deg);
+        }
+
+        .sec-title .en {
+            display: block;
+            font-size: 11px;
+            color: #b8956a;
+            margin-top: 12px;
+            letter-spacing: 4px;
+        }
+
+        /* ========== 影片档案：便签卡片拼贴 ========== */
+        .profile-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .profile-photo {
+            position: relative;
+            padding: 12px;
+            background: #fff;
+            box-shadow: 3px 3px 10px rgba(120, 80, 30, 0.15);
+            transform: rotate(-2deg);
+            border-radius: 2px;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 320px;
+            border-radius: 2px;
+            filter: sepia(10%);
+        }
+
+        .profile-photo::after {
+            content: "♡ 1980s";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 13px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .note-card {
+            padding: 18px 22px;
+            background: #fff9ee;
+            border-radius: 2px 8px 8px 2px;
+            box-shadow: 2px 2px 0 rgba(184, 115, 51, 0.1);
+            position: relative;
+            border-left: 4px solid;
+        }
+
+        .note-card:nth-child(1) {
+            border-left-color: #e8a85c;
+            transform: rotate(0.5deg);
+        }
+
+        .note-card:nth-child(2) {
+            border-left-color: #87ceeb;
+            transform: rotate(-0.8deg);
+        }
+
+        .note-card:nth-child(3) {
+            border-left-color: #f0a868;
+            transform: rotate(0.3deg);
+        }
+
+        .note-card h4 {
+            font-size: 16px;
+            color: #b87333;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+
+        .note-card p {
+            font-size: 14px;
+            line-height: 1.9;
+            color: #6b4e30;
+        }
+
+        .note-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+        }
+
+        .note-grid span {
+            font-size: 13px;
+            color: #6b4e30;
+            padding: 4px 0;
+            border-bottom: 1px dotted #d4b896;
+        }
+
+        .note-grid span strong {
+            color: #b87333;
+            font-weight: normal;
+            margin-right: 6px;
+        }
+
+        /* ========== 剧情：风的轨迹曲线时间轴 ========== */
+        .wind-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .wind-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 35px;
+            position: relative;
+            gap: 30px;
+        }
+
+        .wind-item:nth-child(odd) {
+            flex-direction: row;
+            padding-left: 50px;
+        }
+
+        .wind-item:nth-child(even) {
+            flex-direction: row-reverse;
+            padding-right: 50px;
+        }
+
+        .wind-img {
+            width: 200px;
+            height: 150px;
+            flex-shrink: 0;
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: 3px 3px 10px rgba(120, 80, 30, 0.15);
+            position: relative;
+            padding: 6px;
+            background: #fff;
+        }
+
+        .wind-item:nth-child(odd) .wind-img {
+            transform: rotate(-3deg);
+        }
+
+        .wind-item:nth-child(even) .wind-img {
+            transform: rotate(3deg);
+        }
+
+        .wind-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 2px;
+            filter: sepia(12%);
+        }
+
+        .wind-content {
+            flex: 1;
+            padding: 18px 22px;
+            background: #fff9ee;
+            border-radius: 3px;
+            box-shadow: 2px 2px 0 rgba(184, 115, 51, 0.1);
+            position: relative;
+        }
+
+        .wind-item:nth-child(odd) .wind-content {
+            border-right: 3px solid #e8a85c;
+        }
+
+        .wind-item:nth-child(even) .wind-content {
+            border-left: 3px solid #e8a85c;
+        }
+
+        .wind-content h4 {
+            font-size: 18px;
+            color: #b87333;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+
+        .wind-content h4 .num {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            background: #ffd98a;
+            color: #8b5a2b;
+            border-radius: 50%;
+            font-size: 12px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .wind-content p {
+            font-size: 13px;
+            line-height: 1.9;
+            color: #6b4e30;
+        }
+
+        /* 风的线条节点 */
+        .wind-dot {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border: 3px solid #e8a85c;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        .wind-item:nth-child(odd) .wind-dot {
+            left: 20px;
+        }
+
+        .wind-item:nth-child(even) .wind-dot {
+            right: 20px;
+        }
+
+        /* ========== 人物：拍立得照片墙 ========== */
+        .polaroid-wall {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px 25px;
+            padding: 20px 0;
+        }
+
+        .polaroid {
+            width: 200px;
+            padding: 10px 10px 35px;
+            background: #fff;
+            box-shadow: 3px 5px 12px rgba(120, 80, 30, 0.2);
+            position: relative;
+            transition: all 0.35s;
+        }
+
+        .polaroid:nth-child(1) {
+            transform: rotate(-4deg);
+        }
+
+        .polaroid:nth-child(2) {
+            transform: rotate(3deg);
+            margin-top: -10px;
+        }
+
+        .polaroid:nth-child(3) {
+            transform: rotate(-2deg);
+        }
+
+        .polaroid:nth-child(4) {
+            transform: rotate(5deg);
+            margin-top: 15px;
+        }
+
+        .polaroid:nth-child(5) {
+            transform: rotate(-3deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0) translateY(-8px) scale(1.03);
+            box-shadow: 5px 10px 20px rgba(120, 80, 30, 0.25);
+            z-index: 3;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 160px;
+            border-radius: 2px;
+            filter: sepia(15%) contrast(92%);
+        }
+
+        .polaroid .name {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 15px;
+            color: #8b5a2b;
+            letter-spacing: 2px;
+            font-family: "KaiTi", serif;
+        }
+
+        .polaroid .name-en {
+            text-align: center;
+            font-size: 10px;
+            color: #b8956a;
+            margin-top: 2px;
+            letter-spacing: 1px;
+        }
+
+        /* 顶部胶带 */
+        .polaroid::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 50px;
+            height: 16px;
+            background: rgba(255, 220, 150, 0.55);
+            border-radius: 2px;
+        }
+
+        /* ========== 风之语录：信纸风格 ========== */
+        .letter-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .letter-card {
+            padding: 30px 35px;
+            background: #fffbf2;
+            border-radius: 3px;
+            box-shadow: 3px 3px 12px rgba(120, 80, 30, 0.12);
+            position: relative;
+            background-image: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 27px,
+                    rgba(200, 160, 100, 0.15) 27px,
+                    rgba(200, 160, 100, 0.15) 28px);
+            line-height: 28px;
+        }
+
+        .letter-card::before {
+            content: "✉";
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 18px;
+            color: #e8a85c;
+            opacity: 0.6;
+        }
+
+        .letter-card .quote-text {
+            font-size: 15px;
+            color: #6b4e30;
+            margin-bottom: 18px;
+            text-indent: 2em;
+            font-family: "KaiTi", serif;
+        }
+
+        .letter-card .quote-from {
+            text-align: right;
+            font-size: 13px;
+            color: #b87333;
+            padding-right: 10px;
+        }
+
+        .letter-card .quote-from::before {
+            content: "—— ";
+        }
+
+        /* 邮票装饰 */
+        .stamp {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            width: 45px;
+            height: 55px;
+            border: 2px dashed #d4b896;
+            background: #fff9ee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #e8a85c;
+            transform: rotate(8deg);
+        }
+
+        /* ========== 页脚：地平线与风 ========== */
+        footer {
+            padding: 50px 20px 30px;
+            margin-top: 30px;
+            text-align: center;
+            position: relative;
+            border-top: 2px dashed #d4b896;
+            background: rgba(255, 249, 238, 0.5);
+        }
+
+        footer .footer-mark {
+            font-size: 22px;
+            color: #b87333;
+            letter-spacing: 5px;
+            margin-bottom: 12px;
+            font-family: "KaiTi", serif;
+        }
+
+        footer .footer-mark::before {
+            content: "✈ ";
+            font-size: 18px;
+        }
+
+        footer .footer-mark::after {
+            content: " ✈";
+            font-size: 18px;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: #9a7b5a;
+            line-height: 2;
+        }
+
+        /* ========== 响应式 ========== */
+        @media(max-width: 900px) {
+            .side-bookmark {
+                display: none;
+            }
+
+            .profile-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-photo {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+
+            .letter-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title h1 {
+                font-size: 34px;
+                letter-spacing: 4px;
+            }
+
+            .hero-img {
+                height: 320px;
+            }
+
+            .wind-item,
+            .wind-item:nth-child(even) {
+                flex-direction: column;
+                padding-left: 0;
+                padding-right: 0;
+                align-items: flex-start;
+            }
+
+            .wind-dot {
+                display: none;
+            }
+
+            .wind-img {
+                width: 100%;
+                max-width: 300px;
+                height: 200px;
+            }
+        }
+
+        @media(max-width: 576px) {
+            .wrap {
+                padding: 0 16px;
+            }
+
+            .hero-sketch {
+                padding: 15px;
+            }
+
+            .hero-img {
+                height: 240px;
+            }
+
+            .hero-title {
+                right: 30px;
+                bottom: 40px;
+            }
+
+            .hero-title h1 {
+                font-size: 26px;
+                letter-spacing: 3px;
+            }
+
+            .hero-title .sub {
+                font-size: 15px;
+            }
+
+            .sec-title h2 {
+                font-size: 22px;
+                padding: 8px 30px;
+                letter-spacing: 3px;
+            }
+
+            .polaroid {
+                width: 160px;
+            }
+
+            .polaroid img {
+                height: 130px;
+            }
+
+            .note-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sticker-1,
+            .sticker-2 {
+                display: none;
+            }
+
+            .hero-sketch::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 右侧书签导航 -->
+    <div class="side-bookmark">
+        <h4>目录</h4>
+        <ul>
+            <li><a href="#profile">影片档案</a></li>
+            <li><a href="#story">风之轨迹</a></li>
+            <li><a href="#char">人物相册</a></li>
+            <li><a href="#quote">风中寄语</a></li>
+        </ul>
+    </div>
+
+    <div class="wrap">
+
+        <!-- 返回首页 -->
+        <div class="back-note">
+            <a href="index.html" class="back-tag">返回风之画廊</a>
+        </div>
+
+        <!-- 顶部主视觉：速写本 -->
+        <div class="hero-sketch">
+            <div class="sticker sticker-1">VOL.05</div>
+            <div class="sticker sticker-2">FLY</div>
+            <div class="hero-img">
+                <img src="https://www.ghibli.jp/gallery/kazetachinu042.jpg" alt="起风了">
+            </div>
+            <div class="hero-title">
+                <h1>風立ちぬ</h1>
+                <p class="sub">起 风 了</p>
+                <p class="jp">The Wind Rises</p>
+            </div>
+        </div>
+
+        <!-- 一、影片档案 -->
+        <section id="profile" class="section">
+            <div class="sec-title">
+                <h2>影 片 档 案</h2>
+                <span class="en">FILM PROFILE</span>
+            </div>
+            <div class="profile-wrap">
+                <div class="profile-photo">
+                    <img src="https://www.ghibli.jp/gallery/kazetachinu015.jpg" alt="堀越二郎">
+                </div>
+                <div class="profile-info">
+                    <div class="note-card">
+                        <h4>✎ 基本信息</h4>
+                        <div class="note-grid">
+                            <span><strong>上映</strong>2013年</span>
+                            <span><strong>片长</strong>126分钟</span>
+                            <span><strong>导演</strong>宫崎骏</span>
+                            <span><strong>配乐</strong>久石让</span>
+                            <span><strong>制作</strong>吉卜力</span>
+                            <span><strong>原作</strong>堀辰雄</span>
+                        </div>
+                    </div>
+                    <div class="note-card">
+                        <h4>✎ 主题标签</h4>
+                        <p style="letter-spacing:2px;">
+                            #飞行梦想 #昭和年代 #爱情 #反战 #工匠精神 #风
+                        </p>
+                    </div>
+                    <div class="note-card">
+                        <h4>✎ 简介</h4>
+                        <p>
+                            大正年间，少年堀越二郎梦见自己驾驶银色飞机翱翔天际。他从小立志成为飞机设计师，却因近视无法成为飞行员。在关东大地震的混乱中，他遇见了少女菜穗子，一段跨越十年的情缘就此埋下伏笔。二郎考入东京大学，进入三菱重工，一步步实现造飞机的梦想。而在轻井泽的山谷里，他与菜穗子重逢，两人在风起的日子里相爱。战争的阴影逐渐逼近，梦想与爱情都在风中飘摇。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 二、风之轨迹（剧情） -->
+        <section id="story" class="section">
+            <div class="sec-title">
+                <h2>风 之 轨 迹</h2>
+                <span class="en">WIND PATH</span>
+            </div>
+            <div class="wind-timeline">
+
+                <div class="wind-item">
+                    <div class="wind-dot"></div>
+                    <div class="wind-img">
+                        <img src="https://www.ghibli.jp/gallery/kazetachinu003.jpg" alt="少年的梦">
+                    </div>
+                    <div class="wind-content">
+                        <h4><span class="num">1</span>少年飞行梦</h4>
+                        <p>少年堀越二郎梦见自己站在屋顶，驾驶着奇妙的飞机掠过田野和村庄。他热爱飞行，却因近视无法成为飞行员。在梦中，意大利飞机设计师卡普罗尼告诉他：造飞机比开飞机更棒。从此，二郎下定决心要成为一名飞机设计师。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="wind-item">
+                    <div class="wind-dot"></div>
+                    <div class="wind-img">
+                        <img src="https://www.ghibli.jp/gallery/kazetachinu008.jpg" alt="关东大地震">
+                    </div>
+                    <div class="wind-content">
+                        <h4><span class="num">2</span>震灾初遇</h4>
+                        <p>二郎乘火车前往东京求学，途中遭遇关东大地震。车厢倾覆，一片混乱中，他遇见了少女菜穗子。二郎用自己的智慧帮助菜穗子和她的女佣脱险，将她们护送到东京的家中。少年少女在灾难中相遇，却来不及互通姓名便各自散去。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="wind-item">
+                    <div class="wind-dot"></div>
+                    <div class="wind-img">
+                        <img src="https://www.ghibli.jp/gallery/kazetachinu023.jpg" alt="造飞机">
+                    </div>
+                    <div class="wind-content">
+                        <h4><span class="num">3</span>设计师之路</h4>
+                        <p>二郎进入三菱重工工作，凭借出色的才华成为主力设计师。他设计的战斗机不断改进，却一次次在试飞中失败。他前往德国考察先进技术，在梦想与现实之间挣扎。战争的阴云越来越浓，他知道自己设计的飞机将被用于战争，却无法放弃飞行的梦想。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="wind-item">
+                    <div class="wind-dot"></div>
+                    <div class="wind-img">
+                        <img src="https://www.ghibli.jp/gallery/kazetachinu034.jpg" alt="轻井泽重逢">
+                    </div>
+                    <div class="wind-content">
+                        <h4><span class="num">4</span>山谷重逢</h4>
+                        <p>在轻井泽的度假山庄，二郎与菜穗子意外重逢。此时的菜穗子已出落为亭亭玉立的少女，却身患结核病。两人在风起的山坡上相爱，在高原的夏日里度过了短暂而美好的时光。菜穗子知道自己时日无多，却依然选择来到二郎身边。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="wind-item">
+                    <div class="wind-dot"></div>
+                    <div class="wind-img">
+                        <img src="https://www.ghibli.jp/gallery/kazetachinu045.jpg" alt="风起之时">
+                    </div>
+                    <div class="wind-content">
+                        <h4><span class="num">5</span>风起了</h4>
+                        <p>二郎的新型战斗机终于试飞成功，银色的飞机划过天际。菜穗子在病床上远远望见那道身影，安详地闭上了眼睛。战争结束，一切都化为废墟。在梦中，卡普罗尼对二郎说：起风了，唯有努力生存。飞机虽被用于战争，但飞行本身永远是美丽的。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 三、人物相册（拍立得） -->
+        <section id="char" class="section">
+            <div class="sec-title">
+                <h2>人 物 相 册</h2>
+                <span class="en">CHARACTER ALBUM</span>
+            </div>
+            <div class="polaroid-wall">
+
+                <div class="polaroid">
+                    <img src="https://www.ghibli.jp/gallery/kazetachinu002.jpg" alt="堀越二郎">
+                    <div class="name">堀越二郎</div>
+                    <div class="name-en">Jiro Horikoshi</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="https://www.ghibli.jp/gallery/kazetachinu032.jpg" alt="菜穗子">
+                    <div class="name">里见菜穗子</div>
+                    <div class="name-en">Nahoko Satomi</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="https://www.ghibli.jp/gallery/kazetachinu018.jpg" alt="卡普罗尼">
+                    <div class="name">卡普罗尼</div>
+                    <div class="name-en">Caproni</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="https://www.ghibli.jp/gallery/kazetachinu026.jpg" alt="本庄">
+                    <div class="name">本庄季郎</div>
+                    <div class="name-en">Kiro Honjo</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="https://www.ghibli.jp/gallery/kazetachinu038.jpg" alt="黑川">
+                    <div class="name">黑川雄次</div>
+                    <div class="name-en">Kurokawa</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 四、风中寄语（台词） -->
+        <section id="quote" class="section">
+            <div class="sec-title">
+                <h2>风 中 寄 语</h2>
+                <span class="en">WORDS IN WIND</span>
+            </div>
+            <div class="letter-wrap">
+
+                <div class="letter-card">
+                    <div class="stamp">✈</div>
+                    <p class="quote-text">起风了，唯有努力生存。</p>
+                    <p class="quote-from">保罗·瓦勒里</p>
+                </div>
+
+                <div class="letter-card">
+                    <div class="stamp">♡</div>
+                    <p class="quote-text">我从来没有爱过谁，直到遇见了你。在风起的那一天，我就知道，你是我此生唯一的爱人。</p>
+                    <p class="quote-from">菜穗子</p>
+                </div>
+
+                <div class="letter-card">
+                    <div class="stamp">✎</div>
+                    <p class="quote-text">飞机不是战争的工具，也不是赚钱的商品。飞机是美丽的梦想，是人类飞翔的愿望。</p>
+                    <p class="quote-from">卡普罗尼</p>
+                </div>
+
+                <div class="letter-card">
+                    <div class="stamp">☁</div>
+                    <p class="quote-text">十年了，我一直在等风起来的那一天。现在风终于来了，我要去做我该做的事。</p>
+                    <p class="quote-from">堀越二郎</p>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-mark">风 之 画 廊</div>
+        <p>起风了专题页 | 宫崎骏封笔之作 · 梦想与爱情的风中挽歌</p>
+        <p>所有剧照版权归属 ©スタジオジブリ STUDIO GHIBLI · 仅供爱好者交流学习</p>
+    </footer>
+
+</body>
+
+</html>

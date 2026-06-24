@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>崖の上のポニョ | 悬崖上的金鱼姬</title>
+    <style>
+        /* ========== 金鱼姬专属：深海童话绘本风格 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", "PingFang SC", "Songti SC", serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            object-fit: cover;
+        }
+
+        /* 海水渐变背景 + 水彩晕染 + 气泡暗纹 */
+        body {
+            background: linear-gradient(180deg, #e8f4fc 0%, #d4eaf7 30%, #c2dff0 60%, #b0d4e8 100%);
+            color: #1a3a5c;
+            min-height: 100vh;
+            line-height: 2;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 8%),
+                radial-gradient(circle at 75% 35%, rgba(255, 255, 255, 0.3) 0%, transparent 6%),
+                radial-gradient(circle at 45% 70%, rgba(255, 255, 255, 0.25) 0%, transparent 10%),
+                radial-gradient(circle at 85% 85%, rgba(255, 255, 255, 0.35) 0%, transparent 7%),
+                radial-gradient(circle at 30% 90%, rgba(255, 255, 255, 0.2) 0%, transparent 5%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at top, rgba(255, 215, 140, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(30, 80, 140, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== 返回首页：海浪金扣 ========== */
+        .top-back {
+            padding: 30px 0 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 28px;
+            background: linear-gradient(135deg, #2c6da0, #1a4a7a);
+            color: #fff8e7;
+            border-radius: 50px;
+            font-size: 14px;
+            box-shadow:
+                0 4px 16px rgba(26, 74, 122, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 2px solid #d4af6a;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+        }
+
+        .back-btn::before {
+            content: "🌊";
+            font-size: 15px;
+        }
+
+        .back-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 248, 231, 0.25), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow:
+                0 10px 25px rgba(26, 74, 122, 0.4),
+                0 0 25px rgba(212, 175, 106, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: #e8c98a;
+        }
+
+        .back-btn:hover::after {
+            left: 100%;
+        }
+
+        /* ========== 右侧侧边导航（对齐龙猫侧边栏样式） ========== */
+        .sidebar-nav {
+            position: fixed;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            border: 1px solid #d4af6a;
+            box-shadow: 0 6px 22px rgba(26, 74, 122, 0.16);
+            padding: 24px 12px;
+            z-index: 999;
+        }
+
+        .sidebar-nav h4 {
+            text-align: center;
+            color: #1a4a7a;
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #c9dff0;
+        }
+
+        .sidebar-nav li {
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 7px 4px;
+            font-size: 12px;
+            color: #3a6a9c;
+            border-radius: 8px;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: linear-gradient(135deg, #2c6da0, #1a4a7a);
+            color: #fff8e7;
+        }
+
+        /* ========== 顶部主视觉：海浪绘本 ========== */
+        .hero-ocean {
+            position: relative;
+            margin-bottom: 80px;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 500px;
+            box-shadow:
+                0 20px 50px rgba(26, 74, 122, 0.25),
+                0 0 0 3px rgba(212, 175, 106, 0.5);
+        }
+
+        .hero-ocean img {
+            width: 100%;
+            height: 100%;
+            filter: saturate(1.15) contrast(1.05) brightness(1.02);
+        }
+
+        .hero-ocean::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(26, 74, 122, 0.15) 0%, transparent 35%),
+                linear-gradient(0deg, rgba(10, 40, 70, 0.55) 0%, transparent 55%);
+            z-index: 2;
+        }
+
+        /* 底部海浪过渡 */
+        .hero-ocean::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: linear-gradient(180deg, transparent 0%, #d4eaf7 100%);
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 70'%3E%3Cpath d='M0,35 Q100,5 200,35 T400,35 T600,35 T800,35 T1000,35 T1200,35 L1200,70 L0,70 Z' fill='black'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 70'%3E%3Cpath d='M0,35 Q100,5 200,35 T400,35 T600,35 T800,35 T1000,35 T1200,35 L1200,70 L0,70 Z' fill='black'/%3E%3C/svg%3E");
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+            z-index: 3;
+        }
+
+        .hero-title {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #fff8e7;
+            z-index: 4;
+            text-shadow:
+                0 2px 15px rgba(10, 30, 60, 0.6),
+                0 0 30px rgba(212, 175, 106, 0.3);
+        }
+
+        .hero-title h1 {
+            font-size: 58px;
+            letter-spacing: 10px;
+            margin-bottom: 12px;
+            font-weight: 300;
+            background: linear-gradient(90deg, #fff8e7, #f0d080, #fff8e7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleShine 4s ease-in-out infinite;
+        }
+
+        @keyframes titleShine {
+
+            0%,
+            100% {
+                background-position: 0% center;
+            }
+
+            50% {
+                background-position: 100% center;
+            }
+        }
+
+        .hero-title .sub {
+            font-size: 20px;
+            letter-spacing: 6px;
+            opacity: 0.95;
+            margin-bottom: 6px;
+        }
+
+        .hero-title .en {
+            font-size: 13px;
+            opacity: 0.75;
+            letter-spacing: 4px;
+        }
+
+        /* ========== 章节通用：海浪金饰标题 ========== */
+        .section {
+            margin-bottom: 90px;
+        }
+
+        .sec-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .sec-title h2 {
+            display: inline-block;
+            font-size: 30px;
+            color: #1a4a7a;
+            letter-spacing: 6px;
+            padding: 14px 55px;
+            font-weight: normal;
+            position: relative;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
+            border-radius: 50px;
+            border: 1px solid rgba(212, 175, 106, 0.4);
+            box-shadow: 0 4px 15px rgba(26, 74, 122, 0.08);
+        }
+
+        /* 左右金鱼装饰 */
+        .sec-title h2::before,
+        .sec-title h2::after {
+            content: "🐠";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            opacity: 0.7;
+        }
+
+        .sec-title h2::before {
+            left: 20px;
+            transform: translateY(-50%) scaleX(-1);
+        }
+
+        .sec-title h2::after {
+            right: 20px;
+        }
+
+        .sec-title .en {
+            display: block;
+            font-size: 12px;
+            color: #5a8ab8;
+            margin-top: 12px;
+            letter-spacing: 5px;
+        }
+
+        /* ========== 深海档案：影片信息 ========== */
+        .deep-profile {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.6));
+            backdrop-filter: blur(8px);
+            border-radius: 18px;
+            padding: 45px 50px;
+            box-shadow:
+                0 8px 30px rgba(26, 74, 122, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(212, 175, 106, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deep-profile::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #d4af6a, #f0d080, #d4af6a, #f0d080, #d4af6a);
+        }
+
+        .deep-profile::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 106, 0.4), transparent);
+        }
+
+        .profile-inner {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 45px;
+            align-items: start;
+        }
+
+        .profile-poster {
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow:
+                0 6px 20px rgba(26, 74, 122, 0.2),
+                0 0 0 2px rgba(212, 175, 106, 0.4);
+            position: relative;
+        }
+
+        .profile-poster img {
+            width: 100%;
+            height: 400px;
+        }
+
+        .profile-poster::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(26, 74, 122, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .profile-info h3 {
+            font-size: 26px;
+            color: #1a4a7a;
+            margin-bottom: 22px;
+            letter-spacing: 3px;
+            font-weight: normal;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(212, 175, 106, 0.4);
+            position: relative;
+        }
+
+        .profile-info h3::after {
+            content: "🌊";
+            position: absolute;
+            right: 0;
+            bottom: 10px;
+            font-size: 18px;
+            opacity: 0.5;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 30px;
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px dashed rgba(212, 175, 106, 0.4);
+        }
+
+        .info-item {
+            font-size: 14px;
+            color: #3a6a9c;
+            padding: 5px 0;
+        }
+
+        .info-item strong {
+            color: #1a4a7a;
+            font-weight: normal;
+            margin-right: 10px;
+            display: inline-block;
+            min-width: 50px;
+        }
+
+        .info-item strong::before {
+            content: "✦";
+            color: #d4af6a;
+            font-size: 10px;
+            margin-right: 6px;
+        }
+
+        .tags {
+            margin-bottom: 25px;
+        }
+
+        .tags span {
+            display: inline-block;
+            padding: 5px 16px;
+            background: linear-gradient(135deg, rgba(44, 109, 160, 0.1), rgba(44, 109, 160, 0.05));
+            color: #1a4a7a;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(212, 175, 106, 0.3);
+        }
+
+        .profile-desc {
+            font-size: 14px;
+            line-height: 2.1;
+            color: #2a5a8c;
+            text-indent: 2em;
+            padding: 22px 28px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(232, 244, 252, 0.5));
+            border-radius: 12px;
+            border-left: 4px solid #d4af6a;
+            position: relative;
+        }
+
+        .profile-desc::first-letter {
+            font-size: 32px;
+            color: #1a4a7a;
+            font-weight: bold;
+            float: left;
+            line-height: 1.2;
+            margin-right: 8px;
+            font-family: "Songti SC", serif;
+        }
+
+        /* ========== 潮汐五章：剧情 ========== */
+        .tide-chapters {
+            position: relative;
+            padding: 10px 0;
+        }
+
+        /* 中间金色海平线 */
+        .tide-chapters::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg,
+                    transparent 0%,
+                    #d4af6a 10%,
+                    #f0d080 30%,
+                    #d4af6a 50%,
+                    #f0d080 70%,
+                    #d4af6a 90%,
+                    transparent 100%);
+        }
+
+        .tide-item {
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 50px;
+            position: relative;
+            gap: 40px;
+        }
+
+        .tide-item:nth-child(odd) {
+            flex-direction: row;
+            padding-right: calc(50% - 25px);
+        }
+
+        .tide-item:nth-child(even) {
+            flex-direction: row-reverse;
+            padding-left: calc(50% - 25px);
+        }
+
+        /* 贝壳节点 */
+        .tide-dot {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, #fff8e7, #f0d080);
+            border: 3px solid #d4af6a;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #1a4a7a;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow:
+                0 4px 15px rgba(212, 175, 106, 0.4),
+                inset 0 2px 5px rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+        }
+
+        .tide-card {
+            flex: 1;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            backdrop-filter: blur(6px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 6px 22px rgba(26, 74, 122, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(212, 175, 106, 0.35);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .tide-card:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 14px 35px rgba(26, 74, 122, 0.2),
+                0 0 25px rgba(212, 175, 106, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+
+        /* 卡片顶部波浪装饰 */
+        .tide-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #5ba3d0, #7bc0e0, #5ba3d0, #7bc0e0, #5ba3d0);
+            opacity: 0.6;
+        }
+
+        .tide-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .tide-card-body {
+            padding: 22px 26px 26px;
+        }
+
+        .tide-card h4 {
+            font-size: 19px;
+            color: #1a4a7a;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            font-weight: normal;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(212, 175, 106, 0.4);
+        }
+
+        .tide-card h4 .jp {
+            font-size: 12px;
+            color: #7ba3c0;
+            margin-left: 10px;
+            letter-spacing: 1px;
+            font-weight: normal;
+        }
+
+        .tide-card p {
+            font-size: 13.5px;
+            line-height: 2;
+            color: #3a6a9c;
+        }
+
+        /* ========== 海洋图鉴：人物 ========== */
+        .shell-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+        }
+
+        .shell-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.6));
+            backdrop-filter: blur(6px);
+            border-radius: 50% 50% 16px 16px / 35% 35% 16px 16px;
+            overflow: hidden;
+            box-shadow:
+                0 6px 22px rgba(26, 74, 122, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(212, 175, 106, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            text-align: center;
+        }
+
+        .shell-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow:
+                0 18px 40px rgba(26, 74, 122, 0.25),
+                0 0 30px rgba(212, 175, 106, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-color: rgba(212, 175, 106, 0.7);
+        }
+
+        .shell-card::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 8px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 106, 0.5), transparent);
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        .shell-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+        }
+
+        .shell-card-body {
+            padding: 18px 22px 24px;
+        }
+
+        .shell-card h3 {
+            font-size: 19px;
+            color: #1a4a7a;
+            margin-bottom: 4px;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+
+        .shell-card .name-jp {
+            font-size: 11px;
+            color: #7ba3c0;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .shell-card p {
+            font-size: 12.5px;
+            line-height: 1.9;
+            color: #4a7aac;
+        }
+
+        /* ========== 海的呢喃：台词 ========== */
+        .ocean-whisper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        .whisper-card {
+            padding: 30px 35px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(232, 244, 252, 0.6));
+            backdrop-filter: blur(6px);
+            border-radius: 50px 16px 50px 16px;
+            box-shadow:
+                0 5px 20px rgba(26, 74, 122, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(212, 175, 106, 0.3);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .whisper-card:nth-child(even) {
+            border-radius: 16px 50px 16px 50px;
+        }
+
+        .whisper-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 10px 28px rgba(26, 74, 122, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+
+        .whisper-card::before {
+            content: "💧";
+            position: absolute;
+            top: 18px;
+            right: 25px;
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        .whisper-card .quote-text {
+            font-size: 15px;
+            color: #2a5a8c;
+            line-height: 2.1;
+            margin-bottom: 18px;
+            text-indent: 2em;
+            font-family: "Songti SC", serif;
+        }
+
+        .whisper-card .quote-from {
+            text-align: right;
+            font-size: 13px;
+            color: #1a4a7a;
+            padding-right: 10px;
+            font-weight: normal;
+        }
+
+        .whisper-card .quote-from::before {
+            content: "—— ";
+            color: #d4af6a;
+        }
+
+        /* ========== 页脚：深海之底 ========== */
+        footer {
+            padding: 60px 20px 40px;
+            margin-top: 30px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(180deg, transparent, rgba(26, 74, 122, 0.15));
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 15'%3E%3Cpath d='M0,7.5 Q100,0 200,7.5 T400,7.5 T600,7.5 T800,7.5 T1000,7.5 T1200,7.5 L1200,15 L0,15 Z' fill='%23d4af6a' fill-opacity='0.4'/%3E%3C/svg%3E") repeat-x;
+            background-size: 400px 15px;
+        }
+
+        footer .footer-mark {
+            font-size: 22px;
+            color: #1a4a7a;
+            letter-spacing: 6px;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+
+        footer .footer-mark::before {
+            content: "🌊 ";
+            font-size: 18px;
+        }
+
+        footer .footer-mark::after {
+            content: " 🌊";
+            font-size: 18px;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: #4a7aac;
+            line-height: 2.2;
+        }
+
+        footer .copyright {
+            margin-top: 12px;
+            font-size: 11px;
+            color: #6a9ac8;
+            opacity: 0.8;
+        }
+
+        /* ========== 响应式 ========== */
+        @media(max-width: 960px) {
+            .sidebar-nav {
+                display: none;
+            }
+
+            .profile-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-poster {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .profile-poster img {
+                height: 360px;
+            }
+
+            .shell-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ocean-whisper {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-ocean {
+                height: 380px;
+            }
+
+            .hero-title h1 {
+                font-size: 42px;
+                letter-spacing: 6px;
+            }
+
+            .hero-title {
+                bottom: 70px;
+            }
+
+            /* 剧情改单列 */
+            .tide-chapters::before {
+                left: 25px;
+            }
+
+            .tide-item,
+            .tide-item:nth-child(even) {
+                flex-direction: column;
+                padding-left: 70px;
+                padding-right: 0;
+                align-items: stretch;
+            }
+
+            .tide-dot {
+                left: 25px;
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+                top: 20px;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .wrap {
+                padding: 0 18px;
+            }
+
+            .hero-ocean {
+                height: 300px;
+            }
+
+            .hero-title {
+                bottom: 55px;
+            }
+
+            .hero-title h1 {
+                font-size: 30px;
+                letter-spacing: 4px;
+            }
+
+            .hero-title .sub {
+                font-size: 15px;
+                letter-spacing: 3px;
+            }
+
+            .sec-title h2 {
+                font-size: 22px;
+                padding: 12px 40px;
+                letter-spacing: 3px;
+            }
+
+            .sec-title h2::before,
+            .sec-title h2::after {
+                display: none;
+            }
+
+            .deep-profile {
+                padding: 30px 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shell-gallery {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .tide-card img {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 右侧侧边导航（模仿龙猫侧边栏） -->
+    <div class="sidebar-nav">
+        <h4>目录导航</h4>
+        <ul>
+            <li><a href="#profile">深海档案</a></li>
+            <li><a href="#story">潮汐五章</a></li>
+            <li><a href="#char">海洋图鉴</a></li>
+            <li><a href="#quote">海的呢喃</a></li>
+        </ul>
+    </div>
+
+    <div class="wrap">
+
+        <!-- 返回首页 -->
+        <div class="top-back">
+            <a href="index.html" class="back-btn">返回风之画廊</a>
+        </div>
+
+        <!-- 顶部主视觉：海浪绘本 -->
+        <div class="hero-ocean">
+            <img src="https://www.ghibli.jp/gallery/ponyo048.jpg" alt="悬崖上的金鱼姬">
+            <div class="hero-title">
+                <h1>崖の上のポニョ</h1>
+                <p class="sub">悬 崖 上 的 金 鱼 姬</p>
+                <p class="en">Ponyo on the Cliff by the Sea</p>
+            </div>
+        </div>
+
+        <!-- 一、深海档案 -->
+        <section id="profile" class="section">
+            <div class="sec-title">
+                <h2>深 海 档 案</h2>
+                <span class="en">DEEP OCEAN PROFILE</span>
+            </div>
+            <div class="deep-profile">
+                <div class="profile-inner">
+                    <div class="profile-poster">
+                        <img src="https://www.ghibli.jp/gallery/ponyo002.jpg" alt="波妞">
+                    </div>
+                    <div class="profile-info">
+                        <h3>崖の上のポニョ</h3>
+                        <div class="info-grid">
+                            <div class="info-item"><strong>上映</strong>2008年</div>
+                            <div class="info-item"><strong>片长</strong>101分钟</div>
+                            <div class="info-item"><strong>导演</strong>宫崎骏</div>
+                            <div class="info-item"><strong>配乐</strong>久石让</div>
+                            <div class="info-item"><strong>制作</strong>吉卜力</div>
+                            <div class="info-item"><strong>原作</strong>宫崎骏</div>
+                        </div>
+                        <div class="tags">
+                            <span>海洋童话</span>
+                            <span>童真治愈</span>
+                            <span>水彩手绘</span>
+                            <span>人与自然</span>
+                            <span>金鱼约定</span>
+                        </div>
+                        <div class="profile-desc">
+                            五岁的宗介住在悬崖边的小镇上，他在海边捡到了困在玻璃瓶里的红色小金鱼，为她取名波妞。波妞是深海魔法师藤本的女儿，她向往人类世界，偷偷溜出深海。两人在潮起潮落间许下约定，波妞想要变成人类，宗介承诺会永远保护她。大海见证了这场最纯粹的相遇。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 二、潮汐五章（剧情） -->
+        <section id="story" class="section">
+            <div class="sec-title">
+                <h2>潮 汐 五 章</h2>
+                <span class="en">FIVE TIDES</span>
+            </div>
+            <div class="tide-chapters">
+
+                <div class="tide-item">
+                    <div class="tide-dot">壹</div>
+                    <div class="tide-card">
+                        <img src="https://www.ghibli.jp/gallery/ponyo005.jpg" alt="海边初遇">
+                        <div class="tide-card-body">
+                            <h4>潮起·初遇 <span class="jp">うみとのであい</span></h4>
+                            <p>临海悬崖小镇，五岁男孩宗介在礁石边发现了一只困在玻璃瓶里的红色小金鱼。海浪反复拍打着岸边，宗介小心翼翼地敲碎瓶子，救下了小鱼，为她取名波妞。波妞是深海魔法师藤本的女儿，偷偷顺着洋流溜到了近海。两个小小的生命，在潮起的瞬间相遇了。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tide-item">
+                    <div class="tide-dot">贰</div>
+                    <div class="tide-card">
+                        <img src="https://www.ghibli.jp/gallery/ponyo012.jpg" alt="归海">
+                        <div class="tide-card-body">
+                            <h4>潮涌·归海 <span class="jp">うみへかえる</span></h4>
+                            <p>藤本发现了波妞的踪迹，强行将她带回了深海。被囚禁在海底洞窟的波妞思念着宗介，她咬破了自己的指尖，沾染了人类的血液，觉醒了古老的海洋魔力。整片大海开始躁动，层层巨浪从深海翻涌而上，潮水漫过了海岸线。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tide-item">
+                    <div class="tide-dot">叁</div>
+                    <div class="tide-card">
+                        <img src="https://www.ghibli.jp/gallery/ponyo023.jpg" alt="踏浪而来">
+                        <div class="tide-card-body">
+                            <h4>潮奔·踏浪 <span class="jp">なみをはしる</span></h4>
+                            <p>波妞挣脱了深海的束缚，踩着巨大的浪头奔向人类小镇。她的身后是翻涌的海潮，整个小镇都被海水淹没。她找到了宗介的家，两个孩子在洪水中重逢。波妞变成了小女孩的模样，宗介一眼就认出了她。海潮为他们的重逢而欢呼。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tide-item">
+                    <div class="tide-dot">肆</div>
+                    <div class="tide-card">
+                        <img src="https://www.ghibli.jp/gallery/ponyo031.jpg" alt="小船航行">
+                        <div class="tide-card-body">
+                            <h4>潮行·远航 <span class="jp">ふねのたび</span></h4>
+                            <p>小镇变成了一片汪洋，街道和房屋都浸泡在海水里。宗介和波妞划着小小的玩具船，在被淹没的街道上航行。成群的鱼儿从他们身边游过，巨大的水母在水面下发光。大海变成了他们的游乐场，两个孩子在海潮中开始了一场奇妙的冒险。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tide-item">
+                    <div class="tide-dot">伍</div>
+                    <div class="tide-card">
+                        <img src="https://www.ghibli.jp/gallery/ponyo045.jpg" alt="约定">
+                        <div class="tide-card-body">
+                            <h4>潮落·约定 <span class="jp">ちかい</span></h4>
+                            <p>海洋之母曼玛莲设下了试炼：如果宗介能够接纳波妞的全部模样，波妞就可以永久成为人类，海潮也会褪去。面对变成金鱼的波妞，宗介没有丝毫犹豫。他的真心平息了整片大海的躁动。潮水缓缓退去，小镇恢复了往日的模样，而波妞永远留在了宗介身边。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 三、海洋图鉴（人物） -->
+        <section id="char" class="section">
+            <div class="sec-title">
+                <h2>海 洋 图 鉴</h2>
+                <span class="en">OCEAN ILLUSTRATED</span>
+            </div>
+            <div class="shell-gallery">
+
+                <div class="shell-card">
+                    <img src="https://www.ghibli.jp/gallery/ponyo003.jpg" alt="波妞">
+                    <div class="shell-card-body">
+                        <h3>波妞</h3>
+                        <div class="name-jp">ポニョ</div>
+                        <p>深海魔法师之女，本体是红色金鱼。热烈直白，向往人类世界，为了宗介甘愿放弃海洋，掀起整片大海的浪潮也要奔赴而去。</p>
+                    </div>
+                </div>
+
+                <div class="shell-card">
+                    <img src="https://www.ghibli.jp/gallery/ponyo008.jpg" alt="宗介">
+                    <div class="shell-card-body">
+                        <h3>宗介</h3>
+                        <div class="name-jp">そうすけ</div>
+                        <p>住在悬崖上的五岁小男孩，温柔又坚定。从小跟着母亲理莎长大，熟悉大海的脾气，会用灯语和远航的父亲打招呼。</p>
+                    </div>
+                </div>
+
+                <div class="shell-card">
+                    <img src="https://www.ghibli.jp/gallery/ponyo015.jpg" alt="理莎">
+                    <div class="shell-card-body">
+                        <h3>理莎</h3>
+                        <div class="name-jp">りさ</div>
+                        <p>宗介的母亲，在养老院工作。勇敢坚韧，洪水席卷小镇时独自驾车穿行海面，温柔又强大，是宗介最坚实的依靠。</p>
+                    </div>
+                </div>
+
+                <div class="shell-card">
+                    <img src="https://www.ghibli.jp/gallery/ponyo026.jpg" alt="藤本">
+                    <div class="shell-card-body">
+                        <h3>藤本</h3>
+                        <div class="name-jp">ふじもと</div>
+                        <p>深海魔法师，波妞的父亲。曾是人类，后来选择生活在海里。厌恶人类污染海洋，外表固执，内心却深爱着女儿们。</p>
+                    </div>
+                </div>
+
+                <div class="shell-card">
+                    <img src="https://www.ghibli.jp/gallery/ponyo035.jpg" alt="曼玛莲">
+                    <div class="shell-card-body">
+                        <h3>曼玛莲</h3>
+                        <div class="name-jp">まんまーれ</div>
+                        <p>海洋之母，藤本的妻子，波妞的母亲。温柔包容，掌控着所有潮汐与洋流，看透了人与海洋的羁绊，是大海本身的化身。</p>
+                    </div>
+                </div>
+
+                <div class="shell-card">
+                    <img src="https://www.ghibli.jp/gallery/ponyo020.jpg" alt="耕一">
+                    <div class="shell-card-body">
+                        <h3>耕一</h3>
+                        <div class="name-jp">こういち</div>
+                        <p>宗介的父亲，远洋货船船长。常年在海上航行，很少回家，和家人用灯语交流。敬畏大海，也深爱着家人。</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 四、海的呢喃（台词） -->
+        <section id="quote" class="section">
+            <div class="sec-title">
+                <h2>海 的 呢 喃</h2>
+                <span class="en">WHISPERS OF SEA</span>
+            </div>
+            <div class="ocean-whisper">
+
+                <div class="whisper-card">
+                    <p class="quote-text">波妞，我来保护你。不管是鱼，还是半人鱼，还是人类，我都统统喜欢。</p>
+                    <p class="quote-from">宗介</p>
+                </div>
+
+                <div class="whisper-card">
+                    <p class="quote-text">我要变成人类，我要和宗介在一起，我要长出手脚，我要和宗介一起生活。</p>
+                    <p class="quote-from">波妞</p>
+                </div>
+
+                <div class="whisper-card">
+                    <p class="quote-text">大海是生命的母亲，不要惹怒她。她包容一切，也会带走一切。</p>
+                    <p class="quote-from">曼玛莲</p>
+                </div>
+
+                <div class="whisper-card">
+                    <p class="quote-text">这个世界上，有很多事情是科学无法解释的。比如，大海为什么是蓝色的，孩子为什么会长大。</p>
+                    <p class="quote-from">藤本</p>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-mark">风 之 画 廊</div>
+        <p>悬崖上的金鱼姬 · 深海童话绘本专题</p>
+        <p class="copyright">所有剧照版权归属 ©スタジオジブリ STUDIO GHIBLI · 仅供爱好者交流学习</p>
+    </footer>
+
+    <script>
+        // 侧边导航滚动高亮
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".sidebar-nav a");
+
+        function updateActiveNav() {
+            let current = "";
+            sections.forEach(sec => {
+                const top = sec.offsetTop;
+                const height = sec.offsetHeight;
+                if (window.scrollY >= top - 280) {
+                    current = sec.getAttribute("id");
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === "#" + current) {
+                    link.classList.add("active");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", updateActiveNav);
+        updateActiveNav();
+    </script>
+
+</body>
+
+</html>

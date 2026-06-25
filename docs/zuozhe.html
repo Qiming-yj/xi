@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人物档案｜宫崎骏 - 风之画廊</title>
+    <style>
+        /* 全局重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", 思源黑体, sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            object-fit: cover;
+        }
+
+        body {
+            background-color: #f8f6f0;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .time-row {
+            display: grid;
+            grid-template-columns: 3fr 0.5fr;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .time-pic {
+            text-align: left;
+        }
+
+        .time-pic img {
+            width: auto;
+            max-width: none;
+            max-height: 240px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        @media(max-width:768px) {
+            .time-row {
+                grid-template-columns: 1fr;
+            }
+
+            .time-pic {
+                text-align: center;
+                margin-top: 12px;
+            }
+
+            .time-pic img {
+                max-height: 200px;
+                max-width: 300px;
+            }
+        }
+
+        /* 返回首页按钮样式 */
+        .back-box {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 26px;
+            background: #63a895;
+            color: #fff;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #487c6e;
+        }
+
+        /* 顶部横幅 */
+        .page-banner {
+            width: 100%;
+            height: 42vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("https://www.ghibli.jp/gallery/laputa001.jpg") center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .page-banner h1 {
+            font-size: 44px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-banner p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* 通用容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 20px;
+        }
+
+        /* 作者主体卡片 */
+        .author-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 30px rgba(80, 120, 105, 0.1);
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .avatar-box {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .avatar-box img {
+            width: 100%;
+        }
+
+        .author-title {
+            font-size: 30px;
+            color: #3a695c;
+            margin-bottom: 12px;
+        }
+
+        .author-sub {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .text-desc p {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 16px;
+            text-indent: 2em;
+        }
+
+        /* 荣誉成就板块 */
+        .honor-title {
+            text-align: center;
+            font-size: 30px;
+            color: #3a695c;
+            margin-bottom: 45px;
+            position: relative;
+        }
+
+        .honor-title::after {
+            content: "";
+            width: 70px;
+            height: 3px;
+            background: #63a895;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -12px;
+        }
+
+        .honor-wrap {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 26px;
+        }
+
+        .honor-item {
+            background: #fff;
+            padding: 30px 24px;
+            border-radius: 12px;
+            border-top: 5px solid #63a895;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s;
+        }
+
+        .honor-item:hover {
+            transform: translateY(-6px);
+        }
+
+        .honor-item h4 {
+            font-size: 19px;
+            color: #3a695c;
+            margin-bottom: 12px;
+        }
+
+        .honor-item p {
+            font-size: 15px;
+            color: #666;
+        }
+
+        /* 经典作品时间线 */
+        .timeline-title {
+            text-align: center;
+            font-size: 30px;
+            color: #3a695c;
+            margin: 80px 0 45px;
+            position: relative;
+        }
+
+        .timeline-title::after {
+            content: "";
+            width: 70px;
+            height: 3px;
+            background: #63a895;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -12px;
+        }
+
+        .timeline {
+            border-left: 3px solid #63a895;
+            padding-left: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .time-item {
+            margin-bottom: 36px;
+            position: relative;
+        }
+
+        .time-item::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            background: #63a895;
+            border-radius: 50%;
+            position: absolute;
+            left: -37px;
+            top: 6px;
+        }
+
+        .time-year {
+            font-size: 17px;
+            color: #487c6e;
+            font-weight: bold;
+        }
+
+        .time-name {
+            font-size: 20px;
+            margin: 6px 0 8px;
+        }
+
+        .time-desc {
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #3a5c52;
+            color: #eaeaea;
+            padding: 50px 20px 30px;
+            margin-top: 80px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 18px;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #54796f;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #54796f;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* 移动端适配 */
+        @media(max-width:992px) {
+            .author-card {
+                grid-template-columns: 1fr;
+                padding: 30px;
+            }
+
+            .honor-wrap {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .page-banner h1 {
+                font-size: 34px;
+            }
+        }
+
+        @media(max-width:576px) {
+            .honor-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .page-banner h1 {
+                font-size: 28px;
+            }
+
+            .author-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 返回首页按钮 -->
+    <div class="back-box">
+        <a href="index.html" class="back-btn">← 返回风之画廊</a>
+    </div>
+
+    <!-- 页面顶部横幅 -->
+    <div class="page-banner">
+        <h1>动画诗人 · 宫崎骏</h1>
+        <p>用一生手绘童话，治愈无数人的童年与成年</p>
+    </div>
+
+    <div class="container">
+        <!-- 宫崎骏简介主卡片 -->
+        <div class="author-card">
+            <div class="avatar-box">
+                <img src="https://pic1.zhimg.com/v2-bbf1688806317a22e642266c3ef812a0_720w.jpg?source=172ae18b"
+                    alt="宫崎骏">
+            </div>
+            <div class="text-box">
+                <h2 class="author-title">宫崎骏 Hayao Miyazaki</h2>
+                <p class="author-sub">吉卜力工作室创始人 | 世界级动画大师</p>
+                <div class="text-desc">
+                    <p>宫崎骏，1941年出生于日本东京，日本殿堂级动画导演、漫画家，吉卜力工作室核心创始人。他自幼热爱绘画与飞行器，年少时便对自然、战争、人性产生深刻思考，这份思考贯穿他所有动画作品。</p>
+                    <p>他坚持传统手绘创作，拒绝完全数字化动画，每一张原画都倾注大量心血。作品画风细腻柔和，画面充满治愈的自然气息，森林、蓝天、云朵、少女、飞行造物是他标志性创作元素。</p>
+                    <p>宫崎骏的故事永远包裹温柔的外壳，内核却充满对战争的反思、对自然的敬畏、对女性独立力量的歌颂。他不制造低幼童话，而是写给所有年龄段观众，让成年人在动画里找回遗失的纯粹与温柔。</p>
+                    <p>从业数十年，他创作出十余部传世动画长片，斩获奥斯卡、柏林电影节、安妮奖等全球顶级影视奖项，影响全球几代动画创作者与爱好者。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 荣誉成就板块 -->
+        <h2 class="honor-title">荣誉与成就</h2>
+        <div class="honor-wrap">
+            <a href="https://baike.baidu.com/item/奥斯卡最佳动画长片奖" target="_blank" class="honor-item">
+                <h4>奥斯卡最佳动画长片</h4>
+                <p>《千与千寻》成为首部斩获该奖项的非英语动画电影</p>
+            </a>
+            <a href="https://baike.baidu.com/item/金熊奖" target="_blank" class="honor-item">
+                <h4>柏林电影节金熊奖</h4>
+                <p>《千与千寻》并列获得金熊奖，动画电影史上里程碑</p>
+            </a>
+            <a href="https://baike.baidu.com/item/奥斯卡荣誉奖" target="_blank" class="honor-item">
+                <h4>奥斯卡终身成就奖</h4>
+                <p>表彰其对全球动画艺术无可替代的开创性贡献</p>
+            </a>
+            <a href="https://baike.baidu.com/item/法国艺术及文学勋章" target="_blank" class="honor-item">
+                <h4>法国艺术文学骑士勋章</h4>
+                <p>法国政府授予，认可其世界级艺术影响力</p>
+            </a>
+            <a href="https://baike.baidu.com/item/安妮奖" target="_blank" class="honor-item">
+                <h4>安妮奖终身成就奖</h4>
+                <p>动画行业最高荣誉，肯定手绘动画坚守与革新</p>
+            </a>
+            <a href="https://baike.baidu.com/item/时代周刊年度全球最具影响力人物榜" target="_blank" class="honor-item">
+                <h4>时代周刊百大影响力人物</h4>
+                <p>多次入选，被评价为最温柔的现实主义造梦师</p>
+            </a>
+        </div>
+
+        <!-- 作品时间线 -->
+        <h2 class="timeline-title">电影作品时间线</h2>
+        <div class="timeline">
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">1979</div>
+                        <div class="time-name">鲁邦三世：卡里奥斯特罗之城</div>
+                        <div class="time-desc">宫崎骏首部独立导演动画电影，奠定飞行、冒险、救赎的核心创作风格</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="yingpian/images/b1.jpg" alt="鲁邦三世">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">1984</div>
+                        <div class="time-name">风之谷</div>
+                        <div class="time-desc">人与自然、文明毁灭与救赎，直接推动吉卜力工作室创立</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/nausicaa001.jpg" alt="风之谷">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">1986</div>
+                        <div class="time-name">天空之城</div>
+                        <div class="time-desc">空中古老文明拉普达，纯真少年对抗人类贪婪，飞行机械经典代表作</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/laputa001.jpg" alt="天空之城">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">1988</div>
+                        <div class="time-name">龙猫</div>
+                        <div class="time-desc">零反派治愈童话，乡村森林与神明，吉卜力标志性IP形象</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/totoro001.jpg" alt="龙猫">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">1989</div>
+                        <div class="time-name">魔女宅急便</div>
+                        <div class="time-desc">少女独自离家成长，讲述独立、温柔与接纳自身不完美的青春故事</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://pic3.zhimg.com/v2-91bcc380c38fdc503bfb4712ca6894da_r.jpg" alt="魔女宅急便">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">1992</div>
+                        <div class="time-name">红猪</div>
+                        <div class="time-desc">一战飞行员中年自我和解，融合反战、自由、遗憾的成人动画</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/porco001.jpg" alt="红猪">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">1997</div>
+                        <div class="time-name">幽灵公主</div>
+                        <div class="time-desc">工业文明与自然神灵激烈对立，基调悲壮厚重的史诗动画</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/mononoke001.jpg" alt="幽灵公主">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">2001</div>
+                        <div class="time-name">千与千寻</div>
+                        <div class="time-desc">神隐世界成长史诗，史上首部拿下奥斯卡最佳动画长片的非英语动画</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/chihiro001.jpg" alt="千与千寻">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">2004</div>
+                        <div class="time-name">哈尔的移动城堡</div>
+                        <div class="time-desc">以奇幻魔法外壳控诉战争，浪漫温柔，宫崎骏手绘美学集大成之作</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/howl001.jpg" alt="哈尔的移动城堡">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">2008</div>
+                        <div class="time-name">悬崖上的金鱼姬</div>
+                        <div class="time-desc">回归纯粹童真，大海与孩童懵懂爱恋，全手绘柔和水彩画风</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/ponyo001.jpg" alt="悬崖上的金鱼姬">
+                    </div>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">2013</div>
+                        <div class="time-name">起风了</div>
+                        <div class="time-desc">写实传记动画，飞机设计师的理想、爱情与战争时代的无奈与遗憾</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/kazetachinu001.jpg" alt="起风了">
+                    </div>
+                </div>
+            </div>
+
+            <div class="time-item">
+                <div class="time-row">
+                    <div class="time-text">
+                        <div class="time-year">2024</div>
+                        <div class="time-name">你想活出怎样的人生</div>
+                        <div class="time-desc">晚年收官长篇，奇幻异世界回望一生，探讨善恶、生死与生命的意义</div>
+                    </div>
+                    <div class="time-pic">
+                        <img src="https://www.ghibli.jp/gallery/kimitachi001.jpg" alt="你想活出怎样的人生">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>网站导航</h4>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="index.html#works">全部动画长片</a></li>
+                    <li><a href="wallpaper.html">原画壁纸下载</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>内容板块</h4>
+                <ul>
+                    <li><a href="analysis.html">幕后创作解析</a></li>
+                    <li><a href="#">久石让配乐赏析</a></li>
+                    <li><a href="message.html">观众留言墙</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>版权说明</h4>
+                <ul>
+                    <li>本站仅做非商用科普赏析</li>
+                    <li>原画版权归属 ©スタジオジブリ</li>
+                    <li>禁止商用、二次售卖印刷</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>风之画廊 © 2026 宫崎骏专题分享站 | 仅供爱好者交流学习</p>
+        </div>
+    </footer>
+</body>
+
+</html>

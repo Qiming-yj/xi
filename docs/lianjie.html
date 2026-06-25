@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宫崎骏电影合集 · B站在线观看</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; object-fit: cover; }
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    min-height: 100vh;
+    padding: 50px 20px;
+}
+
+/* 返回首页按钮 */
+.back-home {
+    position: fixed;
+    top: 25px;
+    left: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: #fff;
+    color: #666;
+    border-radius: 20px;
+    font-size: 13px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+    z-index: 999;
+}
+.back-home:hover {
+    background: #fb7299;
+    color: #fff;
+    transform: translateX(-3px);
+    box-shadow: 0 4px 16px rgba(251, 114, 153, 0.3);
+}
+.back-home::before {
+    content: "←";
+    font-size: 14px;
+    line-height: 1;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.page-title h1 {
+    font-size: 32px;
+    color: #333;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+.page-title p {
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 2px;
+}
+.page-title p::before,
+.page-title p::after {
+    content: "—";
+    margin: 0 12px;
+    color: #ccc;
+}
+
+.movies-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.movie-card {
+    display: block;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+.movie-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(251, 114, 153, 0.2);
+}
+
+.card-poster {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+}
+.card-poster img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+.movie-card:hover .card-poster img {
+    transform: scale(1.08);
+}
+.card-poster::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(251, 114, 153, 0.6) 0%, transparent 60%);
+    opacity: 0;
+    transition: 0.3s;
+}
+.movie-card:hover .card-poster::after {
+    opacity: 1;
+}
+.card-poster .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.card-poster .play-icon::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 16px solid #fb7299;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 4px;
+}
+.movie-card:hover .play-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.card-info {
+    padding: 18px 20px 22px;
+}
+.card-info h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 6px;
+    font-weight: 500;
+    transition: 0.25s;
+}
+.movie-card:hover .card-info h3 {
+    color: #fb7299;
+}
+.card-info .year {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 12px;
+}
+.card-info .desc {
+    font-size: 12.5px;
+    color: #888;
+    line-height: 1.7;
+}
+
+.bilibili-tag {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 4px 12px;
+    background: #fff0f5;
+    color: #fb7299;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* 响应式 */
+@media(max-width: 1024px) {
+    .movies-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media(max-width: 768px) {
+    body {
+        padding: 30px 15px;
+    }
+    .back-home {
+        top: 15px;
+        left: 15px;
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+    .page-title {
+        margin-top: 20px;
+        margin-bottom: 35px;
+    }
+    .page-title h1 {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+    .page-title p {
+        font-size: 12px;
+    }
+    .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .card-poster {
+        height: 260px;
+    }
+}
+@media(max-width: 480px) {
+    .movies-grid {
+        grid-template-columns: 1fr;
+        max-width: 280px;
+    }
+    .card-poster {
+        height: 340px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- 返回首页按钮 -->
+<a href="index.html" class="back-home">返回风之画廊</a>
+
+<div class="page-title">
+    <h1>宫崎骏电影合集</h1>
+    <p>点击卡片前往 B 站观看</p>
+</div>
+
+<div class="movies-grid">
+
+    <a href="https://search.bilibili.com/all?keyword=鲁邦三世 卡里奥斯特罗城" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://i0.hdslb.com/bfs/bangumi/image/e24690b8f222a3cd4656d184aa94330291a79f43.png@338w_450h.webp" alt="鲁邦三世">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>鲁邦三世</h3>
+            <p class="year">1979年</p>
+            <p class="desc">怪盗鲁邦的冒险之旅，宫崎骏首部剧场版动画。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=风之谷" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/nausicaa.jpg" alt="风之谷">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>风之谷</h3>
+            <p class="year">1984年</p>
+            <p class="desc">腐海世界中的公主，用勇气守护人类与自然的和解。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=天空之城" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/laputa.jpg" alt="天空之城">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>天空之城</h3>
+            <p class="year">1986年</p>
+            <p class="desc">云端之上的古老文明，纯粹理想对抗贪婪欲望。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=龙猫" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/totoro.jpg" alt="龙猫">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>龙猫</h3>
+            <p class="year">1988年</p>
+            <p class="desc">乡间森林里藏着温柔巨兽，留住童年最简单的美好。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=魔女宅急便" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/majo.jpg" alt="魔女宅急便">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>魔女宅急便</h3>
+            <p class="year">1989年</p>
+            <p class="desc">13岁魔女的独立修行，在陌生小镇学会成长与爱。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=红猪" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/porco.jpg" alt="红猪">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>红猪</h3>
+            <p class="year">1992年</p>
+            <p class="desc">亚得里亚海上的红猪飞行员，浪漫与自由的终极象征。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=幽灵公主" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/mononoke.jpg" alt="幽灵公主">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>幽灵公主</h3>
+            <p class="year">1997年</p>
+            <p class="desc">人与自然的史诗战争，诅咒与救赎的森林传说。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=千与千寻" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/chihiro.jpg" alt="千与千寻">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>千与千寻</h3>
+            <p class="year">2001年</p>
+            <p class="desc">迷失神隐世界的少女，一场关于初心与成长的冒险。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=哈尔的移动城堡" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/howl.jpg" alt="哈尔的移动城堡">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>哈尔的移动城堡</h3>
+            <p class="year">2004年</p>
+            <p class="desc">反对战争的魔法师，追逐自由与浪漫的救赎之旅。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=悬崖上的金鱼姬" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/ponyo.jpg" alt="悬崖上的金鱼姬">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>悬崖上的金鱼姬</h3>
+            <p class="year">2008年</p>
+            <p class="desc">金鱼公主与小男孩的夏日童话，最纯粹的喜欢。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=起风了" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/kazetachinu.jpg" alt="起风了">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>起风了</h3>
+            <p class="year">2013年</p>
+            <p class="desc">风起了，唯有努力生存。追梦人的爱情与理想。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+    <a href="https://search.bilibili.com/all?keyword=你想活出怎样的人生" target="_blank" class="movie-card">
+        <div class="card-poster">
+            <img src="https://www.ghibli.jp/images/kimitachi.jpg" alt="你想活出怎样的人生">
+            <div class="play-icon"></div>
+        </div>
+        <div class="card-info">
+            <h3>你想活出怎样的人生</h3>
+            <p class="year">2023年</p>
+            <p class="desc">少年的奇幻穿越之旅，关于生命与成长的终极追问。</p>
+            <span class="bilibili-tag">▶ B站观看</span>
+        </div>
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙猫 - 宫崎骏作品馆</title>
+    <style>
+        /* 全局吉卜力基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "思源黑体", sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f0f8e8;
+            color: #2c3628;
+            line-height: 1.8;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 返回首页按钮 */
+        .back-home {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 24px;
+            background: #6b9060;
+            color: #fff;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .back-home:hover {
+            background: #4f6d47;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(107, 144, 96, 0.2);
+        }
+
+        /* 右侧固定侧边导航栏 */
+        .side-menu {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            padding: 26px 18px;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(107, 144, 96, 0.18);
+            z-index: 99;
+        }
+
+        .side-menu h4 {
+            text-align: center;
+            color: #6b9060;
+            font-size: 16px;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid #e1ebdd;
+        }
+
+        .side-menu li {
+            margin: 14px 0;
+        }
+
+        .side-menu a {
+            display: block;
+            font-size: 14px;
+            padding: 7px 12px;
+            border-radius: 10px;
+            transition: 0.25s;
+        }
+
+        .side-menu a:hover {
+            background: #f0f8e8;
+            color: #6b9060;
+        }
+
+        /* 顶部电影海报区 */
+        .movie-top-banner {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 16px;
+            margin-bottom: 60px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .movie-top-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 电影基础信息卡片 */
+        .movie-info-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 80px;
+            box-shadow: 0 4px 16px rgba(107, 144, 96, 0.15);
+        }
+
+        .movie-info-card h1 {
+            font-size: 36px;
+            color: #4f6d47;
+            margin-bottom: 16px;
+            border-left: 6px solid #6b9060;
+            padding-left: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+
+        .info-item strong {
+            color: #6b9060;
+        }
+
+        /* 剧情板块：龙猫全屏固定背景（稳定大图） */
+        .story-section {
+            background-image: url("https://ts1.tc.mm.bing.net/th/id/R-C.582edd8cca891cdda0ce8d8a3be090de?rik=s38Ls3cXS3gF8Q&riu=http%3a%2f%2fimg.netbian.com%2ffile%2f20110608%2f35d7930102404a23d92e54afca3d3aa0.jpg&ehk=cLrnufTUw8CQhyQYMQ2ug1lnZEHZDmfygJN874DcGAk%3d&risl=&pid=ImgRaw&r=0");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
+            margin-bottom: 80px;
+        }
+
+        .story-wrap {
+            background: rgba(255, 255, 255, 0.88);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .story-wrap h2 {
+            text-align: center;
+            font-size: 32px;
+            color: #4f6d47;
+            margin-bottom: 40px;
+        }
+
+        .story-paragraph {
+            margin-bottom: 50px;
+        }
+
+        .story-paragraph p {
+            font-size: 17px;
+            margin-bottom: 20px;
+            text-indent: 2em;
+        }
+
+        .story-img {
+            width: 100%;
+            max-height: 420px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 人物介绍板块 */
+        .character-section h2 {
+            text-align: center;
+            font-size: 32px;
+            color: #4f6d47;
+            margin-bottom: 40px;
+        }
+
+        .character-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .character-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(107, 144, 96, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .character-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .character-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+
+        .char-text {
+            padding: 20px;
+        }
+
+        .char-text h3 {
+            color: #6b9060;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部留白 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width:992px) {
+            .side-menu {
+                display: none;
+            }
+        }
+
+        @media (max-width:768px) {
+            .movie-top-banner {
+                height: 300px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            h1 {
+                font-size: 28px !important;
+            }
+
+            h2 {
+                font-size: 24px !important;
+            }
+
+            /* 手机关闭固定背景，解决滑动卡顿 */
+            .story-section {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 右侧固定侧边导航栏 -->
+    <div class="side-menu">
+        <h4>页面导航</h4>
+        <ul>
+            <li><a href="#info">影片简介</a></li>
+            <li><a href="#story">完整剧情</a></li>
+            <li><a href="#char">主要人物</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <!-- 返回首页按钮 -->
+        <a href="index.html" class="back-home">← 返回风之画廊</a>
+
+        <!-- 1. 顶部电影大图横幅（主海报） -->
+        <div class="movie-top-banner">
+            <img src="https://bizhi1.com/wp-content/uploads/2024/08/totoro-family-forest-anime-desktop-wallpaper-4k-small.jpg"
+                alt="龙猫主海报">
+        </div>
+
+        <!-- 2. 电影详细基础信息 -->
+        <div id="info" class="movie-info-card">
+            <h1>となりのトトロ｜龙猫 My Neighbor Totoro</h1>
+            <div class="info-row">
+                <div class="info-item"><strong>导演：</strong>宫崎骏</div>
+                <div class="info-item"><strong>制作：</strong>吉卜力工作室</div>
+                <div class="info-item"><strong>上映年份：</strong>1988年</div>
+                <div class="info-item"><strong>片长：</strong>86分钟</div>
+            </div>
+            <div class="info-row">
+                <div class="info-item"><strong>原作/编剧：</strong>宫崎骏</div>
+                <div class="info-item"><strong>配乐：</strong>久石让</div>
+                <div class="info-item"><strong>类型：</strong>治愈、奇幻、乡村、亲情</div>
+            </div>
+            <p style="margin-top:20px; font-size:17px;">
+                《龙猫》是宫崎骏最具代表性的治愈系动画，没有激烈冲突，只用乡间温柔日常勾勒人与自然、童真与神灵的羁绊，成为吉卜力全球标志性作品。
+            </p>
+        </div>
+
+        <!-- 3. 剧情板块 -->
+        <section id="story" class="story-section">
+            <div class="story-wrap">
+                <h2>剧情故事</h2>
+
+                <!-- 第一段：搬入乡间老屋 -->
+                <div class="story-paragraph">
+                    <p>昭和时代，为了方便母亲疗养养病，小月与小梅姐妹跟随父亲搬到乡下一栋老旧的乡间老屋。房子年久失修，布满灰尘与藤蔓，当地人称它为“鬼屋”，但姐妹俩丝毫没有害怕，反而对充满野趣的乡村生活充满好奇。屋子角落藏着成群的煤煤虫，风吹过木质房梁会发出奇怪声响，在大人眼中诡异的一切，在孩子眼里全是新奇的秘密。
+                    </p>
+                    <img class="story-img" src="https://www.ghibli.jp/gallery/totoro001.jpg" alt="姐妹眺望乡间田野老屋">
+                </div>
+
+                <!-- 第二段：小梅独自遇见大龙猫 -->
+                <div class="story-paragraph">
+                    <p>某天小梅独自在后山玩耍，追逐闪光的小生灵时，意外撞见一只灰色巨大龙猫。小梅追着龙猫钻进茂密樟树的树洞，见到正在熟睡的森林守护神大龙猫，她爬到龙猫身上打闹，可龙猫始终温柔沉睡。小梅兴奋地跑回家告诉姐姐小月，可小月前去寻找时，龙猫早已消失，只留下巨大脚印，父亲告诉姐妹：心存童真的孩子，才能看见森林里的神明。
+                    </p>
+                    <img class="story-img" src="https://www.ghibli.jp/gallery/totoro002.jpg" alt="小梅森林追逐小龙猫">
+                </div>
+
+                <!-- 第三段：雨夜公交站共撑荷叶伞 -->
+                <div class="story-paragraph">
+                    <p>一个雨夜，姐妹俩在公交站牌等待下班回家的父亲，大雨滂沱。巨大龙猫撑着樟树叶子雨伞静静站在一旁，小月鼓起勇气把伞分给龙猫。作为回报，龙猫送给她们一包樟树种子，当晚种子在月光下发芽长大，龙猫带着两姐妹在树梢飞翔，俯瞰整片宁静乡村，这是独属于孩童的奇幻梦境。
+                    </p>
+                    <img class="story-img" src="images/c1.jpg" alt="雨夜公交站龙猫名场面">
+                </div>
+
+                <!-- 第四段：小梅走失，召唤猫巴士寻人 -->
+                <div class="story-paragraph">
+                    <p>医院传来母亲病情加重的消息，年幼的小梅担心母亲，独自带着玉米前往医院，却在陌生山路迷路。小月焦急万分，跑遍田野村庄都找不到妹妹，绝望之下跑到樟树大树下祈求龙猫帮忙。龙猫唤来传说中的猫巴士，巨大的猫咪列车穿梭在田野夜空，带着小月快速找到走失的小梅。
+                    </p>
+                    <img class="story-img" src="images/c3.jpg" alt="猫巴士停靠公交站">
+                </div>
+
+                <!-- 第五段：医院窗外探望妈妈 -->
+                <div class="story-paragraph">
+                    <p>猫巴士带着姐妹来到医院窗外，两人隔着玻璃窗看见平安休养的母亲，放下带来的玉米后悄悄离开。故事没有跌宕的结局，母亲顺利康复，姐妹继续在乡间无忧无虑生活。龙猫依旧藏在森林深处，只留给保有纯粹童心的孩子相遇的机会，诉说人与自然温柔共存的美好。
+                    </p>
+                    <img class="story-img" src="images/c4.jpg" alt="月夜树梢俯瞰村庄">
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 主要人物介绍 -->
+        <section id="char" class="character-section">
+            <h2>电影主要人物</h2>
+            <div class="character-list">
+                <!-- 小月 -->
+                <div class="character-card">
+                    <img src="https://bkimg.cdn.bcebos.com/pic/95eef01f3a292df5e0fef247af6b4b6034a85edfd515?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536"
+                        alt="小月">
+                    <div class="char-text">
+                        <h3>小月（皋月）</h3>
+                        <p>姐姐，小学四年级，懂事体贴，主动分担家务，细心照顾妹妹小梅。内心柔软又勇敢，在妹妹走失时崩溃又坚强，代表逐渐褪去童真、开始理解生活烦恼的孩童。</p>
+                    </div>
+                </div>
+                <!-- 小梅 -->
+                <div class="character-card">
+                    <img src="https://bkimg.cdn.bcebos.com/pic/5d6034a85edf8db1cb1338801d79ca54564e9358de87?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536"
+                        alt="小梅">
+                    <div class="char-text">
+                        <h3>小梅（梅）</h3>
+                        <p>四岁妹妹，天真烂漫，好奇心旺盛，毫无畏惧，是第一个看见龙猫的孩子。心思纯粹直白，因挂念母亲独自跑向医院，是全片童真的核心载体。</p>
+                    </div>
+                </div>
+                <!-- 大龙猫 -->
+                <div class="character-card">
+                    <img src="https://bkimg.cdn.bcebos.com/pic/8d5494eef01f3a292df51e9ee67fab315c6034a8d612?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536"
+                        alt="大龙猫">
+                    <div class="char-text">
+                        <h3>龙猫（トトロ）</h3>
+                        <p>森林守护神，体型巨大，性格温顺慵懒，只愿意和纯真孩童亲近。掌管山林草木，拥有神奇魔力，能唤醒植物、召唤猫巴士，是自然与温柔的象征。</p>
+                    </div>
+                </div>
+                <!-- 猫巴士 -->
+                <div class="character-card">
+                    <img src="https://bkimg.cdn.bcebos.com/smart/b7003af33a87e950352ac48553634443fbf2b3111e9d-bkimg-process,v_1,rw_1173,rh_787,maxl_423?x-bce-process=image/format,f_auto"
+                        alt="猫巴士">
+                    <div class="char-text">
+                        <h3>猫巴士</h3>
+                        <p>龙猫的交通工具，形似巨型猫咪，全身布满发光眼睛，可穿梭田野、树梢、夜空，能感知孩童的心愿。只在孩子陷入危难时现身，神秘又充满暖意。</p>
+                    </div>
+                </div>
+                <!-- 草壁达郎（爸爸） -->
+                <div class="character-card">
+                    <img src="https://bkimg.cdn.bcebos.com/pic/4034970a304e251f95ca1fed77d2de177f3e6709f5d3?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536"
+                        alt="小月小梅父亲">
+                    <div class="char-text">
+                        <h3>父亲（草壁达郎）</h3>
+                        <p>大学考古学者，思想开明温柔，相信森林神明的存在，尊重孩子的幻想，从不否定姐妹遇见龙猫的经历，给予孩子充足包容与自由。</p>
+                    </div>
+                </div>
+                <!-- 勘太与老奶奶 -->
+                <div class="character-card">
+                    <img src="https://bkimg.cdn.bcebos.com/pic/7a899e510fb30f2442a7c7a578ccc643ad4bd113a546?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536"
+                        alt="勘太和乡间奶奶">
+                    <div class="char-text">
+                        <h3>勘太 & 老奶奶</h3>
+                        <p>本地乡下少年勘太，外表害羞别扭内心善良；独居老奶奶熟悉乡间传说，热心帮助姐妹一家，代表淳朴温柔的乡村普通人。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer>
+            <p>宫崎骏动画作品展览馆 | 吉卜力工作室系列专题</p>
+        </footer>
+    </div>
+
+    <!-- JS 预留区域 -->
+    <script>
+        console.log("龙猫页面加载完成，侧边导航已启用");
+    </script>
+</body>
+
+</html>

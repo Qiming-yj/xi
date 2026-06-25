@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天空之城 | 拉普达航行日志</title>
+    <style>
+        /* ========== 天空之城专属：云端航行日志风格 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            object-fit: cover;
+        }
+
+        /* 天空渐变背景 + 淡淡经纬线（飞行地图感） */
+        body {
+            background: linear-gradient(180deg, #87ceeb 0%, #b0d8e8 30%, #d4e8f0 60%, #e8f0f5 100%);
+            background-attachment: fixed;
+            color: #2c3e50;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 漂浮云朵装饰 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(ellipse 120px 40px at 15% 20%, rgba(255, 255, 255, 0.7) 0%, transparent 70%),
+                radial-gradient(ellipse 180px 50px at 85% 35%, rgba(255, 255, 255, 0.6) 0%, transparent 70%),
+                radial-gradient(ellipse 100px 35px at 30% 60%, rgba(255, 255, 255, 0.5) 0%, transparent 70%),
+                radial-gradient(ellipse 150px 45px at 70% 80%, rgba(255, 255, 255, 0.55) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: cloudFloat 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes cloudFloat {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+
+            100% {
+                transform: translateX(-20px) translateY(-10px);
+            }
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 返回首页：飞艇吊舱按钮 */
+        .back-airship {
+            padding: 28px 0 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #c9a96e 0%, #b8860b 100%);
+            color: #fff;
+            border-radius: 50px 50px 50px 10px;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .back-btn::before {
+            content: "✈";
+            font-size: 16px;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-6px) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.4);
+        }
+
+        /* 右侧悬浮导航：罗盘仪表盘风格 */
+        .side-compass {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 20px 14px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            border: 2px solid #c9a96e;
+            box-shadow: 0 4px 20px rgba(44, 62, 80, 0.15);
+            z-index: 99;
+            min-width: 100px;
+        }
+
+        .side-compass h4 {
+            text-align: center;
+            color: #b8860b;
+            font-size: 14px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #d4c08a;
+            letter-spacing: 2px;
+        }
+
+        .side-compass li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .side-compass a {
+            font-size: 13px;
+            padding: 5px 8px;
+            border-radius: 20px;
+            transition: 0.25s;
+            color: #3a5a7a;
+            display: block;
+        }
+
+        .side-compass a:hover {
+            background: #e8f4fc;
+            color: #2980b9;
+        }
+
+        /* ========== 顶部主视觉：拉普达浮空城 ========== */
+        .hero-sky {
+            position: relative;
+            height: 500px;
+            margin-bottom: 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(41, 128, 185, 0.25);
+        }
+
+        .hero-sky img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(20, 40, 80, 0.6) 100%);
+        }
+
+        .hero-title {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #fff;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .hero-title h1 {
+            font-size: 48px;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(135, 206, 235, 0.8), 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 20px rgba(135, 206, 235, 0.6), 0 2px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            100% {
+                text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 2px 12px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        .hero-title .sub {
+            font-size: 18px;
+            opacity: 0.9;
+            letter-spacing: 4px;
+        }
+
+        .hero-title .jp {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 6px;
+            letter-spacing: 3px;
+        }
+
+        /* 飞行石装饰 */
+        .flying-stone {
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #87ceeb 0%, #4169e1 60%, #1e3a8a 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(135, 206, 235, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.4);
+            animation: stoneFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes stoneFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(10deg);
+            }
+        }
+
+        /* ========== 章节通用：云朵卡片 ========== */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .sec-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .sec-header h2 {
+            display: inline-block;
+            font-size: 30px;
+            color: #2c5282;
+            letter-spacing: 4px;
+            padding: 12px 40px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(41, 128, 185, 0.15);
+            position: relative;
+        }
+
+        .sec-header h2::before,
+        .sec-header h2::after {
+            content: "☁";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #87ceeb;
+            opacity: 0.8;
+        }
+
+        .sec-header h2::before {
+            left: 15px;
+        }
+
+        .sec-header h2::after {
+            right: 15px;
+        }
+
+        .sec-header .en {
+            display: block;
+            font-size: 12px;
+            color: #6b8eb0;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+
+        /* ========== 影片信息：云朵大卡片 ========== */
+        .info-cloud {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 60px 80px 70px 90px / 50px 60px 50px 70px;
+            padding: 40px 45px;
+            box-shadow: 0 8px 30px rgba(41, 128, 185, 0.15);
+            position: relative;
+            animation: cloudBob 6s ease-in-out infinite;
+        }
+
+        @keyframes cloudBob {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .info-cloud h3 {
+            font-size: 26px;
+            color: #2c5282;
+            text-align: center;
+            margin-bottom: 24px;
+            letter-spacing: 3px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 14px 10px;
+            background: rgba(232, 244, 252, 0.6);
+            border-radius: 12px;
+        }
+
+        .info-item .label {
+            display: block;
+            font-size: 12px;
+            color: #6b8eb0;
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+        }
+
+        .info-item .value {
+            font-size: 15px;
+            color: #2c5282;
+            font-weight: 500;
+        }
+
+        .info-tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .info-tags span {
+            padding: 5px 16px;
+            background: linear-gradient(135deg, #87ceeb, #6bb3d9);
+            color: #fff;
+            border-radius: 20px;
+            font-size: 13px;
+            box-shadow: 0 2px 8px rgba(135, 206, 235, 0.4);
+        }
+
+        .info-intro {
+            padding-top: 20px;
+            border-top: 1px dashed #b8d4e8;
+            font-size: 15px;
+            line-height: 1.9;
+            color: #3a5a7a;
+            text-indent: 2em;
+        }
+
+        /* ========== 剧情：垂直航线时间轴（加宽文字与中心线距离） ========== */
+        .route-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .route-timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #c9a96e, #87ceeb, #c9a96e);
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .route-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .route-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .route-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .route-img {
+            width: 36%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(41, 128, 185, 0.2);
+        }
+
+        .route-img img {
+            width: 100%;
+            height: 220px;
+        }
+
+        .route-text {
+            width: 36%;
+            padding: 24px 28px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(41, 128, 185, 0.12);
+        }
+
+        .route-text h4 {
+            font-size: 20px;
+            color: #b8860b;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .route-text h4 .num {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: linear-gradient(135deg, #c9a96e, #b8860b);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 14px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .route-text p {
+            font-size: 14px;
+            line-height: 1.85;
+            color: #3a5a7a;
+        }
+
+        /* 时间轴节点 */
+        .route-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border: 3px solid #c9a96e;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.2);
+        }
+
+        /* ========== 角色：飞艇吊舱卡片 ========== */
+        .airship-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .airship-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 20px 20px 30px 30px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(41, 128, 185, 0.15);
+            transition: all 0.35s;
+            position: relative;
+        }
+
+        .airship-card::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 12px;
+            background: linear-gradient(135deg, #c9a96e, #b8860b);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .airship-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(41, 128, 185, 0.25);
+        }
+
+        .airship-card img {
+            width: 100%;
+            height: 200px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .airship-info {
+            padding: 20px 22px 24px;
+        }
+
+        .airship-info h4 {
+            font-size: 20px;
+            color: #2c5282;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .airship-info h4 span {
+            font-size: 12px;
+            color: #c9a96e;
+            margin-left: 6px;
+            font-weight: normal;
+        }
+
+        .airship-info p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #5a7a9a;
+        }
+
+        /* ========== 名场面：飞行石语录 ========== */
+        .stone-quotes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .quote-stone {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 28px 30px;
+            border-radius: 16px;
+            position: relative;
+            border-left: 4px solid #87ceeb;
+            box-shadow: 0 4px 20px rgba(41, 128, 185, 0.12);
+        }
+
+        .quote-stone::before {
+            content: "✦";
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #c9a96e;
+            opacity: 0.6;
+        }
+
+        .quote-stone .text {
+            font-size: 16px;
+            color: #2c5282;
+            line-height: 1.8;
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+
+        .quote-stone .from {
+            text-align: right;
+            font-size: 13px;
+            color: #6b8eb0;
+        }
+
+        .quote-stone .from::before {
+            content: "—— ";
+        }
+
+        /* ========== 页脚：云端地平线 ========== */
+        footer {
+            background: linear-gradient(180deg, transparent 0%, rgba(44, 82, 130, 0.15) 100%);
+            padding: 50px 20px 30px;
+            margin-top: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer .footer-logo {
+            font-size: 20px;
+            color: #2c5282;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: #5a7a9a;
+            line-height: 2;
+        }
+
+        /* ========== 响应式 ========== */
+        @media(max-width: 1100px) {
+            .side-compass {
+                right: 10px;
+            }
+        }
+
+        @media(max-width: 900px) {
+            .side-compass {
+                display: none;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .airship-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stone-quotes {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title h1 {
+                font-size: 36px;
+                letter-spacing: 4px;
+            }
+
+            .hero-sky {
+                height: 380px;
+            }
+
+            /* 时间轴改单列 */
+            .route-timeline::before {
+                left: 20px;
+            }
+
+            .route-item,
+            .route-item:nth-child(even) {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 50px;
+                gap: 24px;
+            }
+
+            .route-img,
+            .route-text {
+                width: 100%;
+            }
+
+            .route-dot {
+                left: 20px;
+                top: 30px;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @media(max-width: 576px) {
+            .wrap {
+                padding: 0 16px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .airship-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title h1 {
+                font-size: 28px;
+                letter-spacing: 3px;
+            }
+
+            .hero-sky {
+                height: 280px;
+            }
+
+            .info-cloud {
+                padding: 30px 24px;
+                border-radius: 40px 50px 40px 50px / 30px 40px 30px 40px;
+            }
+
+            .sec-header h2 {
+                font-size: 22px;
+                padding: 10px 30px;
+            }
+
+            .flying-stone {
+                width: 35px;
+                height: 35px;
+                top: 20px;
+                right: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 右侧罗盘导航 -->
+    <div class="side-compass">
+        <h4>航行指南</h4>
+        <ul>
+            <li><a href="#info">航程概览</a></li>
+            <li><a href="#story">飞行航线</a></li>
+            <li><a href="#char">乘员档案</a></li>
+            <li><a href="#quote">飞行石语</a></li>
+        </ul>
+    </div>
+
+    <div class="wrap">
+
+        <!-- 返回首页 -->
+        <div class="back-airship">
+            <a href="index.html" class="back-btn">返回风之画廊</a>
+        </div>
+
+        <!-- 顶部主视觉 -->
+        <div class="hero-sky">
+            <img src="https://www.ghibli.jp/gallery/laputa035.jpg" alt="天空之城拉普达">
+            <div class="hero-overlay"></div>
+            <div class="flying-stone"></div>
+            <div class="hero-title">
+                <h1>天空の城ラピュタ</h1>
+                <p class="sub">天 空 之 城</p>
+                <p class="jp">Laputa: Castle in the Sky</p>
+            </div>
+        </div>
+
+        <!-- 一、航程概览 -->
+        <section id="info" class="section">
+            <div class="sec-header">
+                <h2>航 程 概 览</h2>
+                <span class="en">VOYAGE OVERVIEW</span>
+            </div>
+            <div class="info-cloud">
+                <h3>天空之城 · 拉普达航行日志</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">启航年份</span>
+                        <span class="value">1986年</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">航行时长</span>
+                        <span class="value">124分钟</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">总舵手</span>
+                        <span class="value">宫崎骏</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">航行配乐</span>
+                        <span class="value">久石让</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">造船厂</span>
+                        <span class="value">吉卜力工作室</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">原作蓝本</span>
+                        <span class="value">宫崎骏</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">飞行石等级</span>
+                        <span class="value">★★★★★</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">目的地</span>
+                        <span class="value">拉普达</span>
+                    </div>
+                </div>
+                <div class="info-tags">
+                    <span>飞行幻想</span>
+                    <span>蒸汽朋克</span>
+                    <span>古代文明</span>
+                    <span>反战</span>
+                    <span>冒险</span>
+                    <span>纯真</span>
+                </div>
+                <p class="info-intro">
+                    少女希达拥有一颗神秘的飞行石，那是传说中浮空城市「拉普达」的钥匙。海盗朵拉一家、军方特务穆斯卡、煤矿少年巴鲁，三方势力因飞行石交织相遇。众人驾驶飞艇穿越云海，追寻那座沉睡在云端的古老文明之城。当巨大的拉普达终于浮现，高度发达的科技与被遗忘的自然真相一同揭晓。影片是吉卜力工作室的开山之作，将蒸汽机械美学与飞行幻想推向极致，探讨科技与自然、战争与和平的永恒命题。
+                </p>
+            </div>
+        </section>
+
+        <!-- 二、飞行航线（剧情时间轴，已拉大文字与中心线间距） -->
+        <section id="story" class="section">
+            <div class="sec-header">
+                <h2>飞 行 航 线</h2>
+                <span class="en">FLIGHT ROUTE</span>
+            </div>
+            <div class="route-timeline">
+
+                <div class="route-item">
+                    <div class="route-img">
+                        <img src="https://www.ghibli.jp/gallery/laputa005.jpg" alt="希达坠落">
+                    </div>
+                    <div class="route-dot"></div>
+                    <div class="route-text">
+                        <h4><span class="num">1</span>天降少女</h4>
+                        <p>矿山小镇的少年巴鲁，在夜晚遇见一位从空中缓缓飘落的少女。少女胸前的蓝色宝石散发柔光，托着她安然降落在铁道上。她叫希达，是被军方追捕的神秘少女，拥有传说中的飞行石。</p>
+                    </div>
+                </div>
+
+                <div class="route-item">
+                    <div class="route-img">
+                        <img src="https://www.ghibli.jp/gallery/laputa012.jpg" alt="朵拉海盗">
+                    </div>
+                    <div class="route-dot"></div>
+                    <div class="route-text">
+                        <h4><span class="num">2</span>海盗追击</h4>
+                        <p>空中海盗朵拉一家也盯上了飞行石，驾驶扑翼机突袭小镇。巴鲁带着希达一路奔逃，从矿坑铁道到高耸烟囱，两人在追逐中渐渐熟悉彼此。希达说出自己来自天空之城「拉普达」的秘密。</p>
+                    </div>
+                </div>
+
+                <div class="route-item">
+                    <div class="route-img">
+                        <img src="https://www.ghibli.jp/gallery/laputa023.jpg" alt="飞行船">
+                    </div>
+                    <div class="route-dot"></div>
+                    <div class="route-text">
+                        <h4><span class="num">3</span>云海迷航</h4>
+                        <p>军方特务穆斯卡挟持希达，驾驶巨型飞行船「哥利亚号」前往拉普达。巴鲁与朵拉海盗团合作，搭乘「虎蛾号」飞艇紧随其后。众人穿越雷电交加的云海，在风暴中心看见了传说中的龙之巢。</p>
+                    </div>
+                </div>
+
+                <div class="route-item">
+                    <div class="route-img">
+                        <img src="https://www.ghibli.jp/gallery/laputa035.jpg" alt="拉普达">
+                    </div>
+                    <div class="route-dot"></div>
+                    <div class="route-text">
+                        <h4><span class="num">4</span>浮空之城</h4>
+                        <p>穿过云层，巨大的拉普达城缓缓浮现。城中机器人守护者沉睡着，古老的科技与繁盛的自然共生共存。穆斯卡露出真面目，他也是拉普达王族后裔，企图掌控这座城市的毁灭武器。</p>
+                    </div>
+                </div>
+
+                <div class="route-item">
+                    <div class="route-img">
+                        <img src="https://www.ghibli.jp/gallery/laputa048.jpg" alt="毁灭咒语">
+                    </div>
+                    <div class="route-dot"></div>
+                    <div class="route-text">
+                        <h4><span class="num">5</span>巴鲁斯</h4>
+                        <p>为阻止穆斯卡的野心，希达与巴鲁一同念出毁灭咒语「巴鲁斯」。拉普达的下层建筑崩塌，承载武器的城市坠入大海，只留下最顶端的巨大飞行石与生命之树，缓缓升向更高远的天空。</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 三、乘员档案（角色） -->
+        <section id="char" class="section">
+            <div class="sec-header">
+                <h2>乘 员 档 案</h2>
+                <span class="en">CREW PROFILES</span>
+            </div>
+            <div class="airship-grid">
+
+                <div class="airship-card">
+                    <img src="https://www.ghibli.jp/gallery/laputa002.jpg" alt="希达">
+                    <div class="airship-info">
+                        <h4>希 达<span>SHEETA</span></h4>
+                        <p>拉普达王族后裔，拥有飞行石项链。温柔善良却有着超乎年龄的勇气，是连接天空之城与地面的关键人物。</p>
+                    </div>
+                </div>
+
+                <div class="airship-card">
+                    <img src="https://www.ghibli.jp/gallery/laputa008.jpg" alt="巴鲁">
+                    <div class="airship-info">
+                        <h4>巴 鲁<span>PASU</span></h4>
+                        <p>矿山少年，父亲曾拍下拉普达的照片却被世人嘲笑。热爱机械与飞行，性格正直热血，为守护希达奋不顾身。</p>
+                    </div>
+                </div>
+
+                <div class="airship-card">
+                    <img src="https://www.ghibli.jp/gallery/laputa015.jpg" alt="朵拉">
+                    <div class="airship-info">
+                        <h4>朵 拉<span>DOLA</span></h4>
+                        <p>空中海盗团的女船长，豪爽泼辣，驾驶虎蛾号飞艇纵横云海。看似贪财实则重情，关键时刻多次出手相助。</p>
+                    </div>
+                </div>
+
+                <div class="airship-card">
+                    <img src="https://www.ghibli.jp/gallery/laputa028.jpg" alt="穆斯卡">
+                    <div class="airship-info">
+                        <h4>穆斯卡<span>MUSKA</span></h4>
+                        <p>军方特务，拉普达王族另一位后裔。表面温文尔雅，实则野心勃勃，企图掌控拉普达的毁灭武器统治世界。</p>
+                    </div>
+                </div>
+
+                <div class="airship-card">
+                    <img src="https://www.ghibli.jp/gallery/laputa038.jpg" alt="机器人兵">
+                    <div class="airship-info">
+                        <h4>机器人兵<span>ROBOT</span></h4>
+                        <p>拉普达的古老守护者，外表冰冷强悍，却会为小鸟轻轻盖上树叶。代表被遗忘的科技与残存的温柔，是全片最动人的意象。</p>
+                    </div>
+                </div>
+
+                <div class="airship-card">
+                    <img src="https://www.ghibli.jp/gallery/laputa018.jpg" alt="波姆爷爷">
+                    <div class="airship-info">
+                        <h4>波姆爷爷<span>UNCLE POM</span></h4>
+                        <p>住在矿坑深处的老人，熟知飞行石的秘密。告诉希达飞行石的咒语与拉普达的传说，是重要的线索人物。</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 四、飞行石语录 -->
+        <section id="quote" class="section">
+            <div class="sec-header">
+                <h2>飞 行 石 语</h2>
+                <span class="en">LEVITATION STONE WORDS</span>
+            </div>
+            <div class="stone-quotes">
+
+                <div class="quote-stone">
+                    <p class="text">如谷之歌，扎根土里，与风共存，与种子越冬，与鸟歌颂春天。</p>
+                    <p class="from">拉普达石碑铭文</p>
+                </div>
+
+                <div class="quote-stone">
+                    <p class="text">巴鲁斯——</p>
+                    <p class="from">毁灭咒语</p>
+                </div>
+
+                <div class="quote-stone">
+                    <p class="text">我不会变成海盗的，我要靠自己的力量找到拉普达。</p>
+                    <p class="from">巴鲁</p>
+                </div>
+
+                <div class="quote-stone">
+                    <p class="text">现在我终于明白，拉普达人为什么会灭亡。离开了土地，人是活不下去的。</p>
+                    <p class="from">希达</p>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-logo">✈ 风 之 画 廊</div>
+        <p>天空之城专题页 | 吉卜力工作室开山之作</p>
+        <p>所有剧照版权归属 ©スタジオジブリ STUDIO GHIBLI · 仅供爱好者交流学习</p>
+    </footer>
+
+</body>
+
+</html>

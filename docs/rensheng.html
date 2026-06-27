@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+ <link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>君たちはどう生きるか | 你想活出怎样的人生</title>
 <style>
@@ -691,51 +692,39 @@ body::before {
     color: #8b7fa8;
 }
 
-/* ========== 页脚：梦境之底 ========== */
+/* ========== 统一三栏页脚样式（和首页/zuozhe.html完全一致） ========== */
+/* ========== 统一三栏页脚样式（加长高度，排版不变） ========== */
 footer {
-    padding: 60px 20px 45px;
-    margin-top: 40px;
+    background: #3a5c52;
+    color: #eaeaea;
+    padding: 50px 20px 30px;
+    margin-top: 80px;
+}
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+.footer-col h4 {
+    font-size: 18px;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #54796f;
+}
+.footer-col li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+.copyright {
     text-align: center;
-    position: relative;
-    background: linear-gradient(180deg, transparent, rgba(180, 160, 200, 0.1));
-}
-footer::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #8b7fa8, transparent);
-    border-radius: 1px;
-}
-footer .footer-mark {
-    font-size: 24px;
-    color: #4a5065;
-    letter-spacing: 7px;
-    margin-bottom: 16px;
-    font-weight: 300;
-    font-family: "Songti SC", "思源宋体", serif;
-}
-footer .footer-mark::before {
-    content: "🪶 ";
-    font-size: 20px;
-}
-footer .footer-mark::after {
-    content: " 🪶";
-    font-size: 20px;
-}
-footer p {
-    font-size: 13px;
-    color: #7a7590;
-    line-height: 2.3;
-}
-footer .copyright {
-    margin-top: 14px;
-    font-size: 11px;
-    color: #9a95b0;
-    opacity: 0.8;
+    padding-top: 20px;
+    border-top: 1px solid #54796f;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
 /* ========== 响应式 ========== */
@@ -781,6 +770,9 @@ footer .copyright {
     .fragment-item:nth-child(even) .fragment-text .divider {
         margin-left: 0;
         background: linear-gradient(90deg, #8b7fa8, transparent);
+    }
+    .footer-inner {
+        grid-template-columns: 1fr;
     }
 }
 @media(max-width: 600px) {
@@ -1068,4 +1060,47 @@ footer .copyright {
         </div>
 
         <div class="whisper-card">
-            <p class="whisper-text">勇敢不是不害怕，而是明明害怕，还是
+            <p class="whisper-text">勇敢不是不害怕，而是明明害怕，依然选择前行。每一次选择，都是你人生的答案。</p>
+            <p class="whisper-from">真人</p>
+        </div>
+    </div>
+</section>
+  </div>    
+         <!-- 页脚 -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>网站导航</h4>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="lianjie.html">全部动画长片</a></li>
+                    <li><a href="wallpaper.html">原画壁纸下载</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>内容板块</h4>
+                <ul>
+                    <li><a href="liuyan.html">观众留言墙</a></li>
+                    <li><a href="zuozhe.html">作者介绍</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>版权说明</h4>
+                <ul>
+                    <li>本站仅做非商用科普赏析</li>
+                    <li>所有剧照原画版权归属 ©スタジオジブリ STUDIO GHIBLI</li>
+                    <li>禁止商用、二次售卖、印刷周边</li>
+                    <li>图片素材取自吉卜力官方公开静止画</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>风之画廊 © 2026 宫崎骏专题分享站 | 仅供爱好者交流学习</p>
+            <p>本网站无广告、无付费内容，不涉及任何商业盈利行为</p>
+        </div>
+    </footer>
+    <div id="backTop">↑</div>
+     <script src="script.js"></script>
+</body>
+
+</html>
